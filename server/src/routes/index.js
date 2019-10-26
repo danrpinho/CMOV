@@ -7,17 +7,19 @@ let router = require("express").Router();
  ++++++++++++++++++++++++++++++++++++++++++++++*/
 
 const auth = require("./auth");
-const todos = require("./todos");
-const todoItems = require("./todoItems");
+const shoppingList = require("./shoppingList");
+const product = require("./product");
+const voucher = require("./voucher");
 const passport = require('passport');
 
 
 router.use("/", auth);
 router.use("/api/", passport.authenticate('jwt', {session: false}));
-router.use("/api/", todos);
-router.use("/api/", todoItems);
+router.use("/api/", shoppingList);
+router.use("/api/", product);
+router.use("/api/", voucher);
 router.get('/api', (req, res) => res.status(200).send({
-    message: 'Welcome to the Todos API!',
+    message: 'Welcome to the Supermarket API!',
 }));
 
 

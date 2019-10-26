@@ -1,9 +1,11 @@
 'use strict';
 
-const todoController = require('./todos');
-const todoItemsController = require('./todoitems');
+const shoppingListController = require('./shoppingList');
+const productController = require('./product');
+const voucherController = require('./voucher');
 
 module.exports = {
-    todoController,
-    todoItemsController,
+    shoppingListController,
+    productController,
+    voucherController,
 };

@@ -1,7 +1,8 @@
 'use strict';
 
-const {Todo, TodoItem} = require('../models');
+const {Product, ShoppingList} = require('../models');
 
+/*
 const create = async (title) => {
     return await Todo
         .create({
@@ -66,3 +67,4 @@ module.exports = {
     update,
     destroy
 };
+*/

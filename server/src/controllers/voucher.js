@@ -1,8 +1,8 @@
 'use strict';
 
-const {TodoItem} = require('../models');
+const {Voucher} = require('../models');
 
-const create = async (content, todoId) => {
+/*const create = async (content, todoId) => {
     return await TodoItem
         .create({
             content,
@@ -50,4 +50,4 @@ module.exports = {
     create,
     update,
     destroy
-};
+};*/
