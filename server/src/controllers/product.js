@@ -2,52 +2,15 @@
 
 const {Product} = require('../models');
 
-/*const create = async (content, todoId) => {
-    return await TodoItem
+const create = async (price, uuid, shoppingListId) => {
+    return await Product
         .create({
-            content,
-            todoId
+            price,
+            uuid,
+            shoppingListId
         })
-};
-
-const update = async (id, todoId, content, complete) => {
-    let todoItem = await TodoItem
-        .findOne({
-            where: {
-                id,
-                todoId,
-            },
-        });
-
-    if (!todoItem) {
-        throw new Error("TodoItem not found");
-    }
-
-    return await todoItem
-        .update({
-            content,
-            complete,
-        })
-};
-
-const destroy = async (id, todoId) => {
-    let todoItem = await TodoItem
-        .find({
-            where: {
-                id,
-                todoId,
-            },
-        });
-
-    if (!todoItem) {
-        throw new Error("TodoItem not found");
-    }
-
-    return await todoItem.destroy();
 };
 
 module.exports = {
     create,
-    update,
-    destroy
-};*/
+};

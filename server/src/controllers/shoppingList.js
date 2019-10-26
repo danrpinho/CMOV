@@ -2,69 +2,37 @@
 
 const {Product, ShoppingList} = require('../models');
 
-/*
-const create = async (title) => {
-    return await Todo
+const create = async (totalCost) => {
+    return await ShoppingList
         .create({
-            title: title,
+            totalCost,
         });
+        
 };
 
 const list = async () => {
-    return await Todo
+    return await ShoppingList
         .findAll({
             include: [{
-                model: TodoItem,
-                as: 'todoItems',
+                model: Product,
+                as: 'products',
             }],
         });
 };
 
-const retrieve = async (todoId) => {
-    return await Todo
-        .findByPk(todoId, {
+const retrieve = async (shoppingListID) => {
+    return await ShoppingList
+        .findByPk(shoppingListID, {
             include: [{
-                model: TodoItem,
-                as: 'todoItems',
+                model: Product,
+                as: 'products',
             }],
         });
 };
 
-const update = async (todoId, title) => {
-    let todo = await Todo
-        .findByPk(todoId, {
-            include: [{
-                model: TodoItem,
-                as: 'todoItems',
-            }],
-        });
-
-    if (!todo) {
-        throw new Error("Todo not found");
-    }
-
-    return await todo
-        .update({
-            title: title || todo.title,
-        });
-};
-
-const destroy = async (todoId) => {
-    let todo = await Todo
-        .findByPk(todoId);
-
-    if (!todo) {
-        throw new Error("Todo not found");
-    }
-
-    return await todo.destroy();
-};
 
 module.exports = {
     create,
     list,
     retrieve,
-    update,
-    destroy
 };
-*/
