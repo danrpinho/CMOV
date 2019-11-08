@@ -65,3 +65,18 @@ api-docs/
 /dist10
 
 .idea
+.gradle/5.4.1/executionHistory/
+
+.gradle/5.4.1/fileChanges/
+
+.gradle/5.4.1/fileHashes/
+
+.gradle/5.4.1/
+
+*.iml
+
+.gradle/buildOutputCleanup/
+
+.gradle/vcs-1/
+
+gradle/wrapper/

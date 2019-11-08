@@ -10,24 +10,25 @@ const create = async (totalCost) => {
         
 };
 
-const list = async () => {
+const list = async (userId) => {
     return await ShoppingList
         .findAll({
-            include: [{
-                model: Product,
-                as: 'products',
-            }],
+            where: { userId: userId },
         });
 };
 
-const retrieve = async (shoppingListID) => {
-    return await ShoppingList
+const retrieve = async (shoppingListID, userId) => {
+    const shoppingList = await ShoppingList
         .findByPk(shoppingListID, {
             include: [{
                 model: Product,
-                as: 'products',
+                as: 'productItems',
             }],
         });
+    
+    if(shoppingList.userId!==userId) throw new Error("You're not the user who made this purchase");
+    
+    return shoppingList
 };
 
 

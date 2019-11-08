@@ -5,6 +5,11 @@ const SALT_WORK_FACTOR = 10;
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
+            email: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                unique: true,
+            },
             name: {
                 type: DataTypes.STRING,
                 allowNull: false,
@@ -47,8 +52,17 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     User.associate = function (models) {
-        // associations can be defined here
+        User.hasMany(models.ShoppingList, {
+            foreignKey: 'userId',
+            as: 'shoppingLists',
+        });
+
+        User.hasMany(models.Voucher, {
+            foreignKey: 'userId',
+            as: 'vouchers',
+        });
     };
+
 
     User.beforeCreate(async function (user) {
         user.password = await bcrypt.hash(user.password, SALT_WORK_FACTOR);

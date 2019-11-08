@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     Product.associate = (models) => {
         Product.belongsTo(models.ShoppingList, {
             foreignKey: 'shoppingListId',
+            as: 'productItems',
             onDelete: 'CASCADE',
         });
     };

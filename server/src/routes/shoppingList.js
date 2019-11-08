@@ -1,59 +1,34 @@
 'use strict';
 
 const router = require("express").Router();
-const {todoController} = require('../controllers');
+const {shoppingListController} = require('../controllers');
 
-router.post('/todos', async (req, res) => {
-    const title = req.body.title;
+router.post('/shoppingList', async (req, res) => {
 
     try {
-        const todo = await todoController.create(title);
+        const shoppingList = await shoppingListController.create(req);
         res.status(201).send(todo);
     } catch (error) {
         res.status(400).send(error)
     }
 });
 
-router.get('/todos', async (_, res) => {
+router.get('/shoppingList', async (req , res) => {
     try {
-        const todo = await todoController.list();
-        res.status(201).send(todo);
+        const shoppingLists = await shoppingListController.list(req.user.id);
+        res.status(201).send(shoppingLists);
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).send(error.message)
     }
 });
 
-router.get('/todos/:todoId', async (req, res) => {
-    const todoId = req.params.todoId;
-
+router.get('/shoppingList/:shoppingListId', async (req, res) => {
+    const shoppingListId = req.params.shoppingListId;
     try {
-        const todo = await todoController.retrieve(todoId);
-        res.status(201).send(todo);
+        const userShoppingList = await shoppingListController.retrieve(shoppingListId,req.user.id);
+        res.status(201).send(userShoppingList);
     } catch (error) {
-        res.status(400).send(error)
-    }
-});
-
-router.put('/todos/:todoId', async (req, res) => {
-    const todoId = req.params.todoId;
-    const title = req.body.title;
-
-    try {
-        const todo = await todoController.update(todoId, title);
-        res.status(201).send(todo);
-    } catch (error) {
-        res.status(400).send(error)
-    }
-});
-
-router.delete('/todos/:todoId', async (req, res) => {
-    const todoId = req.params.todoId;
-
-    try {
-        const todo = await todoController.destroy(todoId);
-        res.status(201).send(todo);
-    } catch (error) {
-        res.status(400).send(error)
+        res.status(400).send(error.message)
     }
 });
 

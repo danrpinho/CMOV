@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
 
     return req.login(user, { session: false }, async () => {
       const body = {
-        id: user.id, name: user.name, uuid: user.useruuid, balance: user.balance, username: user.username, totalspent: user.totalspent
+        id: user.id, email: user.email, name: user.name, uuid: user.useruuid, balance: user.balance, username: user.username, totalspent: user.totalspent
       };
       const token = jwt.sign({ user: body }, JWT_SECRET);
 
@@ -50,7 +50,7 @@ router.post('/login', async (req, res, next) => {
 
         const body = {
           // eslint-disable-next-line
-          id: user.id, name: user.name, uuid: user.useruuid, balance: user.balance, username: user.username, totalspent: user.totalspent
+          id: user.id, email: user.email, name: user.name, uuid: user.useruuid, balance: user.balance, username: user.username, totalspent: user.totalspent
         };
         const token = jwt.sign({ user: body }, JWT_SECRET);
 

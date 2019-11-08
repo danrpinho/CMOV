@@ -10,7 +10,7 @@ passport.use('signup', new LocalStrategy({
   passReqToCallback: true,
 }, async (req, username, password, done) => {
   try {
-    const {  name, publickey, uuid} = req.body;
+    const { email, name, publickey, uuid} = req.body;
     // eslint-disable-next-line
 
     const user = await User.findOne({
@@ -23,10 +23,10 @@ passport.use('signup', new LocalStrategy({
     
     // eslint-disable-next-line
     const newUser = await User.create({
-      username, name, password, publickey, uuid,
+      username, email, name, password, publickey, uuid,
     });
 
-    console.log(newUser);
+    
     return done(null, newUser);
   } catch (error) {
     return done(error);
