@@ -1,59 +1,69 @@
-'use strict';
-
 const passport = require('passport');
-const localStrategy = require('passport-local').Strategy;
-const {Strategy, ExtractJwt} = require('passport-jwt');
-const {User} = require('../models');
-const {JWT_SECRET} = require('../config/configs');
+const LocalStrategy = require('passport-local').Strategy;
+const { Strategy, ExtractJwt } = require('passport-jwt');
+const { User } = require('../models');
+const { JWT_SECRET } = require('../config/configs');
 
-passport.use('signup', new localStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-}, async (email, password, done) => {
-    try {
-        const user = await User.findOne({
-            where: {email}
-        });
+passport.use('signup', new LocalStrategy({
+  usernameField: 'username',
+  passwordField: 'password',
+  passReqToCallback: true,
+}, async (req, username, password, done) => {
+  try {
+    const {  name, publickey, uuid} = req.body;
+    // eslint-disable-next-line
 
-        if (user) {
-            return done(null, false, {message: 'User already exists'});
-        }
+    const user = await User.findOne({
+      where: { username },
+    });
 
-        const newUser = await User.create({email, password});
-        return done(null, newUser);
-    } catch (error) {
-        done(error);
+    if (user) {
+      return done(null, false, { message: 'User already exists' });
     }
+    
+    // eslint-disable-next-line
+    const newUser = await User.create({
+      username, name, password, publickey, uuid,
+    });
+
+    console.log(newUser);
+    return done(null, newUser);
+  } catch (error) {
+    return done(error);
+  }
 }));
 
-passport.use('login', new localStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-}, async (email, password, done) => {
-    try {
-        const user = await User.findOne({
-            where: {email}
-        });
-        if (!user) {
-            return done(null, false, {message: 'User not found'});
-        }
-        const validate = await user.isValidPassword(password);
-        if (!validate) {
-            return done(null, false, {message: 'Wrong Password'});
-        }
-        return done(null, user); //TODO: Not retrieve user bc password 
-    } catch (error) {
-        return done(error);
+passport.use('login', new LocalStrategy({
+  usernameField: 'username',
+  passwordField: 'password',
+}, async (username, password, done) => {
+  try {
+    const user = await User.findOne({
+      where: { username },
+    });
+
+    if (!user) {
+      return done(null, false, { message: 'User not found' });
     }
+
+    const validate = await user.isValidPassword(password);
+    if (!validate) {
+      return done(null, false, { message: 'Wrong Password' });
+    }
+
+    return done(null, user);
+  } catch (error) {
+    return done(error);
+  }
 }));
 
 passport.use(new Strategy({
-    secretOrKey: JWT_SECRET,
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+  secretOrKey: JWT_SECRET,
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 }, async (token, done) => {
-    try {
-        return done(null, token.user);
-    } catch (error) {
-        done(error);
-    }
+  try {
+    return done(null, token.user);
+  } catch (error) {
+    return done(error);
+  }
 }));

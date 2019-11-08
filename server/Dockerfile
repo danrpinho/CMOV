@@ -2,7 +2,7 @@ FROM node:11
 
 RUN mkdir -p /usr/src/app
 
-RUN apt update && apt upgrade -y && apt -y install make g++ 
+RUN apt update && apt upgrade -y && apt -y install make g++ python
 
 RUN npm install -g node-gyp
 
