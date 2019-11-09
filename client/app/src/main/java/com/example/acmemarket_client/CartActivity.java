@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class CartActivity extends AppCompatActivity {
 
     @Override
@@ -29,7 +31,7 @@ public class CartActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         itemRecyclerView.setLayoutManager(layoutManager);
         itemRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        cartAdapter = new CartItemAdapter();
+        cartAdapter = new CartItemAdapter(new ArrayList<>(0));
         itemRecyclerView.setAdapter(cartAdapter);
     }
 }

@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CartItemViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView itemName;
-    private ImageButton deleteButton;
+    public TextView itemName;
+    public ImageButton deleteButton;
 
     public CartItemViewHolder(@NonNull View itemView) {
         super(itemView);
