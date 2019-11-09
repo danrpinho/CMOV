@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
         uuid: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique:true,
         },
     });
 

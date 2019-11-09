@@ -4,6 +4,7 @@ const router = require("express").Router();
 const {shoppingListController} = require('../controllers');
 
 router.post('/shoppingList', async (req, res) => {
+    console.log("ola")
     try {
         const shoppingList = await shoppingListController.create(req.body);
         res.status(201).send(shoppingList);

@@ -5,38 +5,45 @@ const VOUCHER_DISCOUNT = 0.15;
 
 
 
-const create = async ({ products, uuid, voucherId, discount }) => {
+const create = async (body) => {
+
+    console.log(body);
+    const {products,uuid,voucherId,discount} = body;
     if (!Array.isArray(products) || products.length === 0)
         throw new Error("You sent an empty array of products");
 
 
     //FIND USER
-    const user = User.findOne({ where: { uuid: uuid } });
-
+    let user = await User.findOne({ where: { uuid: uuid } });
+    console.log(user.id);
     if (user === null || user === undefined)
         throw new Error("Not a valid uuid");
-
+    
 
     //Create SHOPPING LIST
     let totalPrice = 0;
-    shoppingList = await ShoppingList.create({});
-
-
+    
+    let shoppingList = await ShoppingList.create({userId: user.id});
+    
+    
     products.forEach(product => {
         totalPrice += product.price;
+        console.log(totalPrice);
+
         const price = product.price, uuid = product.uuid, shoppingListId = shoppingList.id;
-        Product.create({ uuid, price, shoppingListId });
+        Product.create({ uuid: uuid, price: price, shoppingListId: shoppingListId});
     });
-
-    shoppingList = shoppingList.update({ totalCost: totalPrice });
-
+    
+    shoppingList = await shoppingList.update({ totalCost: totalPrice });
+    console.log(shoppingList);
+    console.log("chego aqui");
     //VOUCHERS
     if (voucherId !== null) {
         voucher = await Voucher.findByPk(voucherId, { where: { uuid: uuid } });
         if (voucher !== null && voucher !== undefined) {
             const newBalance = totalPrice * VOUCHER_DISCOUNT
-            user = user.update({ balance: newBalance });
-            voucher = voucher.update({ used: true });
+            user = await user.update({ balance: newBalance });
+            voucher = await voucher.update({ used: true });
         }
 
     }
@@ -47,18 +54,20 @@ const create = async ({ products, uuid, voucherId, discount }) => {
         let discounted = 0;
         if (user.balance > totalPrice) {
             const newBalance = user.balance - totalPrice;
-            user = user.update({ balance: newBalance });
+            user = await user.update({ balance: newBalance });
             discounted = totalPrice;
         } else {
-            user = user.update({ balance: 0 });
+            user = await user.update({ balance: 0 });
             discounted = totalPrice - user.balance;
         }
 
         shoppingList.discounted = discounted;
-        shoppingList.update({ discounted: discounted });
+        await shoppingList.update({ discounted: discounted });
     }
 
 };
+
+
 
 const list = async (userId) => {
     return await ShoppingList
@@ -75,7 +84,7 @@ const retrieve = async (shoppingListID, userId) => {
                 as: 'productItems',
             }],
         });
-
+    
     if (shoppingList.userId !== userId) throw new Error("You're not the user who made this purchase");
 
     return shoppingList

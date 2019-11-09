@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const ShoppingList = sequelize.define('ShoppingList', {
-        totalcost: {
+        totalCost: {
             type: DataTypes.FLOAT.UNSIGNED,
             allowNull: false,
             defaultValue: 0,
