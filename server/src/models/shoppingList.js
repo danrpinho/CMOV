@@ -2,8 +2,14 @@
 module.exports = (sequelize, DataTypes) => {
     const ShoppingList = sequelize.define('ShoppingList', {
         totalcost: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT.UNSIGNED,
             allowNull: false,
+            defaultValue: 0,
+        },
+        discounted: {
+            type: DataTypes.FLOAT.UNSIGNED,
+            allowNull: false,
+            defaultValue: 0,
         }
     });
 

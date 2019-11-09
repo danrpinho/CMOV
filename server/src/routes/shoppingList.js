@@ -4,10 +4,9 @@ const router = require("express").Router();
 const {shoppingListController} = require('../controllers');
 
 router.post('/shoppingList', async (req, res) => {
-
     try {
-        const shoppingList = await shoppingListController.create(req);
-        res.status(201).send(todo);
+        const shoppingList = await shoppingListController.create(req.body);
+        res.status(201).send(shoppingList);
     } catch (error) {
         res.status(400).send(error)
     }

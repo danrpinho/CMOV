@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
                 unique: true,
             },
             balance: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.FLOAT.UNSIGNED,
                 allowNull: false,
                 defaultValue: 0
             },
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             totalspent:{
-                type: DataTypes.INTEGER,
+                type: DataTypes.FLOAT.UNSIGNED,
                 allowNull: false,
                 defaultValue: 0
             }
