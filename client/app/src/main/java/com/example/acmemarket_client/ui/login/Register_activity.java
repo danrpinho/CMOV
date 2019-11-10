@@ -23,17 +23,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.acmemarket_client.R;
-import com.example.acmemarket_client.ui.login.LoginViewModel;
-import com.example.acmemarket_client.ui.login.LoginViewModelFactory;
 
-public class LoginActivity extends AppCompatActivity {
+public class Register_activity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_activity);
+        setContentView(R.layout.activity_register);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
