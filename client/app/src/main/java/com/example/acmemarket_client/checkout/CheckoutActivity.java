@@ -1,8 +1,10 @@
-package com.example.acmemarket_client;
+package com.example.acmemarket_client.checkout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.acmemarket_client.R;
 
 public class CheckoutActivity extends AppCompatActivity {
 

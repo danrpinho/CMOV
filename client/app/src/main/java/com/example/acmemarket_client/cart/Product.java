@@ -1,11 +1,11 @@
-package com.example.acmemarket_client;
+package com.example.acmemarket_client.cart;
 
-class StoreItem {
+class Product {
     private String id;
     private String name;
     private double price;
 
-    StoreItem (String id, String name, double price){
+    public Product(String id, String name, double price){
         this.setId(id);
         this.setName(name);
         this.setPrice(price);

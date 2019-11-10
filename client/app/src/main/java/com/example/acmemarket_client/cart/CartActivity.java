@@ -1,4 +1,4 @@
-package com.example.acmemarket_client;
+package com.example.acmemarket_client.cart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.acmemarket_client.R;
 
 import java.util.ArrayList;
 

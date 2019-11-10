@@ -1,4 +1,4 @@
-package com.example.acmemarket_client;
+package com.example.acmemarket_client.cart;
 
 import android.view.View;
 import android.widget.ImageButton;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.acmemarket_client.R;
 
 public class CartItemViewHolder extends RecyclerView.ViewHolder {
 

@@ -1,4 +1,4 @@
-package com.example.acmemarket_client;
+package com.example.acmemarket_client.cart;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -6,11 +6,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.acmemarket_client.R;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
-    private final ArrayList<StoreItem> items;
+    private final ArrayList<Product> items;
 
     public CartItemAdapter(ArrayList data){
         this.items = data;
@@ -32,7 +34,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
     }
 
     //adds an item to the list
-    public void addItem(StoreItem item){
+    public void addItem(Product item){
         items.add(item);
         notifyItemInserted(getItemCount());
     }
