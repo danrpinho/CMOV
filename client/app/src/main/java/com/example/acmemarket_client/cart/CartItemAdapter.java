@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.acmemarket_client.R;
+import com.example.acmemarket_client.model.Product;
 
 import java.util.ArrayList;
 import java.util.Locale;
