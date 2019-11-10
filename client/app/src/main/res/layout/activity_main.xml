@@ -35,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:text="Scan Product" />
+            android:onClick="onScanButtonClick"
+            android:text="@string/main_button_scan" />
 
         <Space
             android:id="@+id/space1"
@@ -47,7 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:text="Your Cart" />
+            android:text="@string/main_button_cart"
+            android:onClick="onCartButtonClick"
+            />
 
         <Space
             android:layout_width="match_parent"
@@ -58,7 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:text="History" />
+            android:text="@string/main_button_history"
+            android:onClick="onHistoryButtonClick" />
 
         <Space
             android:layout_width="match_parent"
@@ -69,7 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:text="Checkout" />
+            android:text="@string/main_button_checkout"
+            android:onClick="onCheckoutButtonClick"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

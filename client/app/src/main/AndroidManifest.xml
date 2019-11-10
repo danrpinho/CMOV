@@ -10,9 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".login.LoginActivity"></activity>
-        <activity android:name=".history.HistoryActivity" />
-        <activity android:name=".checkout.CheckoutActivity" />
-        <activity android:name=".cart.CartActivity" />
+        <activity android:name=".history.HistoryActivity"
+            android:parentActivityName=".mainmenu.MainMenuActivity"
+            />
+        <activity android:name=".checkout.CheckoutActivity"
+            android:parentActivityName=".mainmenu.MainMenuActivity"
+            />
+        <activity
+            android:name=".cart.CartActivity"
+            android:parentActivityName=".mainmenu.MainMenuActivity"
+            />
         <activity
             android:name=".register.RegisterActivity"
             android:label="@string/title_activity_register_activity" />

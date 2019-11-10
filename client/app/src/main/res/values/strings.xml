@@ -10,4 +10,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="already_have_an_account">"Already have an account? Tap here"</string>
+    <string name="main_button_scan">Scan QR Code</string>
+    <string name="main_button_history">History</string>
+    <string name="main_button_cart">YOur Cart</string>
+    <string name="main_button_checkout">Checkout</string>
 </resources>
