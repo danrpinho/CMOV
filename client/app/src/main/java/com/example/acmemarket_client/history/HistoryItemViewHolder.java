@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HistoryItemViewHolder extends RecyclerView.ViewHolder {
-    
+
     public HistoryItemViewHolder(@NonNull View itemView) {
         super(itemView);
     }
