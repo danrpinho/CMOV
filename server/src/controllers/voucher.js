@@ -1,12 +1,14 @@
 'use strict';
 
-const { Voucher } = require('../models');
+const { Voucher, User } = require('../models');
 
 const list = async (userId) => {
-    return await Voucher
+    const vouchers =  await Voucher
         .findAll({
             where: { userId: userId },
         });
+    const user = await User.findByPk(userId);
+    return {vouchers, user};
 };
 
 
