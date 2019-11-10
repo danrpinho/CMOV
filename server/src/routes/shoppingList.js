@@ -28,6 +28,7 @@ router.get('/shoppingList/:shoppingListId', async (req, res) => {
         const userShoppingList = await shoppingListController.retrieve(shoppingListId,req.user.id);
         res.status(201).send(userShoppingList);
     } catch (error) {
+        console.log(error.message);
         res.status(400).send(error.message)
     }
 });

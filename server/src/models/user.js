@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
                 unique: true,
                 allowNull: false,
             },
-            totalspent:{
+            totalSpent:{
                 type: DataTypes.FLOAT.UNSIGNED,
                 allowNull: false,
                 defaultValue: 0

@@ -7,15 +7,14 @@ const VOUCHER_DISCOUNT = 0.15;
 
 const create = async (body) => {
 
-    console.log(body);
     const {products,uuid,voucherId,discount} = body;
+    console.log(voucherId);
     if (!Array.isArray(products) || products.length === 0)
         throw new Error("You sent an empty array of products");
 
 
     //FIND USER
     let user = await User.findOne({ where: { uuid: uuid } });
-    console.log(user.id);
     if (user === null || user === undefined)
         throw new Error("Not a valid uuid");
     
@@ -28,20 +27,21 @@ const create = async (body) => {
     
     products.forEach(product => {
         totalPrice += product.price;
-        console.log(totalPrice);
-
         const price = product.price, uuid = product.uuid, shoppingListId = shoppingList.id;
         Product.create({ uuid: uuid, price: price, shoppingListId: shoppingListId});
     });
     
     shoppingList = await shoppingList.update({ totalCost: totalPrice });
-    console.log(shoppingList);
-    console.log("chego aqui");
+
+
     //VOUCHERS
     if (voucherId !== null) {
-        voucher = await Voucher.findByPk(voucherId, { where: { uuid: uuid } });
-        if (voucher !== null && voucher !== undefined) {
-            const newBalance = totalPrice * VOUCHER_DISCOUNT
+        let voucher = await Voucher.findByPk(voucherId);
+        console.log("chegoaqui");
+        console.log(voucher.id);
+        if (voucher !== null && voucher !== undefined && !voucher.used && voucher.userId === user.id) {
+            let newBalance = totalPrice * VOUCHER_DISCOUNT;
+            console.log(newBalance);
             user = await user.update({ balance: newBalance });
             voucher = await voucher.update({ used: true });
         }
@@ -57,14 +57,26 @@ const create = async (body) => {
             user = await user.update({ balance: newBalance });
             discounted = totalPrice;
         } else {
+            discounted = user.balance;
             user = await user.update({ balance: 0 });
-            discounted = totalPrice - user.balance;
         }
 
         shoppingList.discounted = discounted;
         await shoppingList.update({ discounted: discounted });
     }
 
+    //CREATE VOUCHERS
+
+    let oldSpent = user.totalSpent;
+    let totalSpent= user.totalSpent + totalPrice;
+    user = await user.update({ totalSpent: totalSpent });
+    let totalMinusOldpercent = Math.floor(totalSpent/100.0) - Math.floor(oldSpent/100.0);
+    console.log(Math.floor(oldSpent/100.0))
+    console.log(totalMinusOldpercent);
+
+    if(totalMinusOldpercent>0)
+        for(let i=0; i<totalMinusOldpercent; i++)
+            Voucher.create({userId: user.id});
 };
 
 
