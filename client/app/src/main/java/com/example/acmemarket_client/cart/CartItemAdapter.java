@@ -34,6 +34,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
         holder.deleteButton.setOnClickListener(view -> removeItem(position));
     }
 
+    //TODO switches dos vouchers e do saldo
+
     //adds an item to the list
     public void addItem(Product item){
         items.add(item);

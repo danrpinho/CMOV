@@ -1,8 +1,8 @@
 package com.example.acmemarket_client.history;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import com.example.acmemarket_client.R;
 
 public class HistoryActivity extends AppCompatActivity {
 
