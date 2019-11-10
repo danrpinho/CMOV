@@ -10,7 +10,7 @@ passport.use('signup', new LocalStrategy({
   passReqToCallback: true,
 }, async (req, username, password, done) => {
   try {
-    const { email, name, publickey, uuid} = req.body;
+    const { email, name, publickey, uuid } = req.body;
     // eslint-disable-next-line
 
     const user = await User.findOne({
@@ -20,13 +20,13 @@ passport.use('signup', new LocalStrategy({
     if (user) {
       return done(null, false, { message: 'User already exists' });
     }
-    
+
     // eslint-disable-next-line
     const newUser = await User.create({
       username, email, name, password, publickey, uuid,
     });
 
-    
+
     return done(null, newUser);
   } catch (error) {
     return done(error);

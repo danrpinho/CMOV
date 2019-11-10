@@ -7,7 +7,7 @@ const VOUCHER_DISCOUNT = 0.15;
 
 const create = async (body) => {
 
-    const {products,uuid,voucherId,discount} = body;
+    const { products, uuid, voucherId, discount } = body;
     console.log(voucherId);
     if (!Array.isArray(products) || products.length === 0)
         throw new Error("You sent an empty array of products");
@@ -17,20 +17,20 @@ const create = async (body) => {
     let user = await User.findOne({ where: { uuid: uuid } });
     if (user === null || user === undefined)
         throw new Error("Not a valid uuid");
-    
+
 
     //Create SHOPPING LIST
     let totalPrice = 0;
-    
-    let shoppingList = await ShoppingList.create({userId: user.id});
-    
-    
+
+    let shoppingList = await ShoppingList.create({ userId: user.id });
+
+
     products.forEach(product => {
         totalPrice += product.price;
         const price = product.price, uuid = product.uuid, shoppingListId = shoppingList.id;
-        Product.create({ uuid: uuid, price: price, shoppingListId: shoppingListId});
+        Product.create({ uuid: uuid, price: price, shoppingListId: shoppingListId });
     });
-    
+
     shoppingList = await shoppingList.update({ totalCost: totalPrice });
 
 
@@ -49,7 +49,7 @@ const create = async (body) => {
     }
 
     //DISCOUNT
-    
+
     if (discount) {
         let discounted = 0;
         if (user.balance > totalPrice) {
@@ -68,15 +68,15 @@ const create = async (body) => {
     //CREATE VOUCHERS
 
     let oldSpent = user.totalSpent;
-    let totalSpent= user.totalSpent + totalPrice;
+    let totalSpent = user.totalSpent + totalPrice;
     user = await user.update({ totalSpent: totalSpent });
-    let totalMinusOldpercent = Math.floor(totalSpent/100.0) - Math.floor(oldSpent/100.0);
-    console.log(Math.floor(oldSpent/100.0))
+    let totalMinusOldpercent = Math.floor(totalSpent / 100.0) - Math.floor(oldSpent / 100.0);
+    console.log(Math.floor(oldSpent / 100.0))
     console.log(totalMinusOldpercent);
 
-    if(totalMinusOldpercent>0)
-        for(let i=0; i<totalMinusOldpercent; i++)
-            Voucher.create({userId: user.id});
+    if (totalMinusOldpercent > 0)
+        for (let i = 0; i < totalMinusOldpercent; i++)
+            Voucher.create({ userId: user.id });
 };
 
 
@@ -96,7 +96,7 @@ const retrieve = async (shoppingListID, userId) => {
                 as: 'productItems',
             }],
         });
-    
+
     if (shoppingList.userId !== userId) throw new Error("You're not the user who made this purchase");
 
     return shoppingList

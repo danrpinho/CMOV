@@ -1,6 +1,6 @@
 'use strict';
 
-const {Product} = require('../models');
+const { Product } = require('../models');
 
 const create = async (price, uuid, shoppingListId) => {
     return await Product

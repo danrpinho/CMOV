@@ -3,7 +3,7 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const {JWT_SECRET} = require('../config/configs');
+const { JWT_SECRET } = require('../config/configs');
 
 
 router.post('/signup', async (req, res) => {

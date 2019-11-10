@@ -1,7 +1,7 @@
 'use strict';
 
 const router = require("express").Router();
-const {shoppingListController} = require('../controllers');
+const { shoppingListController } = require('../controllers');
 
 router.post('/shoppingList', async (req, res) => {
     console.log("ola")
@@ -13,7 +13,7 @@ router.post('/shoppingList', async (req, res) => {
     }
 });
 
-router.get('/shoppingList', async (req , res) => {
+router.get('/shoppingList', async (req, res) => {
     try {
         const shoppingLists = await shoppingListController.list(req.user.id);
         res.status(201).send(shoppingLists);
@@ -25,7 +25,7 @@ router.get('/shoppingList', async (req , res) => {
 router.get('/shoppingList/:shoppingListId', async (req, res) => {
     const shoppingListId = req.params.shoppingListId;
     try {
-        const userShoppingList = await shoppingListController.retrieve(shoppingListId,req.user.id);
+        const userShoppingList = await shoppingListController.retrieve(shoppingListId, req.user.id);
         res.status(201).send(userShoppingList);
     } catch (error) {
         console.log(error.message);
