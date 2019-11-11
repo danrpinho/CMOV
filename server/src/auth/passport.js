@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const UUID = require('uuid/v1')
 const { Strategy, ExtractJwt } = require('passport-jwt');
 const { User } = require('../models');
 const { JWT_SECRET } = require('../config/configs');
@@ -10,9 +11,10 @@ passport.use('signup', new LocalStrategy({
   passReqToCallback: true,
 }, async (req, username, password, done) => {
   try {
-    const { email, name, publickey, uuid } = req.body;
+    const { email, name, publickey, cardInfo } = req.body;
     // eslint-disable-next-line
 
+    uuid = UUID();
     const user = await User.findOne({
       where: { username },
     });
@@ -23,7 +25,7 @@ passport.use('signup', new LocalStrategy({
 
     // eslint-disable-next-line
     const newUser = await User.create({
-      username, email, name, password, publickey, uuid,
+      username, email, name, password, publickey, uuid, cardInfo
     });
 
 

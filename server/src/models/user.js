@@ -38,6 +38,11 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             allowNull: false,
         },
+        cardInfo: {
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: false,
+        },
         totalSpent: {
             type: DataTypes.FLOAT.UNSIGNED,
             allowNull: false,
