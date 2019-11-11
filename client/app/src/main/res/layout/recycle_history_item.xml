@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/TextItemList"
+        android:id="@+id/historyItemList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="10"
@@ -13,29 +13,6 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:id="@+id/historyTextVoucher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="@string/history_vouchers"
-                android:textAlignment="textEnd"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/historyBooleanVoucher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textAlignment="textEnd" />
-
-        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -56,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="€0.00"
-                android:textAlignment="textEnd" />
+                android:textAlignment="center" />
         </TableRow>
 
         <TableRow
@@ -78,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
-                android:textAlignment="textEnd" />
+                android:textAlignment="center" />
         </TableRow>
 
     </TableLayout>
