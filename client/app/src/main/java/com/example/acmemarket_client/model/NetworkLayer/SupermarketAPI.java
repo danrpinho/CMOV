@@ -31,7 +31,7 @@ public interface SupermarketAPI {
             @Part("email") RequestBody email,
             @Part("password") RequestBody password,
             @Part("publicKey") RequestBody publicKey,
-            @Part("uuid") RequestBody uuid
+            @Part("cardInfo") RequestBody cardInfo
     );
 
     @Headers({"Content-Type: application/json"})

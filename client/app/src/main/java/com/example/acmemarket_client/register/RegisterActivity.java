@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,12 +15,16 @@ import android.widget.Toast;
 
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.login.LoginActivity;
+import com.example.acmemarket_client.utils.RSAKeys;
 
+import java.security.KeyPair;
+import java.security.PublicKey;
 import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText name, username, email, password, cardInfo;
+    private java.security.KeyPair KeyPair;
 
 
     @Override
@@ -53,7 +58,15 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        UUID userUUID = UUID.randomUUID();
+        try {
+            RSAKeys.genKeys(this);
+            KeyPair kp = RSAKeys.loadKeyPair();
+            String publicKey = RSAKeys.KeyToString(kp.getPublic());
+            PublicKey key= RSAKeys.StringToKey(publicKey);
+            Log.d("","NãoEstoura");
+        }catch(Exception e){
+            Log.d("","Estoura");
+        }
 
         //GERAR CHAVES
 
