@@ -12,6 +12,23 @@
     tools:context=".register.RegisterActivity">
 
     <EditText
+        android:id="@+id/registerCardInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+
+        android:hint="@string/card_info"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerPassword" />
+
+    <EditText
         android:id="@+id/registerName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -82,7 +99,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="64dp"
+        android:clickable="true"
         android:enabled="true"
+        android:onClick="onRegisterClick"
         android:text="@string/action_register_short"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,5 +139,5 @@
         android:textColor="@android:color/holo_blue_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/registerCardInfo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

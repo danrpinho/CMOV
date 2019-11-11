@@ -16,4 +16,6 @@
     <string name="main_button_history">History</string>
     <string name="main_button_cart">Your Cart</string>
     <string name="main_button_checkout">Checkout</string>
+    <string name="card_info">Credit Card Number</string>
+    <string name="invalid_email">Invalid e-mail address</string>
 </resources>
