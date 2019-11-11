@@ -18,4 +18,6 @@
     <string name="main_button_checkout">Checkout</string>
     <string name="card_info">Credit Card Number</string>
     <string name="invalid_email">Invalid e-mail address</string>
+    <string name="register_field_empty">All fields are mandatory</string>
+    <string name="key_generator_error">An expected error ocurred generating your certificate</string>
 </resources>

@@ -1,8 +1,7 @@
 package com.example.acmemarket_client.model.NetworkLayer;
 
-import android.telecom.CallScreeningService;
-
-
+import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.RegisterRequestBody;
+import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.RegisterResponse;
 import com.example.acmemarket_client.model.ShoppingList;
 import com.example.acmemarket_client.model.User;
 import com.example.acmemarket_client.model.UserVouchers;
@@ -11,7 +10,13 @@ import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.*;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 
 public interface SupermarketAPI {
@@ -23,16 +28,10 @@ public interface SupermarketAPI {
                      @Part("password") RequestBody password
     );
 
+
     @Headers({"Content-Type: application/json"})
     @POST("/signup")
-    Call<User> signup(
-            @Part("username") RequestBody username,
-            @Part("name") RequestBody name,
-            @Part("email") RequestBody email,
-            @Part("password") RequestBody password,
-            @Part("publicKey") RequestBody publicKey,
-            @Part("cardInfo") RequestBody cardInfo
-    );
+    Call<RegisterResponse> signup(@Body RegisterRequestBody request);
 
     @Headers({"Content-Type: application/json"})
     @GET("/api/shoppingList")

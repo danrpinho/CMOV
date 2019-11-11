@@ -2,36 +2,29 @@ package com.example.acmemarket_client.register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.login.LoginActivity;
 import com.example.acmemarket_client.utils.RSAKeys;
 
 import java.security.KeyPair;
-import java.security.PublicKey;
-import java.util.UUID;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements RegisterView {
 
     private EditText name, username, email, password, cardInfo;
-    private java.security.KeyPair KeyPair;
-
+    RegisterPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        presenter = new RegisterPresenter(this, new RegisterInteractor());
     }
 
     @Override
@@ -53,28 +46,36 @@ public class RegisterActivity extends AppCompatActivity {
         cardInfo = findViewById(R.id.registerCardInfo);
 
         //TODO CHECK CREDIT CARD INFO
-        if(TextUtils.isEmpty(email.getText()) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
+
+        if (TextUtils.isEmpty(email.getText()) || TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(username.getText()) || TextUtils.isEmpty(password.getText()) || TextUtils.isEmpty(cardInfo.getText())) {
+            Toast.makeText(this, R.string.register_field_empty, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()) {
             Toast.makeText(this, R.string.invalid_email, Toast.LENGTH_SHORT).show();
             return;
         }
 
+        KeyPair kp = null;
+
         try {
-            RSAKeys.genKeys(this);
-            KeyPair kp = RSAKeys.loadKeyPair();
-            String publicKey = RSAKeys.KeyToString(kp.getPublic());
-            PublicKey key= RSAKeys.StringToKey(publicKey);
-            Log.d("","NãoEstoura");
-        }catch(Exception e){
-            Log.d("","Estoura");
+            kp = RSAKeys.genKeys(this);
+        } catch (Exception e) {
+            Toast.makeText(this, R.string.key_generator_error, Toast.LENGTH_SHORT).show();
         }
 
-        //GERAR CHAVES
+        
+        presenter.register(name.getText().toString(), email.getText().toString(), username.getText().toString(), cardInfo.getText().toString(), password.getText().toString(), RSAKeys.KeyToString(kp.getPublic()));
+    }
 
-        //Chama cenas
+    @Override
+    public void showError(String errorMessage) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+    }
 
-
-
-
+    @Override
+    public void successful() {
 
     }
 }
