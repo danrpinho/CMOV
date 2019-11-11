@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.model.Product;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
-    private final ArrayList<Product> items;
+    private final List<Product> items;
 
-    public CartItemAdapter(ArrayList data){
-        this.items = data;
+    public CartItemAdapter(List data){
+        this.items = data;  
     }
 
     @NonNull

@@ -5,12 +5,12 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"Welcome!"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="already_have_an_account">"Already have an account? Tap here"</string>
-    <string name="dont_have_an_account">"Don't have an account? Tap here"</string>
+    <string name="already_have_an_account">Already have an account? Tap here</string>
+    <string name="dont_have_an_account">Don\'t have an account? Tap here</string>
     <string name="action_register_short">Register</string>
     <string name="main_button_scan">Scan QR Code</string>
     <string name="main_button_history">History</string>
@@ -20,4 +20,9 @@
     <string name="invalid_email">Invalid e-mail address</string>
     <string name="register_field_empty">All fields are mandatory</string>
     <string name="key_generator_error">An expected error ocurred generating your certificate</string>
+    <string name="switch_vouchers">Use an available voucher?</string>
+    <string name="switch_balance">Use available balance?</string>
+    <string name="history_total">Total: </string>
+    <string name="history_balance">Balance used: </string>
+    <string name="history_vouchers">Vouchers used? </string>
 </resources>

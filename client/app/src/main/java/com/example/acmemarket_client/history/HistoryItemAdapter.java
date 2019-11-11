@@ -1,30 +1,64 @@
 package com.example.acmemarket_client.history;
 
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
+import com.example.acmemarket_client.R;
+import com.example.acmemarket_client.model.Product;
+import com.example.acmemarket_client.model.ShoppingList;
+import java.util.List;
+import java.util.Locale;
 
 public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHolder> {
-    public HistoryItemAdapter(ArrayList<HistoryItemViewHolder> objects) {
+    private final List<ShoppingList> transactions;
+
+    public HistoryItemAdapter(List data) {
+        this.transactions = data;
     }
 
     @NonNull
     @Override
     public HistoryItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        return new HistoryItemViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycle_history_item, parent, false));
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull HistoryItemViewHolder holder, int position) {
+        String itemList = getItemList(transactions.get(position));
+        String total = getTotal(transactions.get(position));
+        String balanceUsed = getBalanceUsed(transactions.get(position));
+        holder.historyItemList.setText(String.format(Locale.getDefault(), "%s", itemList));
+        holder.historyBalance.setText(String.format(Locale.getDefault(), "%s", balanceUsed));
+        holder.historyTotal.setText(String.format(Locale.getDefault(), "%s", total));
+    }
 
+    private String getBalanceUsed(ShoppingList shoppingList) {
+        return "" + shoppingList.getDiscounted();
+    }
+
+    private String getTotal(ShoppingList shoppingList) {
+        return "" + shoppingList.getTotalCost();
+    }
+
+    private String getItemList(ShoppingList transaction) {
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < transaction.getProductItems().size(); i++){
+            Product elem = transaction.getProductItems().get(i);
+            res.append(elem.getName()).append(" (").append(elem.getPrice()).append(")");
+            if (i < transaction.getProductItems().size()-1)
+                res.append("\n");
+        }
+        return res.toString();
     }
 
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (transactions == null)
+            return 0;
+        else return transactions.size();
     }
 }
