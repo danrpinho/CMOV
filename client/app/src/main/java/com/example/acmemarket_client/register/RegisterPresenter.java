@@ -13,13 +13,20 @@ public class RegisterPresenter {
     }
 
     public void register(String name, String email, String username, String cardInfo, String password, String publickey) {
-
-        interactor.callAPIRegister(new RegisterRequestBody(name, email, username, cardInfo, password, publickey));
+        interactor.callAPIRegister(new RegisterRequestBody(name, email, username, cardInfo, password, publickey), this::onFinished, this::onError);
     }
 
     public void onFinished(User user, String jwt) {
         if (view != null) {
-            view.successful();
+            view.successful(user, jwt);
         }
     }
+
+    public void onError(String errorMessage) {
+        if (view != null) {
+            view.showError(errorMessage);
+        }
+    }
+
+
 }

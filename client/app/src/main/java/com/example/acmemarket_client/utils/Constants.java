@@ -5,6 +5,7 @@ public class Constants {
     public class PreferenceKeys {
         public static final String JWT = "jwt";
         public static final String USER_INFORMATION_PREFERENCES = "userInformation";
+        public static final String UUID = "uuid";
     }
 
     public class RESTAPI {

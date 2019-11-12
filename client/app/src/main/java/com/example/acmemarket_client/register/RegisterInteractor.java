@@ -1,6 +1,8 @@
 package com.example.acmemarket_client.register;
 
-import android.util.Log;
+import android.os.Handler;
+
+import androidx.annotation.NonNull;
 
 import com.example.acmemarket_client.model.NetworkLayer.Interactor;
 import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.RegisterRequestBody;
@@ -17,9 +19,16 @@ public class RegisterInteractor implements Callback<RegisterResponse> {
         void onFinished(User user, String jwt);
     }
 
-    //final OnFinishedListener listener;
+    interface OnErrorListener {
+        void onError(String errorMessage);
+    }
 
-    public void callAPIRegister(RegisterRequestBody body) {
+    private OnFinishedListener successListener;
+    private OnErrorListener errorListener;
+
+    public void callAPIRegister(RegisterRequestBody body, @NonNull OnFinishedListener successListener, @NonNull OnErrorListener errorListener) {
+        this.successListener = successListener;
+        this.errorListener = errorListener;
         Call<RegisterResponse> call = Interactor.getInstance().getAPI().signup(body);
         call.enqueue(this);
 
@@ -27,12 +36,14 @@ public class RegisterInteractor implements Callback<RegisterResponse> {
 
     @Override
     public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-        Log.d("Chamada", "chamada ok");
+        User user = response.body().getUser();
+        String jwt = response.body().getToken();
+        new Handler().post(() -> successListener.onFinished(user, jwt));
     }
 
     @Override
     public void onFailure(Call<RegisterResponse> call, Throwable t) {
-        Log.d("Chamada", "chamada ok");
+        new Handler().post(() -> errorListener.onError(t.getMessage()));
     }
 
 }

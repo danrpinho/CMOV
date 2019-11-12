@@ -1,7 +1,10 @@
 package com.example.acmemarket_client.register;
 
+import com.example.acmemarket_client.model.User;
+
 public interface RegisterView {
 
-    public void showError(String errorMessage);
-    public void successful();
+    void showError(String errorMessage);
+
+    void successful(User user, String token);
 }
