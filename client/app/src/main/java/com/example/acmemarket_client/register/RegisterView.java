@@ -6,5 +6,5 @@ public interface RegisterView {
 
     void showError(String errorMessage);
 
-    void successful(User user, String token);
+    void successful(User user, String token, String publicKey);
 }

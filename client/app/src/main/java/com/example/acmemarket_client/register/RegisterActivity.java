@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.login.LoginActivity;
+import com.example.acmemarket_client.mainmenu.MainMenuActivity;
 import com.example.acmemarket_client.model.User;
 import com.example.acmemarket_client.utils.Constants;
 import com.example.acmemarket_client.utils.RSAKeys;
@@ -79,11 +80,14 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     }
 
     @Override
-    public void successful(@NonNull User user, @NonNull String token) {
+    public void successful(@NonNull User user, @NonNull String token, @NonNull String publicKey) {
         SharedPreferences preferences;
         preferences = this.getSharedPreferences("userInformation", MODE_PRIVATE);
         //TODO save password
-        preferences.edit().putString(Constants.PreferenceKeys.JWT, token);
-        preferences.edit().putString(Constants.PreferenceKeys.UUID, user.getUuid());
+        preferences.edit().putString(Constants.PreferenceKeys.JWT, token).apply();
+        preferences.edit().putString(Constants.PreferenceKeys.UUID, user.getUuid()).apply();
+        preferences.edit().putString(Constants.PreferenceKeys.SUPERMARKET_PUBLIC_KEY, publicKey).apply();
+        Intent intent = new Intent(this, MainMenuActivity.class);
+        startActivity(intent);
     }
 }

@@ -6,10 +6,11 @@ public class Constants {
         public static final String JWT = "jwt";
         public static final String USER_INFORMATION_PREFERENCES = "userInformation";
         public static final String UUID = "uuid";
+        public static final String SUPERMARKET_PUBLIC_KEY = "supermarketpublickey";
     }
 
     public class RESTAPI {
-        public static final String IP = "http://10.166.195.223:3000";
+        public static final String IP = "http://3c378aed.ngrok.io";
     }
 
     public class Encryption {

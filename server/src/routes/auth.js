@@ -24,7 +24,7 @@ router.post('/signup', async (req, res) => {
 
     return req.login(user, { session: false }, async () => {
       const body = {
-        id: user.id, email: user.email, name: user.name, uuid: user.uuid, balance: user.balance, username: user.username, totalSpent: user.totalSpent, supermarketPublicKey: supermarketPublicKey
+        id: user.id, email: user.email, name: user.name, uuid: user.uuid, balance: user.balance, username: user.username, totalSpent: user.totalSpent
       };
       const token = jwt.sign({ user: body }, JWT_SECRET);
 
@@ -32,6 +32,7 @@ router.post('/signup', async (req, res) => {
         message: 'Signup successful',
         user,
         token,
+        supermarketPublicKey,
       });
     });
   })(req, res);
@@ -57,7 +58,12 @@ router.post('/login', async (req, res, next) => {
         };
         const token = jwt.sign({ user: body }, JWT_SECRET);
 
-        return res.json({ token });
+        return res.json({
+          message: 'Login successful',
+          user,
+          token,
+          supermarketPublicKey,
+        });
       });
       return next();
     } catch (error) {

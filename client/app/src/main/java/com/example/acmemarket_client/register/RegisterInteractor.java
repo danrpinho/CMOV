@@ -16,7 +16,7 @@ import retrofit2.Response;
 public class RegisterInteractor implements Callback<RegisterResponse> {
 
     interface OnFinishedListener {
-        void onFinished(User user, String jwt);
+        void onFinished(User user, String jwt, String publicKey);
     }
 
     interface OnErrorListener {
@@ -36,9 +36,15 @@ public class RegisterInteractor implements Callback<RegisterResponse> {
 
     @Override
     public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+        if (!response.body().getMessage().equals("Signup successful")) {
+            new Handler().post(() -> errorListener.onError(response.body().getMessage()));
+            return;
+        }
+
         User user = response.body().getUser();
         String jwt = response.body().getToken();
-        new Handler().post(() -> successListener.onFinished(user, jwt));
+        String publicKey = response.body().getSupermarketPublicKey();
+        new Handler().post(() -> successListener.onFinished(user, jwt, publicKey));
     }
 
     @Override

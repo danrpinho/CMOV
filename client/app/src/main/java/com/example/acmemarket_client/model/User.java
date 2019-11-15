@@ -1,7 +1,7 @@
 package com.example.acmemarket_client.model;
 
 public class User {
-    private String email, name, username, uuid, supermarketPublicKey, cardInfo;
+    private String email, name, username, uuid, cardInfo;
     private float balance,totalSpent;
     private int id;
 
@@ -19,10 +19,6 @@ public class User {
 
     public String getUuid() {
         return uuid;
-    }
-
-    public String getSupermarketPublicKey() {
-        return supermarketPublicKey;
     }
 
     public String getcardInfo() {
