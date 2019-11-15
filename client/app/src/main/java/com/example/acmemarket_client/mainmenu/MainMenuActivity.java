@@ -17,9 +17,6 @@ import com.example.acmemarket_client.history.HistoryActivity;
 import com.example.acmemarket_client.register.RegisterActivity;
 import com.example.acmemarket_client.utils.Constants;
 
-import java.util.Map;
-import java.util.Set;
-
 public class MainMenuActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
@@ -38,6 +35,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void onScanButtonClick(View view){
+        
         //TODO Implement QR Code
     }
 

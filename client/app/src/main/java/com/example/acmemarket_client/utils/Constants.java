@@ -22,5 +22,7 @@ public class Constants {
         public static final int TAGID = 0x41636D65;
     }
 
-
+    public class QRCodes{
+        static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    }
 }
