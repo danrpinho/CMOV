@@ -23,6 +23,7 @@ public class DBinSharedPreferences {
     public static void putListString(SharedPreferences preferences, String key, ArrayList<String> stringList) {
         checkForNullKey(key);
         String[] myStringList = stringList.toArray(new String[stringList.size()]);
+        preferences.edit().remove(key);
         preferences.edit().putString(key, TextUtils.join("‚‗‚", myStringList)).apply();
     }
 

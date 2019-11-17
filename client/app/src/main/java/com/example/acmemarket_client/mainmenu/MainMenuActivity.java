@@ -46,8 +46,9 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuView 
     }
 
     public void onScanButtonClick(View view) {
+
         if (presenter.getCart().size() >= 10) {
-            showMessage(getString(R.string.cart_full));
+            showDialog(this, "", getString(R.string.cart_full), null, getString(R.string.button_ok));
             return;
         }
 
@@ -60,16 +61,18 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuView 
         }
     }
 
-    private static AlertDialog showDialog(final Activity act, CharSequence title, CharSequence message, CharSequence buttonYes, CharSequence buttonNo) {
+    private static AlertDialog showDialog(final Activity act, CharSequence title, CharSequence message, CharSequence buttonYes, CharSequence buttonDismiss) {
         AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
         downloadDialog.setTitle(title);
         downloadDialog.setMessage(message);
-        downloadDialog.setPositiveButton(buttonYes, (d, i) -> {
-            Uri uri = Uri.parse(Constants.QRCodes.URI_QRCODE_SCANNER);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            act.startActivity(intent);
-        });
-        downloadDialog.setNegativeButton(buttonNo, null);
+        if (buttonYes != null) {
+            downloadDialog.setPositiveButton(buttonYes, (d, i) -> {
+                Uri uri = Uri.parse(Constants.QRCodes.URI_QRCODE_SCANNER);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                act.startActivity(intent);
+            });
+        }
+        downloadDialog.setNegativeButton(buttonDismiss, null);
         return downloadDialog.show();
     }
 
@@ -98,7 +101,7 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuView 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        putListObject(preferences, Constants.PreferenceKeys.CART, presenter.getCart());
+
     }
 
     @Override
@@ -107,18 +110,27 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuView 
     }
 
     public void onHistoryButtonClick(View view) {
+
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
     public void onCartButtonClick(View view) {
+
         Intent intent = new Intent(this, CartActivity.class);
         startActivity(intent);
     }
 
     public void onCheckoutButtonClick(View view) {
+
         Intent intent = new Intent(this, CheckoutActivity.class);
         startActivity(intent);
+
+    }
+
+    @Override
+    public void saveCart() {
+        putListObject(preferences, Constants.PreferenceKeys.CART, presenter.getCart());
     }
 
     @Override

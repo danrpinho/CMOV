@@ -42,6 +42,8 @@ public class MainMenuPresenter {
         String name = new String(bName, StandardCharsets.ISO_8859_1);
 
         cart.add(new Product(id.toString(),name, QRCodeSupport.qIntegersToFloat(euros,cents)));
+        view.saveCart();
+        return;
     }
 
     public ArrayList<Object> getCart() {

@@ -3,7 +3,6 @@ package com.example.acmemarket_client.checkout;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +14,6 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Hashtable;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -27,7 +25,7 @@ public class CheckoutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkout);
+        /*setContentView(R.layout.activity_checkout);
 
         qrCodeImageview = findViewById(R.id.img_qr_code);
 
@@ -46,7 +44,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 Log.d(TAG, e.getMessage());
             }
         });
-        t.start();
+        t.start();*/
     }
 
     Bitmap encodeAsBitmap(String str) throws WriterException {
