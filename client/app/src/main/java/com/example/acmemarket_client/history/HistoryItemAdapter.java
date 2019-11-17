@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHolder> {
-    private final List<ShoppingList> transactions;
+    private List<ShoppingList> transactions;
 
     public HistoryItemAdapter(List data) {
         this.transactions = data;
@@ -60,5 +60,10 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHold
         if (transactions == null)
             return 0;
         else return transactions.size();
+    }
+
+    public void setList(List<ShoppingList> list) {
+        transactions = list;
+        notifyItemRangeChanged(0, transactions.size());
     }
 }
