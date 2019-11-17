@@ -7,6 +7,7 @@ public class Constants {
         public static final String USER_INFORMATION_PREFERENCES = "userInformation";
         public static final String UUID = "uuid";
         public static final String SUPERMARKET_PUBLIC_KEY = "supermarketpublickey";
+        public static final String CART = "cart";
     }
 
     public class RESTAPI {
@@ -23,7 +24,11 @@ public class Constants {
         public static final int TAGID = 0x41636D65;
     }
 
-    public class QRCodes{
+    public class QRCodes {
         public static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+        public static final String SCAN_RESULT = "SCAN_RESULT";
+        public static final String URI_QRCODE_SCANNER = "market://search?q=pname:" + "com.google.zxing.client.android";
+        public static final String INTENT_QR_CODE_MODE = "QR_CODE_MODE";
+        public static final String INTENT_SCAN_MODE = "SCAN_MODE";
     }
 }

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -16,19 +17,20 @@ import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.cart.CartActivity;
 import com.example.acmemarket_client.checkout.CheckoutActivity;
 import com.example.acmemarket_client.history.HistoryActivity;
+import com.example.acmemarket_client.model.Product;
 import com.example.acmemarket_client.register.RegisterActivity;
 import com.example.acmemarket_client.utils.Constants;
-import com.example.acmemarket_client.utils.RSAKeys;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
+import java.util.ArrayList;
 
-import javax.crypto.Cipher;
+import static com.example.acmemarket_client.utils.DBinSharedPreferences.getListObject;
+import static com.example.acmemarket_client.utils.DBinSharedPreferences.putListObject;
 
-public class MainMenuActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity implements MainMenuView {
 
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
+    private MainMenuPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +45,18 @@ public class MainMenuActivity extends AppCompatActivity {
 
     }
 
-    public void onScanButtonClick(View view){
+    public void onScanButtonClick(View view) {
+        if (presenter.getCart().size() >= 10) {
+            showMessage(getString(R.string.cart_full));
+            return;
+        }
+
         try {
             Intent intent = new Intent(Constants.QRCodes.ACTION_SCAN);
-            intent.putExtra("SCAN_MODE",  "QR_CODE_MODE");
+            intent.putExtra(Constants.QRCodes.INTENT_SCAN_MODE, Constants.QRCodes.INTENT_QR_CODE_MODE);
             startActivityForResult(intent, 0);
-        }
-        catch (ActivityNotFoundException anfe) {
-            showDialog(this, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
+        } catch (ActivityNotFoundException anfe) {
+            showDialog(this, getString(R.string.no_scanner), getString(R.string.download_scanner), getString(R.string.button_yes), getString(R.string.button_no)).show();
         }
     }
 
@@ -59,7 +65,7 @@ public class MainMenuActivity extends AppCompatActivity {
         downloadDialog.setTitle(title);
         downloadDialog.setMessage(message);
         downloadDialog.setPositiveButton(buttonYes, (d, i) -> {
-            Uri uri = Uri.parse("market://search?q=pname:" + "com.google.zxing.client.android");
+            Uri uri = Uri.parse(Constants.QRCodes.URI_QRCODE_SCANNER);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             act.startActivity(intent);
         });
@@ -70,51 +76,47 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
-                String contents = data.getStringExtra("SCAN_RESULT");
-                if (contents != null)
-                    decodeAndShow(contents.getBytes(StandardCharsets.ISO_8859_1));
-            }
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            String contents = data.getStringExtra(Constants.QRCodes.SCAN_RESULT);
+            if (contents != null)
+                decodeAndShow(contents.getBytes(StandardCharsets.ISO_8859_1));
         }
     }
-    void decodeAndShow(byte[] encTag) {
-        byte[] clearTag = null;
+
+    private void decodeAndShow(byte[] encTag) {
+        byte[] clearTag;
         try {
-            Cipher cipher = Cipher.getInstance(Constants.Encryption.ENC_ALGO);
-            cipher.init(Cipher.DECRYPT_MODE, RSAKeys.StringToKey(getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES,MODE_PRIVATE).getString(Constants.PreferenceKeys.SUPERMARKET_PUBLIC_KEY, "")));
-            clearTag = cipher.doFinal(encTag);
-        }catch (Exception e){
-
+            clearTag = presenter.decryptProduct(encTag, preferences.getString(Constants.PreferenceKeys.SUPERMARKET_PUBLIC_KEY, null));
+            presenter.addProduct(clearTag);
+        } catch (Exception e) {
+            showMessage(e.getMessage());
         }
-
-        ByteBuffer tag = ByteBuffer.wrap(clearTag);
-        int tId = tag.getInt();
-        long most = tag.getLong();
-        long less = tag.getLong();
-        UUID id = new UUID(most, less);
-        int euros = tag.getInt();
-        int cents = tag.getInt();
-        byte l = tag.get();
-        byte[] bName = new byte[l];
-        tag.get(bName);
-        String name = new String(bName, StandardCharsets.ISO_8859_1);
 
         return;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        putListObject(preferences, Constants.PreferenceKeys.CART, presenter.getCart());
+    }
 
-    public void onHistoryButtonClick(View view){
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onHistoryButtonClick(View view) {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
-    public void onCartButtonClick(View view){
+    public void onCartButtonClick(View view) {
         Intent intent = new Intent(this, CartActivity.class);
         startActivity(intent);
     }
 
-    public void onCheckoutButtonClick(View view){
+    public void onCheckoutButtonClick(View view) {
         Intent intent = new Intent(this, CheckoutActivity.class);
         startActivity(intent);
     }
@@ -122,10 +124,15 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        preferences = this.getSharedPreferences("userInformation",MODE_PRIVATE);
-        if(!preferences.contains(Constants.PreferenceKeys.JWT)){
+        preferences = this.getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
+        if (!preferences.contains(Constants.PreferenceKeys.JWT)) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         }
+        ArrayList<Object> cart = new ArrayList<>();
+        if (preferences.contains(Constants.PreferenceKeys.CART))
+            cart = getListObject(preferences, Constants.PreferenceKeys.CART, Product.class);
+
+        presenter = new MainMenuPresenter(this, cart);
     }
 }
