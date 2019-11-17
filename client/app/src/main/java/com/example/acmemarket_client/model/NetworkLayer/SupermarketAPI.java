@@ -39,7 +39,7 @@ public interface SupermarketAPI {
 
     @Headers({"Content-Type: application/json"})
     @GET("/api/shoppingList/{id}")
-    Call<ShoppingList> getCompleteShoppingList(@Path("id") int id, @Header("Authorization") String jwt);
+    Call<ShoppingList> getShoppingList(@Path("id") int id, @Header("Authorization") String jwt);
 
     //TODO POST SHOPPING LIST
 
