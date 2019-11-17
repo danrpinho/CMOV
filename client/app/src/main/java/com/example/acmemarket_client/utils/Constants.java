@@ -10,7 +10,7 @@ public class Constants {
     }
 
     public class RESTAPI {
-        public static final String IP = "http://3c378aed.ngrok.io";
+        public static final String IP = "http://b64af78a.ngrok.io";
     }
 
     public class Encryption {
@@ -24,6 +24,6 @@ public class Constants {
     }
 
     public class QRCodes{
-        static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+        public static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     }
 }

@@ -4,7 +4,7 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const { JWT_SECRET } = require('../config/configs');
-const supermarketPublicKey = "MIIBFTCBwKADAgECAgQAuPR8MA0GCSqGSIb3DQEBCwUAMBIxEDAOBgNVBAMTB0FjbWVLZXkwHhcNMTkxMTEwMTgxMDQyWhcNMzkxMTEwMTgxMDQyWjASMRAwDgYDVQQDEwdBY21lS2V5MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMFIO7hof0lI57WrB071vXXaBlR21AvpNIRgs5Ej0l8Y4He7zqzz9Yr9eHqgEsBGA5UAe5F23jOWs8zoNTWCnRECAwEAATANBgkqhkiG9w0BAQsFAANBAAiHqWxVgx3QzNmvjtE4N1RCSNyfoJtHuDD+oq+LiLpJmEBD+Bl6LhLfKujgknITBcaxxOJwrr5/h94TIOXQJT8=";
+const supermarketPublicKey = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMFIO7hof0lI57WrB071vXXaBlR21AvpNIRgs5Ej0l8Y4He7zqzz9Yr9eHqgEsBGA5UAe5F23jOWs8zoNTWCnRECAwEAAQ==";
 
 
 
