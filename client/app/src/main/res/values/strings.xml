@@ -25,4 +25,9 @@
     <string name="history_total">Total: </string>
     <string name="history_balance">Balance used: </string>
     <string name="history_vouchers">Vouchers used? </string>
+    <string name="cart_full">\"You can only have 10 items in your cart\"</string>
+    <string name="no_scanner">No Scanner Found</string>
+    <string name="download_scanner">Download a scanner code activity?</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_no">No</string>
 </resources>
