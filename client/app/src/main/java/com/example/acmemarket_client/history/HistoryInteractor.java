@@ -14,7 +14,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HistoryInteractor implements Callback<List<ShoppingList>> {
-
+        //TODO add Bearer + token
     interface OnFinishedListener {
         void onFinished(List<ShoppingList> shoppingLists);
     }
@@ -29,7 +29,7 @@ public class HistoryInteractor implements Callback<List<ShoppingList>> {
     public void callAPIHistory(String token, @NonNull OnFinishedListener successListener, @NonNull OnErrorListener errorListener) {
         this.successListener = successListener;
         this.errorListener = errorListener;
-        Call<List<ShoppingList>> call = Interactor.getInstance().getAPI().getCompleteShoppingList(token);
+        Call<List<ShoppingList>> call = Interactor.getInstance().getAPI().getCompleteShoppingList("Bearer " + token);
         call.enqueue(this);
     }
 

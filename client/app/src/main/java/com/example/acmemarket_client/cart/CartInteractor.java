@@ -43,7 +43,7 @@ class CartInteractor  implements Callback<UserVouchers> {
     public void callAPIVouchers(String token, @NonNull OnFinishedListener successListener, @NonNull OnErrorListener errorListener) {
         this.successListener = successListener;
         this.errorListener = errorListener;
-        Call<UserVouchers> call = Interactor.getInstance().getAPI().getVouchers(token);
+        Call<UserVouchers> call = Interactor.getInstance().getAPI().getVouchers("Bearer " + token);
         call.enqueue(this);
     }
 

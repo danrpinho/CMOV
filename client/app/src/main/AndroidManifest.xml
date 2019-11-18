@@ -17,7 +17,7 @@
             android:parentActivityName=".mainmenu.MainMenuActivity"
             />
         <activity android:name=".checkout.CheckoutActivity"
-            android:parentActivityName=".mainmenu.MainMenuActivity"
+            android:parentActivityName=".cart.CartActivity"
             />
         <activity
             android:name=".cart.CartActivity"

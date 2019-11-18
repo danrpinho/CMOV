@@ -8,7 +8,7 @@ const VOUCHER_DISCOUNT = 0.15;
 const create = async (body) => {
 
     const { products, uuid, voucherId, discount } = body;
-    console.log(voucherId);
+
     if (!Array.isArray(products) || products.length === 0)
         throw new Error("You sent an empty array of products");
 
@@ -35,13 +35,10 @@ const create = async (body) => {
 
 
     //VOUCHERS
-    if (voucherId !== null) {
+    if (voucherId !== null && voucherId !==0) {
         let voucher = await Voucher.findByPk(voucherId);
-        console.log("chegoaqui");
-        console.log(voucher.id);
         if (voucher !== null && voucher !== undefined && !voucher.used && voucher.userId === user.id) {
             let newBalance = totalPrice * VOUCHER_DISCOUNT;
-            console.log(newBalance);
             user = await user.update({ balance: newBalance });
             voucher = await voucher.update({ used: true });
         }

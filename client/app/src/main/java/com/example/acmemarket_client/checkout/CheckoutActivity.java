@@ -1,36 +1,84 @@
 package com.example.acmemarket_client.checkout;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acmemarket_client.R;
+import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.Checkout;
+import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.SignedCheckout;
+import com.example.acmemarket_client.model.Product;
+import com.example.acmemarket_client.utils.Constants;
+import com.example.acmemarket_client.utils.RSAKeys;
+import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+import java.nio.charset.StandardCharsets;
+import java.security.KeyPair;
+import java.security.Signature;
+import java.util.ArrayList;
 import java.util.Hashtable;
+
+import static com.example.acmemarket_client.utils.DBinSharedPreferences.getListObject;
 
 public class CheckoutActivity extends AppCompatActivity {
     private final String TAG = "QR_Code";
 
     ImageView qrCodeImageview;
-    String qr_content = null;
+    Checkout checkoutInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*setContentView(R.layout.activity_checkout);
+        setContentView(R.layout.activity_checkout);
 
         qrCodeImageview = findViewById(R.id.img_qr_code);
 
-        byte[] content = getIntent().getByteArrayExtra("data");
-        qr_content = new String(content, StandardCharsets.ISO_8859_1);
+
+        int voucherID = getIntent().getIntExtra("voucherID", 0);
+        boolean discount = getIntent().getBooleanExtra("discount", false);
+        SharedPreferences preferences = getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
+        String uuid = preferences.getString(Constants.PreferenceKeys.UUID, null);
+        ArrayList<Object> cart = getListObject(preferences, Constants.PreferenceKeys.CART, Product.class);
+
+        checkoutInfo = new Checkout(cart, uuid, voucherID, discount);
+        Gson gson = new Gson();
+        String checkoutInfoStr = gson.toJson(checkoutInfo);
+
+        try {
+            KeyPair kp = RSAKeys.loadKeyPair();
+            Signature signature = Signature.getInstance("SHA256withRSA");
+            signature.initSign(kp.getPrivate());
+            signature.update(checkoutInfoStr.getBytes(StandardCharsets.ISO_8859_1));
+            byte[] rsa_text= signature.sign();
+
+            String requestSigned = Base64.encodeToString(rsa_text, Base64.DEFAULT);
+            SignedCheckout request = new SignedCheckout(checkoutInfoStr,requestSigned);
+            String requestStr = gson.toJson(request);
+
+            /*
+            SignedCheckout ups = gson.fromJson(requestStr,SignedCheckout.class);
+            Checkout lol = gson.fromJson(ups.getCheckoutInfoStr(), Checkout.class);
+
+            signature.initVerify(kp.getPublic());
+            signature.update(checkoutInfoStr.getBytes(StandardCharsets.ISO_8859_1));
+            boolean x = signature.verify(rsa_text);
+            */
+            return;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return;
+        /*qr_content = new String(content, StandardCharsets.ISO_8859_1);
 
         Thread t = new Thread(() -> {              // do the creation in a new thread to avoid ANR Exception
             final Bitmap bitmap;
@@ -39,8 +87,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 runOnUiThread(() -> {                  // runOnUiThread method used to do UI task in main thread.
                     qrCodeImageview.setImageBitmap(bitmap);
                 });
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.d(TAG, e.getMessage());
             }
         });
@@ -55,8 +102,7 @@ public class CheckoutActivity extends AppCompatActivity {
         hints.put(EncodeHintType.CHARACTER_SET, "ISO-8859-1");
         try {
             result = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, DIMENSION, DIMENSION, hints);
-        }
-        catch (IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             return null;
         }
         int w = result.getWidth();
