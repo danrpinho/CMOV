@@ -121,12 +121,6 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuView 
         startActivity(intent);
     }
 
-    public void onCheckoutButtonClick(View view) {
-
-        Intent intent = new Intent(this, CheckoutActivity.class);
-        startActivity(intent);
-
-    }
 
     @Override
     public void saveCart() {

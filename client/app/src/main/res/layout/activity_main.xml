@@ -53,17 +53,6 @@
             android:text="@string/main_button_history"
             android:onClick="onHistoryButtonClick" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
-
-        <Button
-            android:id="@+id/buttonCheckout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="@string/main_button_checkout"
-            android:onClick="onCheckoutButtonClick"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
