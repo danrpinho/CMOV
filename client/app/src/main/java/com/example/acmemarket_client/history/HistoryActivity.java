@@ -28,14 +28,15 @@ public class HistoryActivity extends AppCompatActivity implements HistoryView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new HistoryPresenter(this, new HistoryInteractor());
-        preferences = getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
-        setupRecyclerView();
         setContentView(R.layout.activity_history);
     }
 
     @Override
     protected void onStart(){
         super.onStart();
+        recyclerView = (RecyclerView) findViewById(R.id.history_recycle_view);
+        preferences = getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
+        setupRecyclerView();
     }
 
     private void setupRecyclerView() {

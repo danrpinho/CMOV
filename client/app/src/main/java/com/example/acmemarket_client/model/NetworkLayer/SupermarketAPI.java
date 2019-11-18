@@ -4,7 +4,7 @@ import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.Regis
 import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.RegisterResponse;
 import com.example.acmemarket_client.model.ShoppingList;
 import com.example.acmemarket_client.model.User;
-import com.example.acmemarket_client.model.UserVouchers;
+import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.UserVouchers;
 
 import java.util.List;
 

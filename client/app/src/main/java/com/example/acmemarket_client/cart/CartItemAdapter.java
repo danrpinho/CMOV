@@ -50,6 +50,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
         holder.deleteButton.setOnClickListener(view -> removeItem(position));
     }
 
+
     //TODO switches dos vouchers e do saldo
 
     /**

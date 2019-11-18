@@ -1,4 +1,7 @@
-package com.example.acmemarket_client.model;
+package com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels;
+
+import com.example.acmemarket_client.model.User;
+import com.example.acmemarket_client.model.Voucher;
 
 import java.util.List;
 
