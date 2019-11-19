@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -69,13 +70,16 @@ public class CheckoutActivity extends AppCompatActivity {
             Gson gson = new Gson();
             qr_content = gson.toJson(checkoutInfo);
             //qr_content = requestStr.getBytes(StandardCharsets.ISO_8859_1);
-            /*
+
             signature.initVerify(kp.getPublic());
-            signature.update(checkoutInfoStr.getBytes(StandardCharsets.ISO_8859_1));
-            boolean x = signature.verify(rsa_text);
-            */
+            signature.update(checkoutInfo.getText().getBytes(StandardCharsets.ISO_8859_1));
+            boolean verified = signature.verify(rsa_text);
+            if(!verified)
+                throw new Exception();
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this,"There was a problem generating your QRCode", Toast.LENGTH_LONG).show();
+            return;
         }
 
         Thread t = new Thread(() -> {              // do the creation in a new thread to avoid ANR Exception

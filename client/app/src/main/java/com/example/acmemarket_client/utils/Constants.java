@@ -11,7 +11,7 @@ public class Constants {
     }
 
     public class RESTAPI {
-        public static final String IP = "http://b64af78a.ngrok.io";
+        public static final String IP = "http://5dbf4e22.ngrok.io";
     }
 
     public class Encryption {

@@ -20,12 +20,12 @@ public class MainInteractor implements Callback<Object> {
 
     @Override
     public void onResponse(Call<Object> call, Response<Object> response) {
-
+        return;
     }
 
     @Override
     public void onFailure(Call<Object> call, Throwable t) {
-
+        return;
     }
 
     interface OnFinishedListener {

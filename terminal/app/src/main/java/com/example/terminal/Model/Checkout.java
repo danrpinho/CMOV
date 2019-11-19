@@ -10,9 +10,6 @@ public class Checkout {
     String text;
     String signed;
 
-    public void setSigned(String signed) {
-        this.signed = signed;
-    }
 
     public Checkout(ArrayList<Object> products, String uuid, int voucherId, boolean discount) {
         this.products = products;
@@ -20,10 +17,6 @@ public class Checkout {
         this.voucherId = voucherId;
         this.discount = discount;
         this.text = toString();
-    }
-
-    public String getText() {
-        return text;
     }
 
     @Override

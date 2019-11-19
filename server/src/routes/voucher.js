@@ -7,7 +7,7 @@ const { voucherController } = require('../controllers');
 router.get('/voucher', async (req, res) => {
     try {
         const vouchers = await voucherController.list(req.user.id);
-        res.status(201).send(vouchers);
+        res.status(200).send(vouchers);
     } catch (error) {
         res.status(400).send(error.message)
     }
