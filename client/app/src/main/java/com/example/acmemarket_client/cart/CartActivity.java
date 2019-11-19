@@ -1,10 +1,5 @@
 package com.example.acmemarket_client.cart;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +7,11 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.checkout.CheckoutActivity;
@@ -124,12 +124,12 @@ public class CartActivity extends AppCompatActivity implements CartView {
     }
 
     public void onCheckoutButtonClick(View view) {
-        if (cartAdapter.getItemCount() == 0){
+        /*if (cartAdapter.getItemCount() == 0){
             Toast.makeText(this, "You need to have items in your cart in order to checkout.", Toast.LENGTH_LONG).show();
-        } else {
+        } else {*/
             Intent intent = new Intent(this, CheckoutActivity.class);
             startActivity(intent);
-        }
+        //}
     }
 
 }

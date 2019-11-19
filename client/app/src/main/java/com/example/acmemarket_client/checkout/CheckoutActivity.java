@@ -5,13 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.Checkout;
-import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.SignedCheckout;
 import com.example.acmemarket_client.model.Product;
 import com.example.acmemarket_client.utils.Constants;
 import com.example.acmemarket_client.utils.RSAKeys;
@@ -33,8 +33,9 @@ import static com.example.acmemarket_client.utils.DBinSharedPreferences.getListO
 public class CheckoutActivity extends AppCompatActivity {
     private final String TAG = "QR_Code";
 
-    ImageView qrCodeImageview;
-    Checkout checkoutInfo;
+    private ImageView qrCodeImageview;
+    private Checkout checkoutInfo;
+    private String qr_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,34 +52,31 @@ public class CheckoutActivity extends AppCompatActivity {
         ArrayList<Object> cart = getListObject(preferences, Constants.PreferenceKeys.CART, Product.class);
 
         checkoutInfo = new Checkout(cart, uuid, voucherID, discount);
+
+        /*checkoutInfo = new Checkout(cart, uuid, voucherID, discount);
         Gson gson = new Gson();
-        String checkoutInfoStr = gson.toJson(checkoutInfo);
+        String checkoutInfoStr = gson.toJson(checkoutInfo);*/
 
         try {
             KeyPair kp = RSAKeys.loadKeyPair();
             Signature signature = Signature.getInstance("SHA256withRSA");
             signature.initSign(kp.getPrivate());
-            signature.update(checkoutInfoStr.getBytes(StandardCharsets.ISO_8859_1));
+            signature.update(checkoutInfo.getText().getBytes(StandardCharsets.ISO_8859_1));
             byte[] rsa_text= signature.sign();
 
             String requestSigned = Base64.encodeToString(rsa_text, Base64.DEFAULT);
-            SignedCheckout request = new SignedCheckout(checkoutInfoStr,requestSigned);
-            String requestStr = gson.toJson(request);
-
+            checkoutInfo.setSigned(requestSigned);
+            Gson gson = new Gson();
+            qr_content = gson.toJson(checkoutInfo);
+            //qr_content = requestStr.getBytes(StandardCharsets.ISO_8859_1);
             /*
-            SignedCheckout ups = gson.fromJson(requestStr,SignedCheckout.class);
-            Checkout lol = gson.fromJson(ups.getCheckoutInfoStr(), Checkout.class);
-
             signature.initVerify(kp.getPublic());
             signature.update(checkoutInfoStr.getBytes(StandardCharsets.ISO_8859_1));
             boolean x = signature.verify(rsa_text);
             */
-            return;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return;
-        /*qr_content = new String(content, StandardCharsets.ISO_8859_1);
 
         Thread t = new Thread(() -> {              // do the creation in a new thread to avoid ANR Exception
             final Bitmap bitmap;
@@ -91,7 +89,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 Log.d(TAG, e.getMessage());
             }
         });
-        t.start();*/
+        t.start();
     }
 
     Bitmap encodeAsBitmap(String str) throws WriterException {

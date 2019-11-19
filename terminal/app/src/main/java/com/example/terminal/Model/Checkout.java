@@ -1,4 +1,4 @@
-package com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels;
+package com.example.terminal.Model;
 
 import java.util.ArrayList;
 
