@@ -27,8 +27,8 @@ public class CartPresenter {
         }
     }
 
-    public void onUnauthorized(){
-
+    public void onUnauthorized() {
+        view.clearToken();
     }
 
 

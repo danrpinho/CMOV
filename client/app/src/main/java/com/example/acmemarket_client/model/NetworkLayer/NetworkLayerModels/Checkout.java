@@ -29,10 +29,10 @@ public class Checkout {
     @Override
     public String toString() {
         String toReturn = "";
-        for(Object product: products){
+        for (Object product : products) {
             toReturn += product.toString();
         }
-        toReturn+= uuid + voucherId + discount;
+        toReturn += uuid + voucherId + discount;
         return toReturn;
     }
 }

@@ -31,7 +31,7 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHold
     @Override
     public void onBindViewHolder(@NonNull HistoryItemViewHolder holder, int position) {
         String itemList = getItemList(transactions.get(position));
-        String total = "€ "+ getTotal(transactions.get(position));
+        String total = "€ " + getTotal(transactions.get(position));
         String balanceUsed = "€ " + getBalanceUsed(transactions.get(position));
         holder.historyItemList.setText(String.format(Locale.getDefault(), "%s", itemList));
         holder.historyBalance.setText(String.format(Locale.getDefault(), "%s", balanceUsed));
@@ -39,7 +39,7 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHold
     }
 
     private String getBalanceUsed(ShoppingList shoppingList) {
-       return String.format(Locale.getDefault(), "%.2f", shoppingList.getDiscounted());
+        return String.format(Locale.getDefault(), "%.2f", shoppingList.getDiscounted());
     }
 
     private String getTotal(ShoppingList shoppingList) {

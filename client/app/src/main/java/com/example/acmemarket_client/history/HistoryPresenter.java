@@ -15,7 +15,7 @@ public class HistoryPresenter {
     }
 
     public void getHistory(String token) {
-        interactor.callAPIHistory(token, this::onFinished, this::onError,this::onUnauthorized);
+        interactor.callAPIHistory(token, this::onFinished, this::onError, this::onUnauthorized);
     }
 
     public void onFinished(List<ShoppingList> list) {
@@ -31,7 +31,7 @@ public class HistoryPresenter {
     }
 
     public void onUnauthorized() {
-
+        view.clearToken();
     }
 
 }

@@ -69,7 +69,7 @@ public class CheckoutActivity extends AppCompatActivity {
         return new Checkout(cart, uuid, voucherID, discount);
     }
 
-    private void clearCart(){
+    private void clearCart() {
         SharedPreferences preferences = getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
         preferences.edit().remove(Constants.PreferenceKeys.CART).apply();
     }

@@ -22,7 +22,7 @@ import java.security.KeyPair;
 
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
-    private EditText  username,  password;
+    private EditText username, password;
     LoginPresenter presenter;
 
     @Override

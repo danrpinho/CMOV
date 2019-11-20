@@ -63,7 +63,7 @@ public class CartActivity extends AppCompatActivity implements CartView {
 
     public void updateCheckoutButton(ArrayList<Object> cart) {
         float value = 0;
-        for(Object product : cart){
+        for (Object product : cart) {
             value += ((Product) product).getPrice();
         }
         if (value != 0) {
@@ -117,8 +117,7 @@ public class CartActivity extends AppCompatActivity implements CartView {
         if (balance == 0) {
             balanceSwitch.setEnabled(false);
             discount = false;
-        }
-        else {
+        } else {
             balanceSwitch.setEnabled(true);
             discount = true;
         }
@@ -131,10 +130,9 @@ public class CartActivity extends AppCompatActivity implements CartView {
         if (availableVouchers == 0) {
             voucherSwitch.setEnabled(false);
             voucherID = 0;
-        }
-        else{
+        } else {
             voucherSwitch.setEnabled(true);
-            voucherID= vouchers.get(0).getId();
+            voucherID = vouchers.get(0).getId();
         }
 
         voucherLabel.setText("Use available vouchers? (" + availableVouchers + ")");
@@ -160,7 +158,7 @@ public class CartActivity extends AppCompatActivity implements CartView {
         } else {
             Intent intent = new Intent(this, CheckoutActivity.class);
             intent.putExtra("voucherID", voucherID);
-                    intent.putExtra("discount", discount);
+            intent.putExtra("discount", discount);
             startActivity(intent);
         }
     }
