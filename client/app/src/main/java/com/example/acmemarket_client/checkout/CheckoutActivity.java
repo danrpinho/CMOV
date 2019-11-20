@@ -2,7 +2,6 @@ package com.example.acmemarket_client.checkout;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -16,14 +15,8 @@ import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.Check
 import com.example.acmemarket_client.model.Product;
 import com.example.acmemarket_client.utils.Constants;
 import com.google.gson.Gson;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import static com.example.acmemarket_client.utils.DBinSharedPreferences.getListObject;
 
@@ -35,9 +28,10 @@ public class CheckoutActivity extends AppCompatActivity {
     private String qr_content;
     private CheckoutPresenter presenter;
 
-    //TODO Clean this code
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
@@ -78,7 +72,7 @@ public class CheckoutActivity extends AppCompatActivity {
         Thread t = new Thread(() -> {              // do the creation in a new thread to avoid ANR Exception
             final Bitmap bitmap;
             try {
-                bitmap = encodeAsBitmap(qr_content);
+                bitmap = presenter.encodeAsBitmap(qr_content, getResources().getColor(R.color.colorPrimary));
                 runOnUiThread(() -> {                  // runOnUiThread method used to do UI task in main thread.
                     qrCodeImageview.setImageBitmap(bitmap);
                 });
@@ -89,28 +83,5 @@ public class CheckoutActivity extends AppCompatActivity {
         t.start();
     }
 
-    Bitmap encodeAsBitmap(String str) throws WriterException {
-        int DIMENSION = 1000;
-        BitMatrix result;
 
-        Hashtable<EncodeHintType, String> hints = new Hashtable<>();
-        hints.put(EncodeHintType.CHARACTER_SET, "ISO-8859-1");
-        try {
-            result = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, DIMENSION, DIMENSION, hints);
-        } catch (IllegalArgumentException iae) {
-            return null;
-        }
-        int w = result.getWidth();
-        int h = result.getHeight();
-        int[] pixels = new int[w * h];
-        for (int y = 0; y < h; y++) {
-            int offset = y * w;
-            for (int x = 0; x < w; x++) {
-                pixels[offset + x] = result.get(x, y) ? getResources().getColor(R.color.colorPrimary) : Color.WHITE;
-            }
-        }
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, w, 0, 0, w, h);
-        return bitmap;
-    }
 }
