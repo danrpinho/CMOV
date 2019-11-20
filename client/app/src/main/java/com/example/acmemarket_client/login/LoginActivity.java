@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acmemarket_client.R;
+import com.example.acmemarket_client.main.MainAuthActivity;
 import com.example.acmemarket_client.mainmenu.MainMenuActivity;
 import com.example.acmemarket_client.model.User;
 import com.example.acmemarket_client.register.RegisterActivity;
@@ -71,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void successful(@NonNull User user, @NonNull String token, @NonNull String publicKey) {
+        MainAuthActivity.setLocalLogin(true);
         SharedPreferences preferences;
         preferences = this.getSharedPreferences("userInformation", MODE_PRIVATE);
         preferences.edit().putString(Constants.PreferenceKeys.JWT, token).apply();
@@ -78,5 +80,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         preferences.edit().putString(Constants.PreferenceKeys.SUPERMARKET_PUBLIC_KEY, publicKey).apply();
         Intent intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
+
     }
 }

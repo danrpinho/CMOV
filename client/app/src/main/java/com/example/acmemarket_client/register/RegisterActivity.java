@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.login.LoginActivity;
+import com.example.acmemarket_client.main.MainAuthActivity;
 import com.example.acmemarket_client.mainmenu.MainMenuActivity;
 import com.example.acmemarket_client.model.User;
 import com.example.acmemarket_client.utils.Constants;
@@ -80,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     @Override
     public void successful(@NonNull User user, @NonNull String token, @NonNull String publicKey) {
+        MainAuthActivity.setLocalLogin(true);
         SharedPreferences preferences;
         preferences = this.getSharedPreferences("userInformation", MODE_PRIVATE);
         preferences.edit().putString(Constants.PreferenceKeys.JWT, token).apply();

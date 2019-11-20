@@ -16,9 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.cart.CartActivity;
 import com.example.acmemarket_client.history.HistoryActivity;
-import com.example.acmemarket_client.login.LoginActivity;
+import com.example.acmemarket_client.main.MainAuthActivity;
 import com.example.acmemarket_client.model.Product;
-import com.example.acmemarket_client.register.RegisterActivity;
 import com.example.acmemarket_client.utils.Constants;
 
 import java.nio.charset.StandardCharsets;
@@ -32,6 +31,9 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuView 
     private SharedPreferences preferences;
     private MainMenuPresenter presenter;
 
+    // Displays the "log in" prompt.
+
+    /******************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,16 +138,11 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuView 
             cart = getListObject(preferences, Constants.PreferenceKeys.CART, Product.class);
 
         presenter = new MainMenuPresenter(this, cart);
-        if (!preferences.contains(Constants.PreferenceKeys.UUID)) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
-            return;
-        }
-        if (!preferences.contains(Constants.PreferenceKeys.JWT)) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            return;
-        }
 
+        if (!preferences.contains(Constants.PreferenceKeys.JWT)) {
+            Intent intent = new Intent(this, MainAuthActivity.class);
+            startActivity(intent);
+            return;
+        }
     }
 }
