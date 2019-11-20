@@ -9,11 +9,9 @@ const keyFooter = '-----END PUBLIC KEY-----';
 const create = async (body) => {
 
     const { products, uuid, voucherId, discount, text, signed } = body;
-    console.log(body);
-
     
-    //if (!Array.isArray(products) || products.length === 0)
-      //  throw new Error("You sent an empty array of products");
+    if (!Array.isArray(products) || products.length === 0)
+        throw new Error("You sent an empty array of products");
 
 
     //FIND USER
@@ -22,13 +20,13 @@ const create = async (body) => {
         throw new Error("Not a valid uuid");
 
     const publicKey = keyHeader + user.publickey + keyFooter;
-    console.log(publicKey);
 
     let verifier = crypto.createVerify('RSA-SHA256');
     verifier.update(text);
-    let x = verifier.verify(publicKey,signed,'base64');
-    console.log(publicKey);
-    console.log(x);
+    let isUser = verifier.verify(publicKey,signed,'base64');
+
+    if (!isUser)
+        throw new Error("Your message signature is wrong!");
 
     //Create SHOPPING LIST
     let totalPrice = 0;
