@@ -68,6 +68,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void showMessage(String message) {
-        showDialog(this,"",message, null,getString(R.string.button_ok));
+        showDialog(this, "", message, null, getString(R.string.button_ok));
     }
 }

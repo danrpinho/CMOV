@@ -9,7 +9,7 @@ public class Constants {
         public static final String INTENT_SCAN_MODE = "SCAN_MODE";
     }
 
-    public class RESTAPI{
+    public class RESTAPI {
         public static final String IP = "http://5dbf4e22.ngrok.io ";
     }
 }

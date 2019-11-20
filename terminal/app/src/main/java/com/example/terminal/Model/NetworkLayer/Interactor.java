@@ -12,10 +12,10 @@ public class Interactor {
     private static Interactor interactor;
     private SupermarketAPI api;
 
-    private  Interactor() {
+    private Interactor() {
         Gson gson = new GsonBuilder()
-            .setLenient()
-            .create();
+                .setLenient()
+                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.RESTAPI.IP)
@@ -25,14 +25,14 @@ public class Interactor {
         this.api = retrofit.create(SupermarketAPI.class);
     }
 
-    public static Interactor getInstance(){
-        if (interactor==null)
+    public static Interactor getInstance() {
+        if (interactor == null)
             interactor = new Interactor();
 
         return interactor;
     }
 
-    public SupermarketAPI getAPI(){
+    public SupermarketAPI getAPI() {
         return api;
     }
 }

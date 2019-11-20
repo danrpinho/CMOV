@@ -16,19 +16,12 @@ public class MainPresenter {
     public void checkout(String checkoutStr) {
         Gson gson = new Gson();
         Checkout checkout = gson.fromJson(checkoutStr, Checkout.class);
-        interactor.callAPICheckout(checkout, this::onFinished, this::onError);
+        interactor.callAPICheckout(checkout, this::onFinished);
     }
 
     public void onFinished(String message) {
         if (view != null) {
-           //TODO
-            return;
-        }
-    }
-
-    public void onError(String errorMessage) {
-        if (view != null) {
-            //TODO
+            view.showMessage(message);
             return;
         }
     }

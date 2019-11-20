@@ -3,7 +3,7 @@ package com.example.terminal.Model;
 import java.util.ArrayList;
 
 public class Checkout {
-    ArrayList<Object> products;
+    ArrayList<Product> products;
     String uuid;
     int voucherId;
     boolean discount;
@@ -11,7 +11,7 @@ public class Checkout {
     String signed;
 
 
-    public Checkout(ArrayList<Object> products, String uuid, int voucherId, boolean discount) {
+    public Checkout(ArrayList<Product> products, String uuid, int voucherId, boolean discount) {
         this.products = products;
         this.uuid = uuid;
         this.voucherId = voucherId;
@@ -22,10 +22,10 @@ public class Checkout {
     @Override
     public String toString() {
         String toReturn = "";
-        for(Object product: products){
+        for (Object product : products) {
             toReturn += product.toString();
         }
-        toReturn+= uuid + voucherId + discount;
+        toReturn += uuid + voucherId + discount;
         return toReturn;
     }
 }
