@@ -15,7 +15,7 @@ public class HistoryPresenter {
     }
 
     public void getHistory(String token) {
-        interactor.callAPIHistory(token, this::onFinished, this::onError);
+        interactor.callAPIHistory(token, this::onFinished, this::onError,this::onUnauthorized);
     }
 
     public void onFinished(List<ShoppingList> list) {
@@ -28,6 +28,10 @@ public class HistoryPresenter {
         if (view != null) {
             view.showError(errorMessage);
         }
+    }
+
+    public void onUnauthorized() {
+
     }
 
 }

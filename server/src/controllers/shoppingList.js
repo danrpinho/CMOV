@@ -46,6 +46,8 @@ const create = async (body) => {
     //VOUCHERS
     if (voucherId !== null && voucherId !== 0) {
         let voucher = await Voucher.findByPk(voucherId);
+        console.log(voucherId)
+        console.log(voucher);
         if (voucher !== null && voucher !== undefined && !voucher.used && voucher.userId === user.id) {
             let newBalance = totalPrice * VOUCHER_DISCOUNT;
             user = await user.update({ balance: newBalance });
@@ -92,6 +94,10 @@ const list = async (userId) => {
     return await ShoppingList
         .findAll({
             where: { userId: userId },
+            include: [{
+                model: Product,
+                as: 'productItems',
+            }],
         });
 };
 

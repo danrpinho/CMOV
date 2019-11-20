@@ -50,6 +50,11 @@ public class HistoryActivity extends AppCompatActivity implements HistoryView {
     }
 
     @Override
+    public void clearToken() {
+        preferences.edit().remove(Constants.PreferenceKeys.JWT).apply();
+    }
+
+    @Override
     public void showError(@NonNull String errorMessage) {
         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
     }

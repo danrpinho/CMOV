@@ -31,26 +31,27 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHold
     @Override
     public void onBindViewHolder(@NonNull HistoryItemViewHolder holder, int position) {
         String itemList = getItemList(transactions.get(position));
-        String total = getTotal(transactions.get(position));
-        String balanceUsed = getBalanceUsed(transactions.get(position));
+        String total = "€ "+ getTotal(transactions.get(position));
+        String balanceUsed = "€ " + getBalanceUsed(transactions.get(position));
         holder.historyItemList.setText(String.format(Locale.getDefault(), "%s", itemList));
         holder.historyBalance.setText(String.format(Locale.getDefault(), "%s", balanceUsed));
         holder.historyTotal.setText(String.format(Locale.getDefault(), "%s", total));
     }
 
     private String getBalanceUsed(ShoppingList shoppingList) {
-        return "" + shoppingList.getDiscounted();
+       return String.format(Locale.getDefault(), "%.2f", shoppingList.getDiscounted());
     }
 
     private String getTotal(ShoppingList shoppingList) {
-        return "" + shoppingList.getTotalCost();
+        return String.format(Locale.getDefault(), "%.2f", shoppingList.getTotalCost());
     }
 
     private String getItemList(ShoppingList transaction) {
+
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < transaction.getProductItems().size(); i++) {
             Product elem = transaction.getProductItems().get(i);
-            res.append(elem.getName()).append(" (").append(elem.getPrice()).append(")");
+            res.append(elem.getUuid()).append(" (").append(elem.getPrice()).append(")");
             if (i < transaction.getProductItems().size() - 1)
                 res.append("\n");
         }

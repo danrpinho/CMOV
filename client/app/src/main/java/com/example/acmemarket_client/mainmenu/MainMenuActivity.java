@@ -15,8 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.cart.CartActivity;
-import com.example.acmemarket_client.checkout.CheckoutActivity;
 import com.example.acmemarket_client.history.HistoryActivity;
+import com.example.acmemarket_client.login.LoginActivity;
 import com.example.acmemarket_client.model.Product;
 import com.example.acmemarket_client.register.RegisterActivity;
 import com.example.acmemarket_client.utils.Constants;
@@ -131,14 +131,21 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuView 
     protected void onStart() {
         super.onStart();
         preferences = this.getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
-        if (!preferences.contains(Constants.PreferenceKeys.JWT)) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
-        }
         ArrayList<Object> cart = new ArrayList<>();
         if (preferences.contains(Constants.PreferenceKeys.CART))
             cart = getListObject(preferences, Constants.PreferenceKeys.CART, Product.class);
 
         presenter = new MainMenuPresenter(this, cart);
+        if (!preferences.contains(Constants.PreferenceKeys.UUID)) {
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+            return;
+        }
+        if (!preferences.contains(Constants.PreferenceKeys.JWT)) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
+
     }
 }

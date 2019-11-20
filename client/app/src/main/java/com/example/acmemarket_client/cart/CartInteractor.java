@@ -22,14 +22,21 @@ class CartInteractor implements Callback<UserVouchers> {
         void onError(String errorMessage);
     }
 
+    interface OnUnauthorizedListener {
+        void onUnauthorized();
+    }
+
     private OnFinishedListener successListener;
     private OnErrorListener errorListener;
+    private OnUnauthorizedListener unauthorizedListener;
 
     @Override
     public void onResponse(Call<UserVouchers> call, Response<UserVouchers> response) {
         if (response.code() != 200) {
-            //TODO IF 401
-            new Handler().post(() -> errorListener.onError(Interactor.getMessageFromErrorBody(response)));
+            if (response.code() == 401)
+                new Handler().post(() -> unauthorizedListener.onUnauthorized());
+            else
+                new Handler().post(() -> errorListener.onError(Interactor.getMessageFromErrorBody(response)));
             return;
         }
 
@@ -47,9 +54,10 @@ class CartInteractor implements Callback<UserVouchers> {
         new Handler().post(() -> errorListener.onError(t.getMessage()));
     }
 
-    public void callAPIVouchers(String token, @NonNull OnFinishedListener successListener, @NonNull OnErrorListener errorListener) {
+    public void callAPIVouchers(String token, @NonNull OnFinishedListener successListener, @NonNull OnErrorListener errorListener, @NonNull OnUnauthorizedListener unauthorizedListener) {
         this.successListener = successListener;
         this.errorListener = errorListener;
+        this.unauthorizedListener = unauthorizedListener;
         Call<UserVouchers> call = Interactor.getInstance().getAPI().getVouchers(Constants.RESTAPI.AUTHORIZATION_HEADER + token);
         call.enqueue(this);
     }

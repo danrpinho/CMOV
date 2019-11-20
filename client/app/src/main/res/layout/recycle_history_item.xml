@@ -7,7 +7,7 @@
         android:id="@+id/historyItemList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="10"
+        android:maxLines="20"
         android:text="TextView" />
 
     <TableLayout

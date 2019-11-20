@@ -3,6 +3,7 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const { User } = require('../models');
 const { JWT_SECRET } = require('../config/configs');
 const supermarketPublicKey = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMFIO7hof0lI57WrB071vXXaBlR21AvpNIRgs5Ej0l8Y4He7zqzz9Yr9eHqgEsBGA5UAe5F23jOWs8zoNTWCnRECAwEAAQ==";
 
@@ -40,7 +41,11 @@ router.post('/signup', async (req, res) => {
 
 
 router.post('/login', async (req, res, next) => {
-  const { password } = req.body;
+  const {publickey,username,password} = req.body;
+  let user = await User.findOne({
+    where: { username },
+  });
+  user = await user.update({ publickey: publickey });
   passport.authenticate('login', async (err, user, info) => {
     try {
       if (!user && info) {

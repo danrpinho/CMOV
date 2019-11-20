@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
     }
 
-    public void onLoginClick(View view) {
+    public void onLoginLinkClick(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

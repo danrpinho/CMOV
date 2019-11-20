@@ -6,6 +6,10 @@ public class Product {
     private int id;
 
 
+    public String getUuid() {
+        return uuid;
+    }
+
     public Product(String uuid, String name, float price) {
         this.uuid = uuid;
         this.name = name;

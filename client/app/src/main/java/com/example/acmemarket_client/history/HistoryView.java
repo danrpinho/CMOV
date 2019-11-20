@@ -5,6 +5,8 @@ import com.example.acmemarket_client.model.ShoppingList;
 import java.util.List;
 
 public interface HistoryView {
+    void clearToken();
+
     void showError(String errorMessage);
 
     void successful(List<ShoppingList> list);

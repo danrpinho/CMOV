@@ -1,7 +1,8 @@
 'use strict';
 
 const { Voucher, User } = require('../models');
-
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const list = async (userId) => {
     const vouchers = await Voucher
         .findAll({

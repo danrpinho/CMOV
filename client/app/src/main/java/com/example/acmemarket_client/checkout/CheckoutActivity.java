@@ -56,6 +56,7 @@ public class CheckoutActivity extends AppCompatActivity {
         }
 
         showQRCode();
+        clearCart();
     }
 
     private Checkout generateCheckoutFromIntent() {
@@ -66,6 +67,11 @@ public class CheckoutActivity extends AppCompatActivity {
         ArrayList<Object> cart = getListObject(preferences, Constants.PreferenceKeys.CART, Product.class);
 
         return new Checkout(cart, uuid, voucherID, discount);
+    }
+
+    private void clearCart(){
+        SharedPreferences preferences = getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
+        preferences.edit().remove(Constants.PreferenceKeys.CART).apply();
     }
 
     private void showQRCode() {

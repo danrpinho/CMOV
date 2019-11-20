@@ -12,7 +12,6 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".login.LoginActivity"></activity>
         <activity android:name=".history.HistoryActivity"
             android:parentActivityName=".mainmenu.MainMenuActivity"
             />
@@ -26,6 +25,9 @@
         <activity
             android:name=".register.RegisterActivity"
             android:label="@string/title_activity_register_activity" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:label="@string/title_activity_login_activity" />
         <activity android:name=".mainmenu.MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

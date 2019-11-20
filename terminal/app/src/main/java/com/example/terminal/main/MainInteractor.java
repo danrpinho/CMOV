@@ -20,7 +20,7 @@ public class MainInteractor implements Callback<ServerResponse> {
 
     @Override
     public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-        if (response.code() != 200) {
+        if (response.code() != 201) {
             try {
                 Gson gson = new Gson();
                 ServerResponse error = gson.fromJson(response.errorBody().string(), ServerResponse.class);

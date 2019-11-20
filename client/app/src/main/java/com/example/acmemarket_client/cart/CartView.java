@@ -5,8 +5,11 @@ import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.UserV
 import java.util.ArrayList;
 
 interface CartView {
+    void clearToken();
 
     void saveCart(ArrayList<Object> list);
+
+    void updateCheckoutButton(ArrayList<Object> cart);
 
     void showError(String errorMessage);
 

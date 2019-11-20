@@ -5,8 +5,6 @@ import com.example.acmemarket_client.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -45,7 +43,7 @@ public class Interactor {
             Gson gson = new Gson();
             ErrorBody error = gson.fromJson(response.errorBody().string(), ErrorBody.class);
             return error.getMessage();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

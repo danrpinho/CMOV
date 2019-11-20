@@ -72,6 +72,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, items.size());
         view.saveCart(items);
+        view.updateCheckoutButton(items);
     }
 
     /**

@@ -23,12 +23,18 @@ public class HistoryInteractor implements Callback<List<ShoppingList>> {
         void onError(String errorMessage);
     }
 
+    interface OnUnauthorizedListener {
+        void onUnauthorized();
+    }
+
     private OnFinishedListener successListener;
     private OnErrorListener errorListener;
+    private OnUnauthorizedListener unauthorizedListener;
 
-    public void callAPIHistory(String token, @NonNull OnFinishedListener successListener, @NonNull OnErrorListener errorListener) {
+    public void callAPIHistory(String token, @NonNull OnFinishedListener successListener, @NonNull OnErrorListener errorListener, @NonNull OnUnauthorizedListener unauthorizedListener) {
         this.successListener = successListener;
         this.errorListener = errorListener;
+        this.unauthorizedListener = unauthorizedListener;
         Call<List<ShoppingList>> call = Interactor.getInstance().getAPI().getCompleteShoppingList(Constants.RESTAPI.AUTHORIZATION_HEADER + token);
         call.enqueue(this);
     }
@@ -36,7 +42,10 @@ public class HistoryInteractor implements Callback<List<ShoppingList>> {
     @Override
     public void onResponse(Call<List<ShoppingList>> call, Response<List<ShoppingList>> response) {
         if (response.code() != 200) {
-            new Handler().post(() -> errorListener.onError(Interactor.getMessageFromErrorBody(response)));
+            if (response.code() == 401)
+                new Handler().post(() -> unauthorizedListener.onUnauthorized());
+            else
+                new Handler().post(() -> errorListener.onError(Interactor.getMessageFromErrorBody(response)));
             return;
         }
 

@@ -12,7 +12,7 @@ public class CartPresenter {
     }
 
     public void getInfo(String token) {
-        interactor.callAPIVouchers(token, this::onFinished, this::onError);
+        interactor.callAPIVouchers(token, this::onFinished, this::onError, this::onUnauthorized);
     }
 
     public void onFinished(UserVouchers userVouchers) {
@@ -25,6 +25,10 @@ public class CartPresenter {
         if (view != null) {
             view.showError(errorMessage);
         }
+    }
+
+    public void onUnauthorized(){
+
     }
 
 
