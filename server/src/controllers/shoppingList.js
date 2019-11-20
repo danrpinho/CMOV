@@ -9,7 +9,7 @@ const keyFooter = '-----END PUBLIC KEY-----';
 const create = async (body) => {
 
     const { products, uuid, voucherId, discount, text, signed } = body;
-    
+
     if (!Array.isArray(products) || products.length === 0)
         throw new Error("You sent an empty array of products");
 
@@ -23,7 +23,7 @@ const create = async (body) => {
 
     let verifier = crypto.createVerify('RSA-SHA256');
     verifier.update(text);
-    let isUser = verifier.verify(publicKey,signed,'base64');
+    let isUser = verifier.verify(publicKey, signed, 'base64');
 
     if (!isUser)
         throw new Error("Your message signature is wrong!");
@@ -44,7 +44,7 @@ const create = async (body) => {
 
 
     //VOUCHERS
-    if (voucherId !== null && voucherId !==0) {
+    if (voucherId !== null && voucherId !== 0) {
         let voucher = await Voucher.findByPk(voucherId);
         if (voucher !== null && voucher !== undefined && !voucher.used && voucher.userId === user.id) {
             let newBalance = totalPrice * VOUCHER_DISCOUNT;
@@ -77,12 +77,13 @@ const create = async (body) => {
     let totalSpent = user.totalSpent + totalPrice;
     user = await user.update({ totalSpent: totalSpent });
     let totalMinusOldpercent = Math.floor(totalSpent / 100.0) - Math.floor(oldSpent / 100.0);
-    console.log(Math.floor(oldSpent / 100.0))
-    console.log(totalMinusOldpercent);
+
 
     if (totalMinusOldpercent > 0)
         for (let i = 0; i < totalMinusOldpercent; i++)
             Voucher.create({ userId: user.id });
+
+    return "You paid " + (totalPrice - shoppingList.discounted).toFixed(2);;
 };
 
 
