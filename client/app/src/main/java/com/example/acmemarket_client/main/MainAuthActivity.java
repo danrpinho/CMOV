@@ -35,8 +35,8 @@ public class MainAuthActivity extends AppCompatActivity {
     private void showBiometricPrompt(Context context) {
         BiometricPrompt.PromptInfo promptInfo =
                 new BiometricPrompt.PromptInfo.Builder()
-                        .setTitle("Biometric login for my app")
-                        .setSubtitle("Log in using your biometric credential")
+                        .setTitle(getString(R.string.local_login))
+                        .setSubtitle(getString(R.string.local_login_sub))
                         .setDeviceCredentialAllowed(true)
                         .build();
 
@@ -46,9 +46,7 @@ public class MainAuthActivity extends AppCompatActivity {
             public void onAuthenticationError(int errorCode,
                                               @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getApplicationContext(),
-                        "Authentication error: " + errString, Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(getApplicationContext(), getString(R.string.auth_error) + errString, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -65,9 +63,7 @@ public class MainAuthActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(getApplicationContext(), "Authentication failed",
-                        Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(getApplicationContext(), R.string.auth_fail, Toast.LENGTH_SHORT).show();
             }
         });
         biometricPrompt.authenticate(promptInfo);
@@ -98,13 +94,13 @@ public class MainAuthActivity extends AppCompatActivity {
             startActivity(intent);
             return;
         }
-        if (!preferences.contains(Constants.PreferenceKeys.JWT) || (!canAuthenticate&&!localLogin)) {
+        if (!preferences.contains(Constants.PreferenceKeys.JWT) || (!canAuthenticate && !localLogin)) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             return;
         }
 
-        if (!localLogin&&canAuthenticate)
+        if (!localLogin && canAuthenticate)
             showBiometricPrompt(this);
         else {
             Intent intent = new Intent(this, MainMenuActivity.class);

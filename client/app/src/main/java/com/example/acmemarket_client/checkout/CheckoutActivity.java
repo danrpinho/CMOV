@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import static com.example.acmemarket_client.utils.DBinSharedPreferences.getListObject;
 
 public class CheckoutActivity extends AppCompatActivity {
+    public static final String VOUCHER_ID = "voucherID";
+    public static final String DISCOUNT = "discount";
     private final String TAG = "QR_Code";
 
     private ImageView qrCodeImageview;
@@ -60,8 +62,8 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private Checkout generateCheckoutFromIntent() {
-        int voucherID = getIntent().getIntExtra("voucherID", 0);
-        boolean discount = getIntent().getBooleanExtra("discount", false);
+        int voucherID = getIntent().getIntExtra(VOUCHER_ID, 0);
+        boolean discount = getIntent().getBooleanExtra(DISCOUNT, false);
         SharedPreferences preferences = getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
         String uuid = preferences.getString(Constants.PreferenceKeys.UUID, null);
         ArrayList<Object> cart = getListObject(preferences, Constants.PreferenceKeys.CART, Product.class);

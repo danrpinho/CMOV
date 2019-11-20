@@ -22,12 +22,15 @@
         </activity>
         <activity
             android:name=".history.HistoryActivity"
+            android:label="History"
             android:parentActivityName=".mainmenu.MainMenuActivity" />
         <activity
             android:name=".checkout.CheckoutActivity"
+            android:label="Checkout"
             android:parentActivityName=".cart.CartActivity" />
         <activity
             android:name=".cart.CartActivity"
+            android:label="Cart"
             android:parentActivityName=".mainmenu.MainMenuActivity" />
         <activity
             android:name=".register.RegisterActivity"
@@ -39,6 +42,7 @@
             android:parentActivityName=".main.MainAuthActivity" />
         <activity
             android:name=".mainmenu.MainMenuActivity"
+            android:label="MainMenu"
             android:parentActivityName=".main.MainAuthActivity" />
 
     </application>

@@ -15,6 +15,7 @@ router.post('/shoppingList', async (req, res) => {
 router.get('/shoppingList', async (req, res) => {
     try {
         const shoppingLists = await shoppingListController.list(req.user.id);
+        console.log(shoppingLists);
         res.status(200).send(shoppingLists);
     } catch (error) {
         res.status(400).send(error.message);

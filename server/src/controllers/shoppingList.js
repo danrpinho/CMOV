@@ -85,7 +85,7 @@ const create = async (body) => {
         for (let i = 0; i < totalMinusOldpercent; i++)
             Voucher.create({ userId: user.id });
 
-    return "You paid " + (totalPrice - shoppingList.discounted).toFixed(2);;
+    return "You paid " + (totalPrice - shoppingList.discounted).toFixed(2) + "€";
 };
 
 

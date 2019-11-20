@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void successful(@NonNull User user, @NonNull String token, @NonNull String publicKey) {
         MainAuthActivity.setLocalLogin(true);
         SharedPreferences preferences;
-        preferences = this.getSharedPreferences("userInformation", MODE_PRIVATE);
+        preferences = this.getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
         preferences.edit().putString(Constants.PreferenceKeys.JWT, token).apply();
         preferences.edit().putString(Constants.PreferenceKeys.UUID, user.getUuid()).apply();
         preferences.edit().putString(Constants.PreferenceKeys.SUPERMARKET_PUBLIC_KEY, publicKey).apply();

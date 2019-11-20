@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.Checkout;
+import com.example.acmemarket_client.utils.Constants;
 import com.example.acmemarket_client.utils.RSAKeys;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -20,7 +21,7 @@ public class CheckoutPresenter {
 
     public byte[] generateSignature(Checkout checkoutInfo) throws Exception {
         KeyPair kp = RSAKeys.loadKeyPair();
-        Signature signature = Signature.getInstance("SHA256withRSA");
+        Signature signature = Signature.getInstance(Constants.Encryption.SIGN_ALGO);
         signature.initSign(kp.getPrivate());
         signature.update(checkoutInfo.getText().getBytes(StandardCharsets.ISO_8859_1));
         byte[] rsa_text = signature.sign();

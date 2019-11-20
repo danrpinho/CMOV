@@ -15,6 +15,8 @@ import retrofit2.Response;
 
 public class LoginInteractor implements Callback<RegisterResponse> {
 
+    public static final String LOGIN_SUCCESSFUL = "Login successful";
+
     interface OnFinishedListener {
         void onFinished(User user, String jwt, String publicKey);
     }
@@ -41,7 +43,7 @@ public class LoginInteractor implements Callback<RegisterResponse> {
             return;
         }
 
-        if (!response.body().getMessage().equals("Login successful")) {
+        if (!response.body().getMessage().equals(LOGIN_SUCCESSFUL)) {
             new Handler().post(() -> errorListener.onError(response.body().getMessage()));
             return;
         }

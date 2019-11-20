@@ -11,7 +11,7 @@ public class Constants {
     }
 
     public class RESTAPI {
-        public static final String IP = "http://301c1562.ngrok.io";
+        public static final String IP = "https://e41944ef.ngrok.io";
         public static final String AUTHORIZATION_HEADER = "Bearer ";
     }
 
@@ -23,6 +23,7 @@ public class Constants {
         public static final String ENC_ALGO = "RSA/NONE/PKCS1Padding";
         public static final String KEYNAME = "AcmeMarketKey";
         public static final int TAGID = 0x41636D65;
+        public static final String SIGN_ALGO = "SHA256withRSA";
     }
 
     public class QRCodes {

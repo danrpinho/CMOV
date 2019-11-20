@@ -30,6 +30,8 @@ import static com.example.acmemarket_client.utils.DBinSharedPreferences.putListO
 
 public class CartActivity extends AppCompatActivity implements CartView {
 
+    public static final String VOUCHER_ID = "voucherID";
+    public static final String DISCOUNT = "discount";
     private SharedPreferences preferences;
     RecyclerView itemRecyclerView;
     private CartItemAdapter cartAdapter;
@@ -68,8 +70,8 @@ public class CartActivity extends AppCompatActivity implements CartView {
         }
         if (value != 0) {
             String price = String.format(Locale.getDefault(), "%.2f", value);
-            checkoutButton.setText("Checkout (€" + price + ")");
-        } else checkoutButton.setText("Checkout");
+            checkoutButton.setText(getString(R.string.checkout)+ " (€ " + price + ")");
+        } else checkoutButton.setText(getString(R.string.checkout));
     }
 
     private void initViews() {
@@ -122,7 +124,7 @@ public class CartActivity extends AppCompatActivity implements CartView {
             discount = true;
         }
         String value = String.format(Locale.getDefault(), "%.2f", balance);
-        balanceLabel.setText("Use available balance? (€ " + value + ")");
+        balanceLabel.setText(getString(R.string.use_balance) + " (€ " + value + ")");
     }
 
     private void prepareVoucherSwitch(List<Voucher> vouchers) {
@@ -135,7 +137,7 @@ public class CartActivity extends AppCompatActivity implements CartView {
             voucherID = vouchers.get(0).getId();
         }
 
-        voucherLabel.setText("Use available vouchers? (" + availableVouchers + ")");
+        voucherLabel.setText(getString(R.string.use_vouchers) + " (" + availableVouchers + ")");
 
     }
 
@@ -157,8 +159,8 @@ public class CartActivity extends AppCompatActivity implements CartView {
             Toast.makeText(this, "You need to have items in your cart in order to checkout.", Toast.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(this, CheckoutActivity.class);
-            intent.putExtra("voucherID", voucherID);
-            intent.putExtra("discount", discount);
+            intent.putExtra(VOUCHER_ID, voucherID);
+            intent.putExtra(DISCOUNT, discount);
             startActivity(intent);
         }
     }

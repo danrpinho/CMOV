@@ -33,4 +33,11 @@
     <string name="button_ok">ACK</string>
     <string name="error_generate_QR">There was a problem generating your QRCode</string>
     <string name="title_activity_login_activity">Login</string>
+    <string name="checkout">Checkout</string>
+    <string name="use_balance">Use available balance?</string>
+    <string name="use_vouchers">Use available vouchers? (</string>
+    <string name="auth_fail">Authentication failed</string>
+    <string name="auth_error">Authentication error:</string>
+    <string name="local_login">Biometric login</string>
+    <string name="local_login_sub">Log in using your biometric credential</string>
 </resources>

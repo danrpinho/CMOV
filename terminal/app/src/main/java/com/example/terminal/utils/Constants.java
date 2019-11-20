@@ -10,6 +10,6 @@ public class Constants {
     }
 
     public class RESTAPI {
-        public static final String IP = "http://301c1562.ngrok.io";
+        public static final String IP = "https://e41944ef.ngrok.io ";
     }
 }
