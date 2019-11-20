@@ -5,13 +5,9 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 
 import com.example.acmemarket_client.model.NetworkLayer.Interactor;
-import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.ErrorBody;
 import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.RegisterRequestBody;
 import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.RegisterResponse;
 import com.example.acmemarket_client.model.User;
-import com.google.gson.Gson;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,13 +37,7 @@ public class RegisterInteractor implements Callback<RegisterResponse> {
     @Override
     public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
         if (response.code() != 200) {
-            try {
-                Gson gson = new Gson();
-                ErrorBody error = gson.fromJson(response.errorBody().string(), ErrorBody.class);
-                new Handler().post(() -> errorListener.onError(error.getMessage()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new Handler().post(() -> errorListener.onError(Interactor.getMessageFromErrorBody(response)));
             return;
         }
 

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.acmemarket_client.model.NetworkLayer.Interactor;
 import com.example.acmemarket_client.model.ShoppingList;
+import com.example.acmemarket_client.utils.Constants;
 
 import java.util.List;
 
@@ -14,7 +15,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HistoryInteractor implements Callback<List<ShoppingList>> {
-        //TODO add Bearer + token
     interface OnFinishedListener {
         void onFinished(List<ShoppingList> shoppingLists);
     }
@@ -29,14 +29,19 @@ public class HistoryInteractor implements Callback<List<ShoppingList>> {
     public void callAPIHistory(String token, @NonNull OnFinishedListener successListener, @NonNull OnErrorListener errorListener) {
         this.successListener = successListener;
         this.errorListener = errorListener;
-        Call<List<ShoppingList>> call = Interactor.getInstance().getAPI().getCompleteShoppingList("Bearer " + token);
+        Call<List<ShoppingList>> call = Interactor.getInstance().getAPI().getCompleteShoppingList(Constants.RESTAPI.AUTHORIZATION_HEADER + token);
         call.enqueue(this);
     }
 
     @Override
     public void onResponse(Call<List<ShoppingList>> call, Response<List<ShoppingList>> response) {
+        if (response.code() != 200) {
+            new Handler().post(() -> errorListener.onError(Interactor.getMessageFromErrorBody(response)));
+            return;
+        }
+
         if (response.body() == null) {
-            new Handler().post(() -> errorListener.onError("Something went wrong."));
+            new Handler().post(() -> errorListener.onError(Interactor.SOMETHING_WRONG));
             return;
         }
 

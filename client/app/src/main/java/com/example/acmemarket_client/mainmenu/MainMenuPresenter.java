@@ -21,13 +21,13 @@ public class MainMenuPresenter {
         this.cart = cart;
     }
 
-    public byte[] decryptProduct(byte [] encTag, String supermarketPublicKey) throws Exception{
+    public byte[] decryptProduct(byte[] encTag, String supermarketPublicKey) throws Exception {
         Cipher cipher = Cipher.getInstance(Constants.Encryption.ENC_ALGO);
         cipher.init(Cipher.DECRYPT_MODE, RSAKeys.StringToKey(supermarketPublicKey));
         return cipher.doFinal(encTag);
     }
 
-    public void addProduct(byte[] clearTag){
+    public void addProduct(byte[] clearTag) {
 
         ByteBuffer tag = ByteBuffer.wrap(clearTag);
         tag.getInt();
@@ -41,7 +41,7 @@ public class MainMenuPresenter {
         tag.get(bName);
         String name = new String(bName, StandardCharsets.ISO_8859_1);
 
-        cart.add(new Product(id.toString(),name, QRCodeSupport.qIntegersToFloat(euros,cents)));
+        cart.add(new Product(id.toString(), name, QRCodeSupport.qIntegersToFloat(euros, cents)));
         view.saveCart();
         return;
     }

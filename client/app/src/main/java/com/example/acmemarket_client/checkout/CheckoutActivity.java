@@ -15,7 +15,6 @@ import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.Checkout;
 import com.example.acmemarket_client.model.Product;
 import com.example.acmemarket_client.utils.Constants;
-import com.example.acmemarket_client.utils.RSAKeys;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -23,9 +22,6 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
-import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.Signature;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -37,51 +33,48 @@ public class CheckoutActivity extends AppCompatActivity {
     private ImageView qrCodeImageview;
     private Checkout checkoutInfo;
     private String qr_content;
+    private CheckoutPresenter presenter;
 
+    //TODO Clean this code
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
         qrCodeImageview = findViewById(R.id.img_qr_code);
+        presenter = new CheckoutPresenter();
+
+        checkoutInfo = generateCheckoutFromIntent();
+
+        try {
+            byte[] rsa_text = presenter.generateSignature(checkoutInfo);
+
+            String requestSigned = Base64.encodeToString(rsa_text, Base64.DEFAULT);
+            checkoutInfo.setSigned(requestSigned);
+            Gson gson = new Gson();
+            qr_content = gson.toJson(checkoutInfo);
 
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, R.string.error_generate_QR, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        showQRCode();
+    }
+
+    private Checkout generateCheckoutFromIntent() {
         int voucherID = getIntent().getIntExtra("voucherID", 0);
         boolean discount = getIntent().getBooleanExtra("discount", false);
         SharedPreferences preferences = getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);
         String uuid = preferences.getString(Constants.PreferenceKeys.UUID, null);
         ArrayList<Object> cart = getListObject(preferences, Constants.PreferenceKeys.CART, Product.class);
 
-        checkoutInfo = new Checkout(cart, uuid, voucherID, discount);
+        return new Checkout(cart, uuid, voucherID, discount);
+    }
 
-        /*checkoutInfo = new Checkout(cart, uuid, voucherID, discount);
-        Gson gson = new Gson();
-        String checkoutInfoStr = gson.toJson(checkoutInfo);*/
-
-        try {
-            KeyPair kp = RSAKeys.loadKeyPair();
-            Signature signature = Signature.getInstance("SHA256withRSA");
-            signature.initSign(kp.getPrivate());
-            signature.update(checkoutInfo.getText().getBytes(StandardCharsets.ISO_8859_1));
-            byte[] rsa_text= signature.sign();
-
-            String requestSigned = Base64.encodeToString(rsa_text, Base64.DEFAULT);
-            checkoutInfo.setSigned(requestSigned);
-            Gson gson = new Gson();
-            qr_content = gson.toJson(checkoutInfo);
-            //qr_content = requestStr.getBytes(StandardCharsets.ISO_8859_1);
-
-            signature.initVerify(kp.getPublic());
-            signature.update(checkoutInfo.getText().getBytes(StandardCharsets.ISO_8859_1));
-            boolean verified = signature.verify(rsa_text);
-            if(!verified)
-                throw new Exception();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this,"There was a problem generating your QRCode", Toast.LENGTH_LONG).show();
-            return;
-        }
-
+    private void showQRCode() {
         Thread t = new Thread(() -> {              // do the creation in a new thread to avoid ANR Exception
             final Bitmap bitmap;
             try {

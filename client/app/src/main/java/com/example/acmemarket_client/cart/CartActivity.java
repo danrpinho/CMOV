@@ -49,7 +49,7 @@ public class CartActivity extends AppCompatActivity implements CartView {
         callsToServer();
         initViews();
         ArrayList<Object> cart = new ArrayList<>();
-        if (preferences.contains(Constants.PreferenceKeys.CART)){
+        if (preferences.contains(Constants.PreferenceKeys.CART)) {
             cart = getListObject(preferences, Constants.PreferenceKeys.CART, Product.class);
         }
         cartAdapter.addList(cart);
@@ -115,7 +115,7 @@ public class CartActivity extends AppCompatActivity implements CartView {
      * - a layout manager (in this case, a LinearLayoutManager)
      * - an adapter (using the CartItemAdapter class)
      */
-    private void setupRecyclerView(){
+    private void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         itemRecyclerView.setLayoutManager(layoutManager);
         itemRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -127,8 +127,8 @@ public class CartActivity extends AppCompatActivity implements CartView {
         /*if (cartAdapter.getItemCount() == 0){
             Toast.makeText(this, "You need to have items in your cart in order to checkout.", Toast.LENGTH_LONG).show();
         } else {*/
-            Intent intent = new Intent(this, CheckoutActivity.class);
-            startActivity(intent);
+        Intent intent = new Intent(this, CheckoutActivity.class);
+        startActivity(intent);
         //}
     }
 

@@ -1,14 +1,14 @@
 package com.example.acmemarket_client.history;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.model.ShoppingList;
@@ -17,7 +17,7 @@ import com.example.acmemarket_client.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryActivity extends AppCompatActivity implements HistoryView{
+public class HistoryActivity extends AppCompatActivity implements HistoryView {
 
     private SharedPreferences preferences;
     private HistoryPresenter presenter;
@@ -32,7 +32,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryView{
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         recyclerView = (RecyclerView) findViewById(R.id.history_recycle_view);
         preferences = getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);

@@ -2,7 +2,7 @@ package com.example.acmemarket_client.model;
 
 public class User {
     private String email, name, username, uuid, cardInfo;
-    private float balance,totalSpent;
+    private float balance, totalSpent;
     private int id;
 
     public String getEmail() {

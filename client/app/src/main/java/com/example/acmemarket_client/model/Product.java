@@ -12,14 +12,6 @@ public class Product {
         this.price = price;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
     public String getName() {
         return name;
     }
@@ -30,10 +22,6 @@ public class Product {
 
     public float getPrice() {
         return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
     }
 
     public int getId() {

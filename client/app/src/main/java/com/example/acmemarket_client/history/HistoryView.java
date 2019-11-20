@@ -8,5 +8,4 @@ public interface HistoryView {
     void showError(String errorMessage);
 
     void successful(List<ShoppingList> list);
-
 }

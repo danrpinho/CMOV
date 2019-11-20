@@ -18,14 +18,15 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
     private ArrayList<Object> items;
     private CartView view;
 
-    public CartItemAdapter(ArrayList data, CartView view){
+    public CartItemAdapter(ArrayList data, CartView view) {
         this.items = data;
         this.view = view;
     }
 
     /**
      * Activity that states what to do when creating the ViewHolder.
-     * @param parent The parent activity, required to inflate the layout.
+     *
+     * @param parent   The parent activity, required to inflate the layout.
      * @param viewType
      * @return
      */
@@ -38,7 +39,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
 
     /**
      * Connects the cart item list to the ViewHolder and activates the buttons
-     * @param holder The Activity ViewHolder
+     *
+     * @param holder   The Activity ViewHolder
      * @param position The position of the item list related to the item in question
      */
     @Override
@@ -50,20 +52,19 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
         holder.deleteButton.setOnClickListener(view -> removeItem(position));
     }
 
-
-    //TODO switches dos vouchers e do saldo
-
     /**
      * Adds an item to the list.
-      * @param item The Product to be added to the cart list.
+     *
+     * @param item The Product to be added to the cart list.
      */
-    public void addItem(Product item){
+    public void addItem(Product item) {
         items.add(item);
         notifyItemInserted(getItemCount());
     }
 
     /**
      * Removes an item from the list.
+     *
      * @param position The position from which the item was removed.
      */
     private void removeItem(int position) {
@@ -75,6 +76,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
 
     /**
      * Gets the amount of items in the cart
+     *
      * @return The amount of items in the cart
      */
     @Override

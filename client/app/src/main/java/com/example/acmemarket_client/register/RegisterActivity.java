@@ -63,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
         }
 
         KeyPair kp = null;
-        //TODO save password
         try {
             kp = RSAKeys.genKeys(this);
         } catch (Exception e) {
@@ -83,7 +82,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     public void successful(@NonNull User user, @NonNull String token, @NonNull String publicKey) {
         SharedPreferences preferences;
         preferences = this.getSharedPreferences("userInformation", MODE_PRIVATE);
-        //TODO save password
         preferences.edit().putString(Constants.PreferenceKeys.JWT, token).apply();
         preferences.edit().putString(Constants.PreferenceKeys.UUID, user.getUuid()).apply();
         preferences.edit().putString(Constants.PreferenceKeys.SUPERMARKET_PUBLIC_KEY, publicKey).apply();

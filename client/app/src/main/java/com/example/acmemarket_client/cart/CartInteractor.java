@@ -6,12 +6,13 @@ import androidx.annotation.NonNull;
 
 import com.example.acmemarket_client.model.NetworkLayer.Interactor;
 import com.example.acmemarket_client.model.NetworkLayer.NetworkLayerModels.UserVouchers;
+import com.example.acmemarket_client.utils.Constants;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-class CartInteractor  implements Callback<UserVouchers> {
+class CartInteractor implements Callback<UserVouchers> {
 
     interface OnFinishedListener {
         void onFinished(UserVouchers userVouchers);
@@ -26,8 +27,14 @@ class CartInteractor  implements Callback<UserVouchers> {
 
     @Override
     public void onResponse(Call<UserVouchers> call, Response<UserVouchers> response) {
-        if (response.body()==null){
-            new Handler().post(() -> errorListener.onError("Something went wrong."));
+        if (response.code() != 200) {
+            //TODO IF 401
+            new Handler().post(() -> errorListener.onError(Interactor.getMessageFromErrorBody(response)));
+            return;
+        }
+
+        if (response.body() == null) {
+            new Handler().post(() -> errorListener.onError(Interactor.SOMETHING_WRONG));
             return;
         }
 
@@ -43,11 +50,7 @@ class CartInteractor  implements Callback<UserVouchers> {
     public void callAPIVouchers(String token, @NonNull OnFinishedListener successListener, @NonNull OnErrorListener errorListener) {
         this.successListener = successListener;
         this.errorListener = errorListener;
-        Call<UserVouchers> call = Interactor.getInstance().getAPI().getVouchers("Bearer " + token);
+        Call<UserVouchers> call = Interactor.getInstance().getAPI().getVouchers(Constants.RESTAPI.AUTHORIZATION_HEADER + token);
         call.enqueue(this);
     }
-
-
-
-
 }

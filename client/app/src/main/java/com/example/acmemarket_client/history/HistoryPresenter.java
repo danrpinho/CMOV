@@ -1,7 +1,6 @@
 package com.example.acmemarket_client.history;
 
 import com.example.acmemarket_client.model.ShoppingList;
-import com.example.acmemarket_client.model.User;
 
 import java.util.List;
 
@@ -30,7 +29,5 @@ public class HistoryPresenter {
             view.showError(errorMessage);
         }
     }
-
-
 
 }

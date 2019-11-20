@@ -11,7 +11,7 @@ public class CartPresenter {
         this.interactor = interactor;
     }
 
-    public void getInfo(String token){
+    public void getInfo(String token) {
         interactor.callAPIVouchers(token, this::onFinished, this::onError);
     }
 

@@ -16,7 +16,7 @@ public class RegisterPresenter {
         interactor.callAPIRegister(new RegisterRequestBody(name, email, username, cardInfo, password, publickey), this::onFinished, this::onError);
     }
 
-    public void onFinished(User user, String jwt,String publicKey) {
+    public void onFinished(User user, String jwt, String publicKey) {
         if (view != null) {
             view.successful(user, jwt, publicKey);
         }

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 interface CartView {
 
     void saveCart(ArrayList<Object> list);
+
     void showError(String errorMessage);
+
     void successful(UserVouchers userVouchers);
 }

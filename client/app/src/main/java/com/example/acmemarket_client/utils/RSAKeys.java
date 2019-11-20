@@ -43,29 +43,29 @@ public class RSAKeys {
         return kp;
     }
 
-    public static KeyPair loadKeyPair() throws Exception{
+    public static KeyPair loadKeyPair() throws Exception {
         KeyStore ks = KeyStore.getInstance(Constants.Encryption.ANDROID_KEYSTORE);
         ks.load(null);
         KeyStore.Entry entry = ks.getEntry(Constants.Encryption.KEYNAME, null);
         boolean hasKey = (entry != null);
         if (hasKey) {
-            PublicKey pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
-            PrivateKey pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
-            return new KeyPair(pub,pri);
+            PublicKey pub = ((KeyStore.PrivateKeyEntry) entry).getCertificate().getPublicKey();
+            PrivateKey pri = ((KeyStore.PrivateKeyEntry) entry).getPrivateKey();
+            return new KeyPair(pub, pri);
         }
 
         return null;
     }
 
-    public static String KeyToString(PublicKey publicKey){
-        String pkcs1pem="";
+    public static String KeyToString(PublicKey publicKey) {
+        String pkcs1pem = "";
         pkcs1pem += Base64.encodeToString(publicKey.getEncoded(), Base64.DEFAULT);
 
 
         return pkcs1pem;
     }
 
-    public static PublicKey StringToKey(String publicKeyString) throws Exception{
+    public static PublicKey StringToKey(String publicKeyString) throws Exception {
 
         byte[] keyBytes = Base64.decode(publicKeyString, Base64.DEFAULT);
         X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);

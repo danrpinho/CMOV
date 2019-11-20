@@ -2,11 +2,14 @@ package com.example.acmemarket_client.history;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.acmemarket_client.R;
 import com.example.acmemarket_client.model.Product;
 import com.example.acmemarket_client.model.ShoppingList;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -45,10 +48,10 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHold
 
     private String getItemList(ShoppingList transaction) {
         StringBuilder res = new StringBuilder();
-        for (int i = 0; i < transaction.getProductItems().size(); i++){
+        for (int i = 0; i < transaction.getProductItems().size(); i++) {
             Product elem = transaction.getProductItems().get(i);
             res.append(elem.getName()).append(" (").append(elem.getPrice()).append(")");
-            if (i < transaction.getProductItems().size()-1)
+            if (i < transaction.getProductItems().size() - 1)
                 res.append("\n");
         }
         return res.toString();
