@@ -11,7 +11,7 @@ public class Constants {
     }
 
     public class RESTAPI {
-        public static final String IP = "https://e41944ef.ngrok.io";
+        public static final String IP = "http://0028d4b4.ngrok.io";
         public static final String AUTHORIZATION_HEADER = "Bearer ";
     }
 
