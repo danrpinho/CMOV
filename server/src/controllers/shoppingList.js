@@ -36,8 +36,8 @@ const create = async (body) => {
 
     products.forEach(product => {
         totalPrice += product.price;
-        const price = product.price, uuid = product.uuid, shoppingListId = shoppingList.id;
-        Product.create({ uuid: uuid, price: price, shoppingListId: shoppingListId });
+        const price = product.price, uuid = product.uuid, shoppingListId = shoppingList.id, name=product.name;
+        Product.create({ uuid: uuid, price: price, name: name, shoppingListId: shoppingListId });
     });
 
     shoppingList = await shoppingList.update({ totalCost: totalPrice });

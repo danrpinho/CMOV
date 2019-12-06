@@ -16,6 +16,7 @@ import com.example.acmemarket_client.model.Product;
 import com.example.acmemarket_client.utils.Constants;
 import com.google.gson.Gson;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import static com.example.acmemarket_client.utils.DBinSharedPreferences.getListObject;
@@ -40,9 +41,9 @@ public class CheckoutActivity extends AppCompatActivity {
         qrCodeImageview = findViewById(R.id.img_qr_code);
         presenter = new CheckoutPresenter();
 
-        checkoutInfo = generateCheckoutFromIntent();
-
         try {
+            checkoutInfo = generateCheckoutFromIntent();
+
             byte[] rsa_text = presenter.generateSignature(checkoutInfo);
 
             String requestSigned = Base64.encodeToString(rsa_text, Base64.DEFAULT);
@@ -61,7 +62,7 @@ public class CheckoutActivity extends AppCompatActivity {
         clearCart();
     }
 
-    private Checkout generateCheckoutFromIntent() {
+    private Checkout generateCheckoutFromIntent() throws NoSuchAlgorithmException {
         int voucherID = getIntent().getIntExtra(VOUCHER_ID, 0);
         boolean discount = getIntent().getBooleanExtra(DISCOUNT, false);
         SharedPreferences preferences = getSharedPreferences(Constants.PreferenceKeys.USER_INFORMATION_PREFERENCES, MODE_PRIVATE);

@@ -51,7 +51,7 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemViewHold
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < transaction.getProductItems().size(); i++) {
             Product elem = transaction.getProductItems().get(i);
-            res.append(elem.getUuid()).append(" (").append(elem.getPrice()).append(")");
+            res.append(elem.getName()).append(" (").append(elem.getPrice()).append(")");
             if (i < transaction.getProductItems().size() - 1)
                 res.append("\n");
         }
