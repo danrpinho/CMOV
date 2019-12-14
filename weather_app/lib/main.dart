@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/src/ui/widgets/main_info.dart';
 
 void main() => runApp(MyApp());
 
@@ -83,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            MainInfo(info: null, key: null),
             Text(
               'You have pushed the button this many times:',
             ),
