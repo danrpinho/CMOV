@@ -33,8 +33,6 @@
 //name City name
 //cod Internal parameter
 
-import 'dart:ffi';
-
 class Weather {
   String name;
   int cityId;
@@ -67,7 +65,7 @@ class Weather {
       this.currentTime,
       this.sunsetTime,
       this.sunriseTime,
-      this.weatherBio, //Todo rename this for something better
+      this.weatherBio, //TODO rename this for something better
       this.weatherInfo,
       this.weatherIconID});
 
