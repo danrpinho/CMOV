@@ -30,6 +30,7 @@ class MainInfo extends StatelessWidget{
             fontSize: 30,
           ),
         ),
+        createTemperatureWidget(info),
       
       ],
 
@@ -37,6 +38,25 @@ class MainInfo extends StatelessWidget{
     
     );
     
+  }
+
+  createTemperatureWidget(Weather info) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          "13ºC",
+          style: TextStyle(
+            fontSize: 30, 
+            color: Colors.grey
+          ),
+        ),
+        Column (children: <Widget>[
+          Text("Max: 18ºC"),
+          Text("Min: 9ºC")
+        ],)
+      ],
+    );
   }
 
 }
