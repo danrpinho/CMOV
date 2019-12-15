@@ -80,3 +80,4 @@ api-docs/
 .gradle/vcs-1/
 
 gradle/wrapper/
+.DS_Store
