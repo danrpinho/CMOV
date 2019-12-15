@@ -6,6 +6,9 @@ class Themes{
   static const int THEME_DARK  = 1;
   static const int THEME_GRADIENT = 2;
 
+  static get lightTheme => _themeLight;
+  static get darkTheme => _themeDark;
+
   static Color getMaxTempColor() => Colors.yellow[900];
   static Color getMinTempColor() => Colors.lightBlue[400];
 

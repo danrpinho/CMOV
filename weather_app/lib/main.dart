@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/ui/screens/weather_screen.dart';
 
+import 'src/ui/theme/theme.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -11,9 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'WeatherApp',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: Themes.lightTheme,
       home: MyHomePage(
         title: 'ACME Weather  ',
         itemCount: 3,
