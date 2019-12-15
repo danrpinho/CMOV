@@ -3,8 +3,9 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/ui/screens/weather_screen.dart';
-
 import 'src/ui/theme/theme.dart';
+import 'package:weather_app/src/repository/weatherRepository.dart';
+import 'package:weather_app/src/ui/widgets/main_info.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,17 +29,20 @@ class MyHomePage extends StatefulWidget {
   final String title;
   final int itemCount;
 
+  //weather Repository
+  final WeatherRepository weatherRepo = WeatherRepository(
+      client: OpenWeatherAPIClient(httpClient: http.Client()));
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  final clinet = OpenWeatherAPIClient(httpClient: http.Client());
-
+  final WeatherRepository weatherRepo = WeatherRepository(
+      client: OpenWeatherAPIClient(httpClient: http.Client()));
   void _incrementCounter() {
     setState(() {
-      clinet.featchWeather("Porto");
+      weatherRepo.getWeather(0, 0, "Porto");
       print("hello");
     });
   }

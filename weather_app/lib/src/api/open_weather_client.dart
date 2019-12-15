@@ -12,7 +12,7 @@ class OpenWeatherAPIClient {
   OpenWeatherAPIClient({@required this.httpClient})
       : assert(httpClient != null);
 
-  Future<Weather> featchWeather(String cityName) async {
+  Future<Weather> fetchWeather(String cityName) async {
     //URL
     final url = '$baseUrl/data/2.5/weather?q=$cityName&appid=$apiKey';
     print(url);
