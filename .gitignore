@@ -84,3 +84,4 @@ gradle/wrapper/
 
 terminal/
 client/
+weather_app/pubspec.lock
