@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         // This is the theme of your application.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'ACME Weather '),
+      home: MyHomePage(title: 'ACME Weather  '),
     );
   }
 }

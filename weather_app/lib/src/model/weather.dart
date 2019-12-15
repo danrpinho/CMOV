@@ -106,4 +106,7 @@ class Weather {
       //weatherIconID: json['weather']['0']['icon'],
     );
   }
+import 'package:flutter/material.dart';
+import 'package:weather_app/src/util/converters.dart';
+import 'package:weather_app/src/util/weather_icons.dart';
 }
