@@ -7,12 +7,6 @@
 //weather.description Weather condition within the group
 //weather.icon Weather icon id
 //base Internal parameter
-//main
-//main.temp Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-//main.pressure Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
-//main.humidity Humidity, %
-//main.temp_min Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-//main.temp_max Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
 //main.sea_level Atmospheric pressure on the sea level, hPa
 //main.grnd_level Atmospheric pressure on the ground level, hPa
 //wind
@@ -26,7 +20,7 @@
 //snow
 //snow.1h Snow volume for the last 1 hour, mm
 //snow.3h Snow volume for the last 3 hours, mm
-//dt Time of data calculation, unix, UTC
+
 //sys
 //sys.type Internal parameter
 //sys.id Internal parameter
@@ -53,6 +47,14 @@ class Weather {
   int pressure;
   int humidity;
 
+  int currentTime;
+  int sunsetTime;
+  int sunriseTime;
+
+  String weatherBio;
+  String weatherInfo;
+  String weatherIconID;
+
   Weather(
       {this.cityId,
       this.name,
@@ -61,22 +63,49 @@ class Weather {
       this.minTemp,
       this.humidity,
       this.feelsLike,
-      this.pressure});
+      this.pressure,
+      this.currentTime,
+      this.sunsetTime,
+      this.sunriseTime,
+      this.weatherBio, //Todo rename this for something better
+      this.weatherInfo,
+      this.weatherIconID});
 
   static Weather mapFromJson(Map<String, dynamic> json) {
     return Weather(
-        cityId: json['id'],
-        name: json['name'],
+      cityId: json['id'],
+      name: json['name'],
 
-        //main.temp Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-        temp: json['main']['temp'],
-        //main.pressure Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
-        pressure: json['main']['pressure'],
-        //main.humidity Humidity, %
-        humidity: json['main']['humidity'],
-        //main.temp_min Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-        minTemp: json['main']['temp_min'],
-        //main.temp_max Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-        maxTemp: json['main']['temp_max']);
+      //main.temp Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+      temp: json['main']['temp'],
+
+      //main.pressure Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
+      pressure: json['main']['pressure'],
+
+      //main.humidity Humidity, %
+      humidity: json['main']['humidity'],
+
+      //main.temp_min Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+      minTemp: json['main']['temp_min'],
+
+      //main.temp_max Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+      maxTemp: json['main']['temp_max'],
+
+      //dt Time of data calculation, unix, UTC
+      currentTime: json['dt'],
+      //sys.sunrise Sunrise time, unix, UTC
+      sunriseTime: json['sys']['sunrise'],
+      //sys.sunset Sunset time, unix, UTC
+      sunsetTime: json['sys']['sunset'],
+      //weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
+      //TODO code below untested, it should work
+      //weatherBio: json['weather']['0']['main'],
+      //weather.description Weather condition within the group
+
+      //weatherInfo: json['weather']['0']['description'],
+      //weather.icon Weather icon id
+
+      //weatherIconID: json['weather']['0']['icon'],
+    );
   }
 }
