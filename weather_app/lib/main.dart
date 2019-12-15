@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/src/api/open_weather_client.dart';
-import 'package:weather_app/src/ui/widgets/main_info.dart';
+import 'package:weather_app/src/ui/screens/weather_screen.dart';
 
-const double _main_info_margin = 40;
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -52,15 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: new Swiper(
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            child: new Center(
-                child: Column(
-              children: <Widget>[
-                MainInfo(info: null, key: null),
-              ],
-            )),
-            margin: EdgeInsets.all(_main_info_margin),
-          );
+          return WeatherScreen(day: "Sunday, 15 December 2019");
         },
         itemCount: widget.itemCount,
         pagination: new SwiperPagination(),
