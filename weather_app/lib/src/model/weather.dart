@@ -41,10 +41,10 @@ class Weather {
   String name;
   int cityId;
   //int weatherId;
-  double temp;
-  double minTemp;
-  double maxTemp;
-  double feelsLike;
+  Temperature temp;
+  Temperature minTemp;
+  Temperature maxTemp;
+  Temperature feelsLike;
 
   int pressure;
   int humidity;
@@ -79,7 +79,7 @@ class Weather {
       name: json['name'],
 
       //main.temp Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-      temp: json['main']['temp'],
+      temp: Temperature(int2Double(json['main']['temp'])),
 
       //main.pressure Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
       pressure: json['main']['pressure'],
@@ -88,17 +88,20 @@ class Weather {
       humidity: json['main']['humidity'],
 
       //main.temp_min Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-      minTemp: json['main']['temp_min'],
+      minTemp: Temperature(int2Double(json['main']['temp_min'])),
 
       //main.temp_max Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-      maxTemp: json['main']['temp_max'],
+      maxTemp: Temperature(int2Double(json['main']['temp_max'])),
 
       //dt Time of data calculation, unix, UTC
       currentTime: json['dt'],
+
       //sys.sunrise Sunrise time, unix, UTC
       sunriseTime: json['sys']['sunrise'],
+
       //sys.sunset Sunset time, unix, UTC
       sunsetTime: json['sys']['sunset'],
+
       //weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
       //TODO code below untested, it should work
       //weatherBio: json['weather']['0']['main'],
@@ -110,5 +113,4 @@ class Weather {
       //weatherIconID: json['weather']['0']['icon'],
     );
   }
-
 }

@@ -26,3 +26,15 @@ class Temperature {
     return this.fahrenheit;
   }
 }
+
+int2Double(dynamic val) {
+  if (val.runtimeType == double) {
+    return val;
+  } else if (val.runtimeType == int) {
+    return val.toDouble();
+  } else {
+    throw new Exception("value is not of type 'int' or 'double' got type '" +
+        val.runtimeType.toString() +
+        "'");
+  }
+}
