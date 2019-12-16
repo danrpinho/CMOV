@@ -13,6 +13,36 @@ class Temperature {
 
   double get fahrenheit => _kelvin * (9 / 5) - 459.67;
 
+  static int asRadioOption(TemperatureUnit unit) {
+    switch (unit) {
+      case TemperatureUnit.kelvin:
+        return 0;
+        break;
+      case TemperatureUnit.celsius:
+        return 1;
+        break;
+      case TemperatureUnit.fahrenheit:
+        return 2;
+        break;
+    }
+    return 1;
+  }
+
+  static TemperatureUnit fromRadioOption(int option) {
+    switch (option) {
+      case 0:
+        return TemperatureUnit.kelvin;
+        break;
+      case 1:
+        return TemperatureUnit.celsius;
+        break;
+      case 2:
+        return TemperatureUnit.celsius;
+        break;
+    }
+    return TemperatureUnit.celsius;
+  }
+
   double as(TemperatureUnit unit) {
     switch (unit) {
       case TemperatureUnit.kelvin:

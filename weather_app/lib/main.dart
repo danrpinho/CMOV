@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/src/api/open_weather_client.dart';
-import 'package:weather_app/src/ui/screens/weather_screen.dart';
-import 'src/ui/theme/theme.dart';
 import 'package:weather_app/src/repository/weatherRepository.dart';
-import 'package:weather_app/src/ui/widgets/main_info.dart';
+import 'package:weather_app/src/ui/screens/settings.dart';
+import 'package:weather_app/src/ui/screens/weather_screen.dart';
+
+import 'src/ui/theme/theme.dart';
 
 void main() => runApp(MyApp());
 
@@ -52,6 +53,23 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Settings(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () async {},
+          )
+        ],
       ),
       body: new Swiper(
         itemBuilder: (BuildContext context, int index) {
