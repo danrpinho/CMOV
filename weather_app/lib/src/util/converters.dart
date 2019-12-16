@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 enum TemperatureUnit { kelvin, celsius, fahrenheit }
 
 class Temperature {
@@ -36,5 +38,25 @@ int2Double(dynamic val) {
     throw new Exception("value is not of type 'int' or 'double' got type '" +
         val.runtimeType.toString() +
         "'");
+  }
+}
+
+class TimeConverter {
+  static millisecondsSinceEpochToDay(int time) {
+    return DateFormat.yMMMMEEEEd()
+        .format(DateTime.fromMillisecondsSinceEpoch(time * 1000))
+        .toString();
+  }
+
+  static millisecondsSinceEpochToWeekdayHour(int time) {
+    return DateFormat('E, ha')
+        .format(DateTime.fromMillisecondsSinceEpoch(time * 1000))
+        .toString();
+  }
+
+  static millisecondsSinceEpochToHourMinutes(int time) {
+    return DateFormat('h:m a')
+        .format(DateTime.fromMillisecondsSinceEpoch(time * 1000))
+        .toString();
   }
 }
