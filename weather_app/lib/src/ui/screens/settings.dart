@@ -187,7 +187,6 @@ class ThemeOption extends StatelessWidget {
             groupValue: _SettingsState.selectedTheme,
             onChanged: (value) {
               this.updateTheme(value);
-              //TODO
             },
             activeColor: this.accentColor,
           )
@@ -236,7 +235,6 @@ class TemperatureOption extends StatelessWidget {
             groupValue: _SettingsState.selectedTemperatureUnit,
             onChanged: (value) {
               this.updateTemperatureUnit(value);
-              //TODO
             },
             activeColor: this.accentColor,
           )

@@ -85,3 +85,5 @@ gradle/wrapper/
 terminal/
 client/
 weather_app/pubspec.lock
+
+weather_app/.flutter-plugins-dependencies
