@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:weather_app/src/model/weather.dart';
 
@@ -30,7 +31,7 @@ class OpenWeatherAPIClient {
     //URL
     final url = '$baseUrl/data/2.5/forecast?q=$cityName&appid=$apiKey';
 
-    print('fetching $url');
+    //print('fetching $url');
 
     //response
     final res = await this.httpClient.get(url);
@@ -47,7 +48,7 @@ class OpenWeatherAPIClient {
 
   Future<Weather> fetchWeatherByID(int id) async {
     final url = '$baseUrl/data/2.5/weather?id=$id&appid=$apiKey';
-    print(url);
+    //  print(url);
 
     //Response
     final response = await this.httpClient.get(url);
@@ -60,7 +61,7 @@ class OpenWeatherAPIClient {
     //URL
     final url = '$baseUrl/data/2.5/forecast?id=$id&appid=$apiKey';
 
-    print('fetching $url');
+//print('fetching $url');
 
     //response
     final res = await this.httpClient.get(url);

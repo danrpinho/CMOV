@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:meta/meta.dart';
@@ -64,10 +65,12 @@ class WeatherRepository {
   }
 
   Future<List<Weather>> getWeatherCollectionRemote(List<int> ids) async {
-    List<Weather> weathers;
+    final weathers = List<Weather>();
+    var logger = Logger();
     for (var id in ids) {
       Weather weather = await client.fetchWeatherByID(id);
       weathers.add(weather);
+      //logger.i(weather);
     }
     return weathers;
   }

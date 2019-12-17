@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/bloc/bloc.dart';
@@ -47,6 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     setState(() {
       bloc.add(FetchWeatherById(2735943));
+      List<int> ids = [2735943, 2732438];
+      bloc.add(FetchWeatherCollectionById(ids));
 
       //widget.weatherRepo.getWeather(0, 0, "Porto");
       //print("hello");
@@ -97,6 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     // TODO Do something
 
                     return WeatherScreen(day: "Sunday, 16 December 2019");
+                  }
+                  if (state is WeatherCollectionLoaded) {
+                    var logger = Logger();
+                    logger.wtf("weather collection loaded ", state.weathers);
                   }
                   return WeatherScreen(day: "Sunday, 15 December 2019");
                 });
