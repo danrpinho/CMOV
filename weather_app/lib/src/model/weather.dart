@@ -57,6 +57,8 @@ class Weather {
   String weatherInfo;
   String weatherIconID;
 
+  List<Weather> forecast;
+
   Weather(
       {this.cityId,
       this.name,
@@ -69,11 +71,12 @@ class Weather {
       this.currentTime,
       this.sunsetTime,
       this.sunriseTime,
-      this.weatherBio, //TODO rename this for something better
+      this.weatherBio,
       this.weatherInfo,
       this.weatherIconID});
 
   static Weather mapFromJson(Map<String, dynamic> json) {
+    final weather = json['weather'][0];
     return Weather(
       cityId: json['id'],
       name: json['name'],
@@ -103,14 +106,44 @@ class Weather {
       sunsetTime: json['sys']['sunset'],
 
       //weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
-      //TODO code below untested, it should work
-      //weatherBio: json['weather']['0']['main'],
+      weatherBio: weather['main'],
       //weather.description Weather condition within the group
-
-      //weatherInfo: json['weather']['0']['description'],
+      weatherInfo: weather['description'],
       //weather.icon Weather icon id
-
-      //weatherIconID: json['weather']['0']['icon'],
+      weatherIconID: weather['icon'],
     );
   }
+
+  static List<Weather> fromForecastJson(Map<String, dynamic> json) {
+    final weathers = List<Weather>();
+    for (final item in json['list']) {
+      weathers.add(Weather(
+          currentTime: item['dt'],
+          temp: Temperature(int2Double(
+            item['main']['temp'],
+          )),
+          weatherIconID: item['weather'][0]['icon']));
+    }
+    return weathers;
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': cityId,
+        'name': name,
+        'main': {
+          'temp': temp,
+          'pressure': pressure,
+          'temp_min': minTemp,
+          'temp_max': maxTemp,
+        },
+        'dt': currentTime,
+        'sys': {'sunrise': sunriseTime, 'sunset': sunsetTime},
+        'weather': [
+          {
+            'main': weatherBio,
+            'description': weatherInfo,
+            'icon': weatherIconID
+          }
+        ]
+      };
 }

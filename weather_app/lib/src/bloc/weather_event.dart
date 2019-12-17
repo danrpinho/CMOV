@@ -11,3 +11,10 @@ class FetchWeather extends WeatherEvent {
   @override
   List<Object> get props => [cityName];
 }
+//class FetchWeatherList extends WeatherEvent {
+//final l
+//const FetchWeather(this.cityName);
+
+//@override
+//List<Object> get props => [cityName];
+//}

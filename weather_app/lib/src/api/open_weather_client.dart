@@ -21,8 +21,55 @@ class OpenWeatherAPIClient {
     final response = await this.httpClient.get(url);
     final weatherJson = jsonDecode(response.body);
 
-    print(weatherJson);
+    // print(weatherJson);
     //map to model
     return Weather.mapFromJson(weatherJson);
+  }
+
+  Future<List<Weather>> getForecast(String cityName) async {
+    //URL
+    final url = '$baseUrl/data/2.5/forecast?q=$cityName&appid=$apiKey';
+
+    print('fetching $url');
+
+    //response
+    final res = await this.httpClient.get(url);
+    if (res.statusCode != 200) {
+      print("error");
+    }
+    final forecastJson = json.decode(res.body);
+    //print(forecastJson);
+    // map to model
+    List<Weather> weathers = Weather.fromForecastJson(forecastJson);
+    return weathers;
+  }
+
+  Future<Weather> fetchWeatherByID(int id) async {
+    final url = '$baseUrl/data/2.5/weather?q=$id&appid=$apiKey';
+    print(url);
+
+    //Response
+    final response = await this.httpClient.get(url);
+    final weatherJson = jsonDecode(response.body);
+
+    return Weather.mapFromJson(weatherJson);
+  }
+
+  Future<List<Weather>> getForecastbyId(int id) async {
+    //URL
+    final url = '$baseUrl/data/2.5/forecast?q=$id&appid=$apiKey';
+
+    print('fetching $url');
+
+    //response
+    final res = await this.httpClient.get(url);
+    if (res.statusCode != 200) {
+      print("error");
+    }
+    final forecastJson = json.decode(res.body);
+    //print(forecastJson);
+    // map to model
+    List<Weather> weathers = Weather.fromForecastJson(forecastJson);
+    return weathers;
   }
 }
