@@ -24,7 +24,7 @@ class City {
 
   @override
   String toString() {
-    return 'City{name: $name, country: $country}';
+    return '$name, $country}';
   }
 
   @override

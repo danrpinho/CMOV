@@ -45,7 +45,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   dynamic cityNumber = 1;
-
+  SharedPreferences preferences;
   WeatherBloc bloc;
   void _incrementCounter() {
     setState(() {
