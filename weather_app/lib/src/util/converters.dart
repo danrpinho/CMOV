@@ -3,15 +3,15 @@ import 'package:intl/intl.dart';
 enum TemperatureUnit { kelvin, celsius, fahrenheit }
 
 class Temperature {
-  final double _kelvin;
+  final double kelvin;
 
-  Temperature(this._kelvin) : assert(_kelvin != null);
+  Temperature(this.kelvin) : assert(kelvin != null);
 
-  double get kelvin => _kelvin;
+  //double get kelvin => kelvin;
 
-  double get celsius => _kelvin - 273.15;
+  double get celsius => kelvin - 273.15;
 
-  double get fahrenheit => _kelvin * (9 / 5) - 459.67;
+  double get fahrenheit => kelvin * (9 / 5) - 459.67;
 
   static int asRadioOption(TemperatureUnit unit) {
     switch (unit) {
