@@ -33,21 +33,24 @@
 //name City name
 //cod Internal parameter
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:weather_app/src/util/converters.dart';
 import 'package:weather_app/src/util/weather_icons.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-//part 'weather.g.dart';
-
-//@JSONSerializable()
 class Weather {
   String name;
   int cityId;
   //int weatherId;
+  @JsonKey(name: 'temp')
   Temperature temp;
+  @JsonKey(name: 'min_temp')
   Temperature minTemp;
+  @JsonKey(name: 'max_temp')
   Temperature maxTemp;
+  @JsonKey(name: 'feels_like')
   Temperature feelsLike;
 
   int pressure;
@@ -131,6 +134,10 @@ class Weather {
     return weathers;
   }
 
+  // factory Weather.fromJson(Map<String, dynamic> json) =>
+  //    _$WeatherFromJson(json);
+  // Map<String, dynamic> toJson() => _$WeatherToJson(this);
+
   Map<String, dynamic> toJson() => {
         'id': cityId,
         'name': name,
@@ -149,7 +156,24 @@ class Weather {
             'icon': weatherIconID
           }
         ],
-        'forecasts': forecast,
+        'forecasts': forecast
+            .map((f) => {
+                  'main': {
+                    'temp': f.temp.kelvin,
+                    'pressure': f.pressure,
+                    'temp_min': f.minTemp.kelvin,
+                    'temp_max': f.maxTemp.kelvin,
+                  },
+                  'dt': currentTime,
+                  'weather': [
+                    {
+                      'main': weatherBio,
+                      'description': weatherInfo,
+                      'icon': weatherIconID
+                    }
+                  ],
+                })
+            .toList()
       };
 
   //factory Weather.fromJson(Map<String, dynamic> json) =>

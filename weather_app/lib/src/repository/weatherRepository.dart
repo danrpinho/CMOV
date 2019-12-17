@@ -33,6 +33,7 @@ class WeatherRepository {
 
   Future saveWeatherSharedPreferences(String key, weather) async {
     final prefs = await SharedPreferences.getInstance();
+    print(json.encode(weather));
     prefs.setString(weather.name, json.encode(weather));
   }
 
