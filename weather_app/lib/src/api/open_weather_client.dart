@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:weather_app/src/model/weather.dart';
 
@@ -26,11 +27,23 @@ class OpenWeatherAPIClient {
     return Weather.mapFromJson(weatherJson);
   }
 
+  Future<Weather> fetchWeatherByLocation(double lat, double lon) async {
+    final url = '$baseUrl/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey';
+
+    final res = await this.httpClient.get(url);
+    if (res.statusCode != 200) {
+      Logger().e("couldnt get weather by location");
+    }
+    final weatherJson = json.decode(res.body);
+    Weather weather = Weather.mapFromJson(weatherJson);
+    return weather;
+  }
+
   Future<List<Weather>> getForecast(String cityName) async {
     //URL
     final url = '$baseUrl/data/2.5/forecast?q=$cityName&appid=$apiKey';
 
-    print('fetching $url');
+    //print('fetching $url');
 
     //response
     final res = await this.httpClient.get(url);
@@ -46,8 +59,8 @@ class OpenWeatherAPIClient {
   }
 
   Future<Weather> fetchWeatherByID(int id) async {
-    final url = '$baseUrl/data/2.5/weather?q=$id&appid=$apiKey';
-    print(url);
+    final url = '$baseUrl/data/2.5/weather?id=$id&appid=$apiKey';
+    //  print(url);
 
     //Response
     final response = await this.httpClient.get(url);
@@ -56,11 +69,11 @@ class OpenWeatherAPIClient {
     return Weather.mapFromJson(weatherJson);
   }
 
-  Future<List<Weather>> getForecastbyId(int id) async {
+  Future<List<Weather>> getForecastByID(int id) async {
     //URL
-    final url = '$baseUrl/data/2.5/forecast?q=$id&appid=$apiKey';
+    final url = '$baseUrl/data/2.5/forecast?id=$id&appid=$apiKey';
 
-    print('fetching $url');
+//print('fetching $url');
 
     //response
     final res = await this.httpClient.get(url);
@@ -71,7 +84,6 @@ class OpenWeatherAPIClient {
     //print(forecastJson);
     // map to model
     List<Weather> weathers = Weather.fromForecastJson(forecastJson);
-    print(weathers);
     return weathers;
   }
 }

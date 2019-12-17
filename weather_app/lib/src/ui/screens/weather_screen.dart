@@ -39,7 +39,7 @@ class WeatherScreen extends StatelessWidget {
               ],
             ),
           ),
-          MainInfo(info: null, key: null),
+          MainInfo(info: weather, key: null),
         ],
       )),
       margin: EdgeInsets.all(_main_info_margin),
