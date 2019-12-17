@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/src/model/weather.dart';
 import 'package:weather_app/src/model/weatherCollection.dart';
+import 'package:weather_app/src/ui/widgets/value_tile.dart';
 import '../theme/theme.dart';
 
 class MainInfo extends StatelessWidget {
@@ -30,6 +32,43 @@ class MainInfo extends StatelessWidget {
           ),
         ),
         createTemperatureWidget(info),
+        Padding(
+          child: Divider(
+            color: Colors.black,
+          ),
+          padding: EdgeInsets.all(20),
+        ),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          ValueTile("wind speed", '${info.windSpeed} m/s'),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Center(
+                child: Container(width: 1, height: 30, color: Colors.black45)),
+          ),
+          ValueTile(
+              "sunrise",
+              DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
+                  this.info.sunriseTime * 1000))),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Center(
+                child: Container(width: 1, height: 30, color: Colors.black45)),
+          ),
+          ValueTile(
+              "sunset",
+              DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
+                  this.info.sunsetTime * 1000))),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: Center(
+                child: Container(
+              width: 1,
+              height: 30,
+              color: Colors.black45,
+            )),
+          ),
+          ValueTile("humidity", '${this.info.humidity}%'),
+        ]),
       ],
     );
   }
@@ -43,6 +82,12 @@ class MainInfo extends StatelessWidget {
             Text(
               "13ºC",
               style: TextStyle(fontSize: 30, color: Colors.grey),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: Center(
+                  child:
+                      Container(width: 1, height: 30, color: Colors.black45)),
             ),
             Column(
               children: <Widget>[
