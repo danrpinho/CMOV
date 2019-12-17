@@ -29,8 +29,8 @@ class FetchWeatherCollectionById extends WeatherEvent {
 }
 
 class FetchWeatherCollectionByLatLon extends WeatherEvent {
-  final int lat;
-  final int long;
+  final double lat;
+  final double long;
 
   const FetchWeatherCollectionByLatLon(this.lat, this.long);
   @override

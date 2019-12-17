@@ -56,6 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
       //bloc.add(FetchWeatherById(2735943));
       List<int> ids = [2735943, 2732438];
       bloc.add(FetchWeatherCollectionById(ids));
+
+      //bloc.add(FetchWeatherCollectionByLatLon(41.3, -7.75));
       //bloc.add(FetchWeather("Vila Real"));
       //widget.weatherRepo.getWeather(0, 0, "Porto");
       //print("hello");
@@ -111,17 +113,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 }
                 if (state is WeatherLoaded) {
-                  // TODO Do something
-
                   return WeatherScreen(
-                      day: "Sunday, 16 December 2019", weather: state.weather);
+                    day: "Sunday, 16 December 2019",
+                    weather: state.weather,
+                  );
                 }
                 if (state is WeatherCollectionLoaded) {
-                  Logger().d("collection loaded ");
                   this.weathers = state.weathers;
                   return WeatherScreen(
                       day: "Sunday, 15 December 2019",
-                      weather: state.weathers.elementAt(0));
+                      weather: this.weathers.elementAt(this.cityNumber));
                 }
                 return WeatherScreen(day: "Sunday, 15 December 2019");
               });
