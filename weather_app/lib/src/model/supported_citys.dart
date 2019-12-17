@@ -19,6 +19,10 @@ class City {
     this.lat = 0.0;
     this.long = 0.0;
   }
+  City.fromPosition(lat, long) {
+    this.lat = lat;
+    this.long = long;
+  }
 
   factory City.fromJson(dynamic json) {
     return City.supportedCitys(

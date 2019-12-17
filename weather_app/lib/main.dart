@@ -77,11 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _loadState() async {
     cities = await SavedCities.fromSharedPreferences();
+    if (cities == null) cities = new List<City>();
     position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    cities.insert(
+        0, new City.fromPosition(position.latitude, position.longitude));
     itemCount = SavedCities.savedCities.length;
+
     bloc = WeatherBloc(widget.weatherRepo);
-    //TODO retires ids do var cities e enviar
     List<int> ids = [2735943, 2732438];
     bloc.add(FetchWeatherCollectionById(ids));
     SupportedCitys.loadCitys();
@@ -115,7 +118,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ).then((value) {
                 setState(() {
                   cities = SavedCities.savedCities;
-                  itemCount = cities.length + 1;
+                  cities.insert(
+                      0,
+                      new City.fromPosition(
+                          position.latitude, position.longitude));
+                  itemCount = cities.length;
                 });
               });
             },
