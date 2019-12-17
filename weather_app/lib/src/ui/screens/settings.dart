@@ -12,7 +12,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   static dynamic selectedTheme = 1;
   static dynamic selectedTemperatureUnit = 1;
-
+  static bool useGoogleMaps = false;
   SharedPreferences preferences;
 
   notifyThemeUpdate(int themeCode) {
@@ -42,6 +42,7 @@ class _SettingsState extends State<Settings> {
       selectedTheme = (prefs.getInt(Constants.PREFS_THEME) ?? 1);
       selectedTemperatureUnit =
           (prefs.getInt(Constants.PREFS_TEMPERATURE_UNIT) ?? 1);
+      useGoogleMaps = (prefs.getBool(Constants.LOCATION_PICKER_BOOL) ?? false);
     });
   }
 
@@ -138,6 +139,56 @@ class _SettingsState extends State<Settings> {
                       temperatureValue:
                           Temperature.asRadioOption(TemperatureUnit.fahrenheit),
                       updateTemperatureUnit: notifyTemperatureUnitUpdate,
+                    ),
+                  ],
+                ),
+              ),
+              Card(
+                margin: EdgeInsets.all(10),
+                elevation: 3,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 15, left: 8, right: 8, bottom: 8),
+                      child: Text(
+                        "Location Picker",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8)),
+                        color: Colors.white,
+                      ),
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Use Google Maps",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Switch(
+                            value: useGoogleMaps,
+                            onChanged: (value) {
+                              setState(() {
+                                useGoogleMaps = value;
+                                preferences.setBool(
+                                    Constants.LOCATION_PICKER_BOOL, value);
+                              });
+                            },
+                            activeTrackColor: Colors.lightBlueAccent,
+                            activeColor: Colors.blue,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

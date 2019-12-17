@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/bloc/bloc.dart';
 import 'package:weather_app/src/bloc/weather_bloc.dart';
+import 'package:weather_app/src/model/supported_citys.dart';
 import 'package:weather_app/src/repository/weatherRepository.dart';
 import 'package:weather_app/src/ui/screens/settings.dart';
 import 'package:weather_app/src/ui/screens/weather_screen.dart';
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
+
+  final void x = SupportedCitys.loadCitys();
 
   final String title;
   final int itemCount = 3;
