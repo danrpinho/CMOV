@@ -3,14 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/bloc/bloc.dart';
 import 'package:weather_app/src/bloc/weather_bloc.dart';
 import 'package:weather_app/src/model/supported_citys.dart';
 import 'package:weather_app/src/model/weather.dart';
-import 'package:weather_app/src/model/weatherCollection.dart';
 import 'package:weather_app/src/repository/weatherRepository.dart';
 import 'package:weather_app/src/ui/screens/local_picker.dart';
 import 'package:weather_app/src/ui/screens/settings.dart';
@@ -38,10 +36,6 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
-  final String title;
-  final int itemCount = 3;
-  SharedPreferences preferences;
-  //weather Repository
   final WeatherRepository weatherRepo = WeatherRepository(
       client: OpenWeatherAPIClient(httpClient: http.Client()));
 
@@ -77,9 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO From shared preferences
     super.initState();
     _loadState();
-    bloc = WeatherBloc(widget.weatherRepo);
-    List<int> ids = [2735943, 2732438];
-    bloc.add(FetchWeatherCollectionById(ids));
+
     //bloc.add(FetchWeather("Sobrado"));
   }
 
@@ -87,7 +79,11 @@ class _MyHomePageState extends State<MyHomePage> {
     cities = await SavedCities.fromSharedPreferences();
     position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    itemCount = SavedCities.savedCities.length + 1;
+    itemCount = SavedCities.savedCities.length;
+    bloc = WeatherBloc(widget.weatherRepo);
+    //TODO retires ids do var cities e enviar
+    List<int> ids = [2735943, 2732438];
+    bloc.add(FetchWeatherCollectionById(ids));
     SupportedCitys.loadCitys();
   }
 
@@ -159,8 +155,8 @@ class _MyHomePageState extends State<MyHomePage> {
             this.cityNumber = index;
           })
         },
+        itemCount: itemCount,
       ),
-        itemCount: widget.itemCount,
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
