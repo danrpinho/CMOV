@@ -34,7 +34,13 @@ class WeatherRepository {
   Future saveWeatherSharedPreferences(String key, weather) async {
     final prefs = await SharedPreferences.getInstance();
     print(json.encode(weather));
+
     prefs.setString(weather.name, json.encode(weather));
+  }
+
+  Future getWeatherSharedPreferences(name) async {
+    final prefs = await SharedPreferences.getInstance();
+    return json.decode(prefs.getString(name));
   }
 
   Future saveWeatherCollection(String key, value) async {

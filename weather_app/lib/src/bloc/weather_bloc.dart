@@ -23,7 +23,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             await weatherRepository.getWeatherbyName(event.cityName);
         final s = await weatherRepository.saveWeatherSharedPreferences(
             weather.name, weather);
-
+        final m =
+            await weatherRepository.getWeatherSharedPreferences(weather.name);
+        print(m);
         yield WeatherLoaded(weather);
       } on NetworkError {
         yield WeatherError("Error Weather Bloc");

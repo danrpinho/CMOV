@@ -159,10 +159,10 @@ class Weather {
         'forecasts': forecast
             .map((f) => {
                   'main': {
-                    'temp': f.temp.kelvin,
-                    'pressure': f.pressure,
-                    'temp_min': f.minTemp.kelvin,
-                    'temp_max': f.maxTemp.kelvin,
+                    'temp': temp.kelvin,
+                    'pressure': pressure,
+                    'temp_min': minTemp.kelvin,
+                    'temp_max': maxTemp.kelvin,
                   },
                   'dt': currentTime,
                   'weather': [
