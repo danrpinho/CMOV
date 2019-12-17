@@ -74,6 +74,13 @@ class WeatherRepository {
     }
     return weathers;
   }
+
+  Future getWeatherByLocation(double lat, double lon) async {
+    final weather = await client.fetchWeatherByLocation(lat, lon);
+    final weatherForecas = await client.getForecastByID(weather.cityId);
+    weather.forecast = weatherForecas;
+    return weather;
+  }
 }
 
 class NetworkError extends Error {}

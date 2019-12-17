@@ -8,6 +8,8 @@ import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/bloc/bloc.dart';
 import 'package:weather_app/src/bloc/weather_bloc.dart';
 import 'package:weather_app/src/model/supported_citys.dart';
+import 'package:weather_app/src/model/weather.dart';
+import 'package:weather_app/src/model/weatherCollection.dart';
 import 'package:weather_app/src/repository/weatherRepository.dart';
 import 'package:weather_app/src/ui/screens/settings.dart';
 import 'package:weather_app/src/ui/screens/weather_screen.dart';
@@ -35,7 +37,7 @@ class MyHomePage extends StatefulWidget {
   final void x = SupportedCitys.loadCitys();
 
   final String title;
-  final int itemCount = 3;
+  final int itemCount = 2;
   SharedPreferences preferences;
   //weather Repository
   final WeatherRepository weatherRepo = WeatherRepository(
@@ -48,12 +50,13 @@ class _MyHomePageState extends State<MyHomePage> {
   dynamic cityNumber = 1;
   SharedPreferences preferences;
   WeatherBloc bloc;
+  List<Weather> weathers;
   void _incrementCounter() {
     setState(() {
-      bloc.add(FetchWeatherById(2735943));
+      //bloc.add(FetchWeatherById(2735943));
       List<int> ids = [2735943, 2732438];
       bloc.add(FetchWeatherCollectionById(ids));
-
+      //bloc.add(FetchWeather("Vila Real"));
       //widget.weatherRepo.getWeather(0, 0, "Porto");
       //print("hello");
     });
@@ -67,7 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     bloc = WeatherBloc(widget.weatherRepo);
-    bloc.add(FetchWeather("Porto"));
+    List<int> ids = [2735943, 2732438];
+    bloc.add(FetchWeatherCollectionById(ids));
     //bloc.add(FetchWeather("Sobrado"));
   }
 
@@ -95,29 +99,41 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: new Swiper(
-          itemBuilder: (BuildContext context, int index) {
-            return BlocBuilder(
-                bloc: bloc,
-                builder: (context, state) {
-                  if (state is WeatherLoaded) {
-                    // TODO Do something
+        itemBuilder: (BuildContext context, int index) {
+          return BlocBuilder(
+              bloc: bloc,
+              builder: (context, state) {
+                if (state is WeatherLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                    ),
+                  );
+                }
+                if (state is WeatherLoaded) {
+                  // TODO Do something
 
-                    return WeatherScreen(day: "Sunday, 16 December 2019");
-                  }
-                  if (state is WeatherCollectionLoaded) {
-                    var logger = Logger();
-                    logger.wtf("weather collection loaded ", state.weathers);
-                  }
-                  return WeatherScreen(day: "Sunday, 15 December 2019");
-                });
-          },
-          itemCount: widget.itemCount,
-          pagination: new SwiperPagination(),
-          onIndexChanged: (int index) => {
-                setState(() {
-                  this.cityNumber = index;
-                })
-              }),
+                  return WeatherScreen(
+                      day: "Sunday, 16 December 2019", weather: state.weather);
+                }
+                if (state is WeatherCollectionLoaded) {
+                  Logger().d("collection loaded ");
+                  this.weathers = state.weathers;
+                  return WeatherScreen(
+                      day: "Sunday, 15 December 2019",
+                      weather: state.weathers.elementAt(0));
+                }
+                return WeatherScreen(day: "Sunday, 15 December 2019");
+              });
+        },
+        itemCount: widget.itemCount,
+        pagination: new SwiperPagination(),
+        onIndexChanged: (int index) => {
+          setState(() {
+            this.cityNumber = index;
+          })
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

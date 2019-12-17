@@ -27,3 +27,12 @@ class FetchWeatherCollectionById extends WeatherEvent {
   @override
   List<Object> get props => [ids];
 }
+
+class FetchWeatherCollectionByLatLon extends WeatherEvent {
+  final int lat;
+  final int long;
+
+  const FetchWeatherCollectionByLatLon(this.lat, this.long);
+  @override
+  List<Object> get props => [lat, long];
+}

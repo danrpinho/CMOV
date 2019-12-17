@@ -48,5 +48,13 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         yield WeatherError("Error Weather Bloc");
       }
     }
+    else if (event is FetchWeatherCollectionByLatLon) {
+      try {
+        final weather =
+            await weatherRepository.getWeatherByLocation(event.lat.toDouble(), event.long.toDouble());
+        yield (WeatherLoaded(weather));
+      } on NetworkError {
+        yield WeatherError("Error Weather Bloc");
+      }
   }
 }

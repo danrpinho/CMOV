@@ -27,6 +27,18 @@ class OpenWeatherAPIClient {
     return Weather.mapFromJson(weatherJson);
   }
 
+  Future<Weather> fetchWeatherByLocation(double lat, double lon) async {
+    final url = '$baseUrl/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey';
+
+    final res = await this.httpClient.get(url);
+    if (res.statusCode != 200) {
+      Logger().e("couldnt get weather by location");
+    }
+    final weatherJson = json.decode(res.body);
+    Weather weather = Weather.mapFromJson(weatherJson);
+    return weather;
+  }
+
   Future<List<Weather>> getForecast(String cityName) async {
     //URL
     final url = '$baseUrl/data/2.5/forecast?q=$cityName&appid=$apiKey';
