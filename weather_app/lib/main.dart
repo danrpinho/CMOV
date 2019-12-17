@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/bloc/bloc.dart';
@@ -67,12 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    //TODO  Fetch Cities
-    // TODO From shared preferences
     super.initState();
+    bloc = WeatherBloc(widget.weatherRepo, this.weathers);
     _loadState();
 
-    //bloc.add(FetchWeather("Sobrado"));
+    bloc.add(FetchWeather("Sobrado"));
   }
 
   _loadState() async {
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         0, new City.fromPosition(position.latitude, position.longitude));
     itemCount = SavedCities.savedCities.length;
 
-    bloc = WeatherBloc(widget.weatherRepo);
+    bloc = WeatherBloc(widget.weatherRepo, this.weathers);
     List<int> ids = [2735943, 2732438];
     bloc.add(FetchWeatherCollectionById(ids));
     SupportedCitys.loadCitys();
@@ -142,6 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 }
                 if (state is WeatherLoaded) {
+                  Logger().d("WeatherLoaded", state);
+                  //this.weathers.add(state.weather);
                   return WeatherScreen(
                     day: "Sunday, 16 December 2019",
                     weather: state.weather,
@@ -149,6 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
                 if (state is WeatherCollectionLoaded) {
                   this.weathers = state.weathers;
+
                   return WeatherScreen(
                       day: "Sunday, 15 December 2019",
                       weather: this.weathers.elementAt(this.cityNumber));

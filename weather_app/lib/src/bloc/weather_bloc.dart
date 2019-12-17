@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:weather_app/src/model/weather.dart';
 import 'package:weather_app/src/model/weatherCollection.dart';
 import 'package:weather_app/src/repository/weatherRepository.dart';
 import './bloc.dart';
@@ -7,8 +8,8 @@ import './bloc.dart';
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository weatherRepository;
 
-  WeatherBloc(this.weatherRepository);
-
+  WeatherBloc(this.weatherRepository, this.weathers);
+  List<Weather> weathers = List<Weather>();
   @override
   WeatherState get initialState => WeatherInitial();
 
@@ -27,6 +28,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
             weather.name, weather);
         final m =
             await weatherRepository.getWeatherSharedPreferences(weather.name);
+
         // print(m);
         yield WeatherLoaded(weather);
       } on NetworkError {
@@ -51,10 +53,13 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       try {
         final weather = await weatherRepository.getWeatherByLocation(
             event.lat.toDouble(), event.long.toDouble());
-        yield (WeatherLoaded(weather));
+        weathers.add(weather);
+        yield (WeatherCollectionLoaded(this.weathers));
       } on NetworkError {
         yield WeatherError("Error Weather Bloc");
       }
     }
   }
 }
+
+class Weathers {}
