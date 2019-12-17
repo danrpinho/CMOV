@@ -26,7 +26,7 @@ class WeatherRepository {
     }
     var weather = await client.fetchWeather(cityName);
     var weatherForecast = await client.getForecast(cityName);
-    //print(weatherForecast);
+
     weather.forecast = weatherForecast;
     return weather;
   }

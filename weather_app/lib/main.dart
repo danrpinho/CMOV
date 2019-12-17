@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   WeatherBloc bloc;
   void _incrementCounter() {
     setState(() {
+      bloc.add(FetchWeather("Porto"));
       //widget.weatherRepo.getWeather(0, 0, "Porto");
       //print("hello");
     });
@@ -92,11 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 bloc: bloc,
                 builder: (context, state) {
                   if (state is WeatherLoaded) {
-                    //TODO  delete for tests purposes
-                    print(state.weather);
-                    print(state.weather.forecast[0].temp.celsius);
+                    // TODO Do something
 
-                    print(this.cityNumber);
                     return WeatherScreen(day: "Sunday, 16 December 2019");
                   }
                   return WeatherScreen(day: "Sunday, 15 December 2019");

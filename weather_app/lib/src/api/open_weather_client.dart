@@ -15,7 +15,7 @@ class OpenWeatherAPIClient {
   Future<Weather> fetchWeather(String cityName) async {
     //URL
     final url = '$baseUrl/data/2.5/weather?q=$cityName&appid=$apiKey';
-    print(url);
+    //print(url);
 
     //Response
     final response = await this.httpClient.get(url);
@@ -41,6 +41,7 @@ class OpenWeatherAPIClient {
     //print(forecastJson);
     // map to model
     List<Weather> weathers = Weather.fromForecastJson(forecastJson);
+
     return weathers;
   }
 
@@ -70,6 +71,7 @@ class OpenWeatherAPIClient {
     //print(forecastJson);
     // map to model
     List<Weather> weathers = Weather.fromForecastJson(forecastJson);
+    print(weathers);
     return weathers;
   }
 }

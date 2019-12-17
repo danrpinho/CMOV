@@ -36,7 +36,11 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/src/util/converters.dart';
 import 'package:weather_app/src/util/weather_icons.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+//part 'weather.g.dart';
+
+//@JSONSerializable()
 class Weather {
   String name;
   int cityId;
@@ -131,10 +135,10 @@ class Weather {
         'id': cityId,
         'name': name,
         'main': {
-          'temp': temp,
+          'temp': temp.kelvin,
           'pressure': pressure,
-          'temp_min': minTemp,
-          'temp_max': maxTemp,
+          'temp_min': minTemp.kelvin,
+          'temp_max': maxTemp.kelvin,
         },
         'dt': currentTime,
         'sys': {'sunrise': sunriseTime, 'sunset': sunsetTime},
@@ -144,6 +148,11 @@ class Weather {
             'description': weatherInfo,
             'icon': weatherIconID
           }
-        ]
+        ],
+        'forecasts': forecast,
       };
+
+  //factory Weather.fromJson(Map<String, dynamic> json) =>
+  //    _$WeatherFromJson(this);
+  //Map<String, dynamic> toJson() => _$WeatherToJson(this);
 }

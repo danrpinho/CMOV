@@ -1,18 +1,11 @@
-class User {
-  String name;
-  String age;
-  String location;
+import 'package:weather_app/src/model/weather.dart';
 
-  User();
+class WeatherCollection {
+  List<Weather> weathers;
 
-  User.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        age = json['age'],
-        location = json['location'];
+  WeatherCollection({this.weathers});
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'age': age,
-        'location': location,
+        'weathers': weathers,
       };
 }
