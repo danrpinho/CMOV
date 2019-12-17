@@ -38,19 +38,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:weather_app/src/util/converters.dart';
 import 'package:weather_app/src/util/weather_icons.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 class Weather {
   String name;
   int cityId;
   //int weatherId;
-  @JsonKey(name: 'temp')
+
   Temperature temp;
-  @JsonKey(name: 'min_temp')
+
   Temperature minTemp;
-  @JsonKey(name: 'max_temp')
+
   Temperature maxTemp;
-  @JsonKey(name: 'feels_like')
+
   Temperature feelsLike;
 
   int pressure;
@@ -175,8 +174,4 @@ class Weather {
                 })
             .toList()
       };
-
-  //factory Weather.fromJson(Map<String, dynamic> json) =>
-  //    _$WeatherFromJson(this);
-  //Map<String, dynamic> toJson() => _$WeatherToJson(this);
 }

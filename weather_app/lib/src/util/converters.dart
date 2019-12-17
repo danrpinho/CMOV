@@ -1,9 +1,7 @@
 import 'package:intl/intl.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 enum TemperatureUnit { kelvin, celsius, fahrenheit }
 
-@JsonSerializable()
 class Temperature {
   final double kelvin;
 
