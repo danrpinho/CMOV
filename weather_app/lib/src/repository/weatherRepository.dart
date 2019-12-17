@@ -8,8 +8,8 @@ import 'package:weather_app/src/model/weather.dart';
 
 class WeatherRepository {
   final OpenWeatherAPIClient client;
-  SharedPreferences preferences;
 
+  //constructor, inject dependency
   WeatherRepository({@required this.client}) : assert(client != null);
 
   Future<Weather> getWeather(double lat, double lon, String cityName) async {
