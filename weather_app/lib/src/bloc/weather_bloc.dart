@@ -19,14 +19,31 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     yield WeatherLoading();
     if (event is FetchWeather) {
       try {
+        //TODO Refractor this logic
         final weather =
             await weatherRepository.getWeatherbyName(event.cityName);
+
         final s = await weatherRepository.saveWeatherSharedPreferences(
             weather.name, weather);
         final m =
             await weatherRepository.getWeatherSharedPreferences(weather.name);
-        print(m);
+        // print(m);
         yield WeatherLoaded(weather);
+      } on NetworkError {
+        yield WeatherError("Error Weather Bloc");
+      }
+    } else if (event is FetchWeatherById) {
+      try {
+        final weather = await weatherRepository.getWeatherById(event.id);
+        yield (WeatherLoaded(weather));
+      } on NetworkError {
+        yield WeatherError("Error Weather Bloc");
+      }
+    } else if (event is FetchWeatherCollectionById) {
+      try {
+        final weather =
+            await weatherRepository.getWeatherCollectionRemote(event.ids);
+        yield (WeatherCollectionLoaded(weather));
       } on NetworkError {
         yield WeatherError("Error Weather Bloc");
       }

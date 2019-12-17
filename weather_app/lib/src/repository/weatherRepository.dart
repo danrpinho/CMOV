@@ -31,6 +31,16 @@ class WeatherRepository {
     return weather;
   }
 
+  Future<Weather> getWeatherById(int id) async {
+    if (id == null) {
+      print("id null");
+    }
+    var weather = await client.fetchWeatherByID(id);
+    var weatherForecast = await client.getForecastByID(id);
+    weather.forecast = weatherForecast;
+    return weather;
+  }
+
   Future saveWeatherSharedPreferences(String key, weather) async {
     final prefs = await SharedPreferences.getInstance();
     print(json.encode(weather));
@@ -51,6 +61,15 @@ class WeatherRepository {
   Future getWeatherCollectionShared(String name) async {
     final prefs = await SharedPreferences.getInstance();
     return json.decode(prefs.getString(name));
+  }
+
+  Future<List<Weather>> getWeatherCollectionRemote(List<int> ids) async {
+    List<Weather> weathers;
+    for (var id in ids) {
+      Weather weather = await client.fetchWeatherByID(id);
+      weathers.add(weather);
+    }
+    return weathers;
   }
 }
 

@@ -46,7 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
   WeatherBloc bloc;
   void _incrementCounter() {
     setState(() {
-      bloc.add(FetchWeather("Porto"));
+      bloc.add(FetchWeatherById(2735943));
+
       //widget.weatherRepo.getWeather(0, 0, "Porto");
       //print("hello");
     });
