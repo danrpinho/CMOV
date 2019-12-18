@@ -26,8 +26,8 @@ class MainInfo extends StatelessWidget {
           child: Text(this.day),
         ),
         Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Icon(this.info.toIcon(), color: Colors.black, size: 45),
+          padding: EdgeInsets.only(bottom: 30),
+          child: Icon(this.info.toIcon(), color: Colors.black, size: 60),
         ),
         Text(
           // city
