@@ -127,7 +127,7 @@ class MainInfo extends StatelessWidget {
             Column(
               children: <Widget>[
                 Text(
-                    "Max : ${info.maxTemp.tempToString(Temperature.fromRadioOption(prefs.getInt(Constants.PREFS_TEMPERATURE_UNIT)))}",
+                    "Max: ${info.maxTemp.tempToString(Temperature.fromRadioOption(prefs.getInt(Constants.PREFS_TEMPERATURE_UNIT)))}",
                     style: TextStyle(color: Themes.getMaxTempColor())),
                 Text(
                   "Min: ${info.minTemp.tempToString(Temperature.fromRadioOption(prefs.getInt(Constants.PREFS_TEMPERATURE_UNIT)))}",
