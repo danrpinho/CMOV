@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _loadState() async {
     SupportedCitys.loadCitys();
-
+    preferences = await SharedPreferences.getInstance();
     position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     if (position == null)
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
           .getLastKnownPosition(desiredAccuracy: LocationAccuracy.high);
 
     city = City.fromPosition(position.latitude, position.longitude);
-    preferences = await SharedPreferences.getInstance();
+
     _loadWeather();
   }
 
@@ -156,6 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     return WeatherScreen(
                       day: "Sunday, 16 December 2019",
                       weather: state.weather,
+                      prefs: preferences,
                     );
                   }
                   return Center(
@@ -164,6 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   );
                 }),
+            alignment: Alignment.center,
           ),
         ),
       ),

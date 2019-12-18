@@ -57,6 +57,21 @@ class Temperature {
     }
     return this.fahrenheit;
   }
+
+  String tempToString(TemperatureUnit unit) {
+    switch (unit) {
+      case TemperatureUnit.kelvin:
+        return this.kelvin.round().toString() + ' K';
+        break;
+      case TemperatureUnit.celsius:
+        return this.celsius.round().toString() + ' º';
+        break;
+      case TemperatureUnit.fahrenheit:
+        return this.fahrenheit.round().toString() + ' ºF';
+        break;
+    }
+    return this.celsius.round().toString() + ' º';
+  }
 }
 
 int2Double(dynamic val) {
