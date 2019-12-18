@@ -11,16 +11,14 @@ class LocalPicker extends StatelessWidget {
       body = new Container();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Add City')),
+      appBar: AppBar(title: Text('Change City')),
       body: body,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           City city = SupportedCitys.citys[_NormalPickerState.selectedCity];
-          SavedCities.addCity(city);
-          //TODO addcity
-          Navigator.pop(context);
+          Navigator.pop(context, city);
         },
-        tooltip: 'Add',
+        tooltip: 'Change to',
         child: Icon(Icons.add),
       ),
     );

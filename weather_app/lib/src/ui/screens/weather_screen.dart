@@ -25,17 +25,7 @@ class WeatherScreen extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                IconButton(
-                  iconSize: 30.0,
-                  onPressed: () {},
-                  icon: Icon(Icons.keyboard_arrow_left),
-                ),
                 Text(this.day),
-                IconButton(
-                  iconSize: 30.0,
-                  onPressed: () {},
-                  icon: Icon(Icons.keyboard_arrow_right),
-                ),
               ],
             ),
           ),

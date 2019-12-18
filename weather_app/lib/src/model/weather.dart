@@ -1,38 +1,3 @@
-//coord
-//coord.lon City geo location, longitude
-//coord.lat City geo location, latitude
-//weather (more info Weather condition codes)
-//weather.id Weather condition id
-//weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
-//weather.description Weather condition within the group
-//weather.icon Weather icon id
-//base Internal parameter
-//main.sea_level Atmospheric pressure on the sea level, hPa
-//main.grnd_level Atmospheric pressure on the ground level, hPa
-//wind
-//wind.speed Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
-//wind.deg Wind direction, degrees (meteorological)
-//clouds
-//clouds.all Cloudiness, %
-//rain
-//rain.1h Rain volume for the last 1 hour, mm
-//rain.3h Rain volume for the last 3 hours, mm
-//snow
-//snow.1h Snow volume for the last 1 hour, mm
-//snow.3h Snow volume for the last 3 hours, mm
-
-//sys
-//sys.type Internal parameter
-//sys.id Internal parameter
-//sys.message Internal parameter
-//sys.country Country code (GB, JP etc.)
-//sys.sunrise Sunrise time, unix, UTC
-//sys.sunset Sunset time, unix, UTC
-//timezone Shift in seconds from UTC
-//id City ID
-//name City name
-//cod Internal parameter
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -63,6 +28,7 @@ class Weather {
   String weatherInfo;
   String weatherIconID;
 
+  double windSpeed;
   List<Weather> forecast;
 
   Weather(
@@ -79,45 +45,47 @@ class Weather {
       this.sunriseTime,
       this.weatherBio,
       this.weatherInfo,
-      this.weatherIconID});
+      this.weatherIconID,
+      this.windSpeed});
 
   static Weather mapFromJson(Map<String, dynamic> json) {
     final weather = json['weather'][0];
     return Weather(
-      cityId: json['id'],
-      name: json['name'],
+        cityId: json['id'],
+        name: json['name'],
 
-      //main.temp Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-      temp: Temperature(int2Double(json['main']['temp'])),
+        //main.temp Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+        temp: Temperature(int2Double(json['main']['temp'])),
 
-      //main.pressure Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
-      pressure: json['main']['pressure'],
+        //main.pressure Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
+        pressure: json['main']['pressure'],
 
-      //main.humidity Humidity, %
-      humidity: json['main']['humidity'],
+        //main.humidity Humidity, %
+        humidity: json['main']['humidity'],
 
-      //main.temp_min Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-      minTemp: Temperature(int2Double(json['main']['temp_min'])),
+        //main.temp_min Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+        minTemp: Temperature(int2Double(json['main']['temp_min'])),
 
-      //main.temp_max Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-      maxTemp: Temperature(int2Double(json['main']['temp_max'])),
+        //main.temp_max Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+        maxTemp: Temperature(int2Double(json['main']['temp_max'])),
 
-      //dt Time of data calculation, unix, UTC
-      currentTime: json['dt'],
+        //dt Time of data calculation, unix, UTC
+        currentTime: json['dt'],
 
-      //sys.sunrise Sunrise time, unix, UTC
-      sunriseTime: json['sys']['sunrise'],
+        //sys.sunrise Sunrise time, unix, UTC
+        sunriseTime: json['sys']['sunrise'],
 
-      //sys.sunset Sunset time, unix, UTC
-      sunsetTime: json['sys']['sunset'],
+        //sys.sunset Sunset time, unix, UTC
+        sunsetTime: json['sys']['sunset'],
 
-      //weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
-      weatherBio: weather['main'],
-      //weather.description Weather condition within the group
-      weatherInfo: weather['description'],
-      //weather.icon Weather icon id
-      weatherIconID: weather['icon'],
-    );
+        //weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
+        weatherBio: weather['main'],
+        //weather.description Weather condition within the group
+        weatherInfo: weather['description'],
+        //weather.icon Weather icon id
+        weatherIconID: weather['icon'],
+        // wind
+        windSpeed: int2Double(json['wind']['speed']));
   }
 
   static List<Weather> fromForecastJson(Map<String, dynamic> json) {

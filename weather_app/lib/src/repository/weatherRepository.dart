@@ -66,7 +66,6 @@ class WeatherRepository {
 
   Future<List<Weather>> getWeatherCollectionRemote(List<int> ids) async {
     final weathers = List<Weather>();
-    var logger = Logger();
     for (var id in ids) {
       Weather weather = await client.fetchWeatherByID(id);
       weathers.add(weather);

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/bloc/bloc.dart';
 import 'package:weather_app/src/bloc/weather_bloc.dart';
 import 'package:weather_app/src/model/supported_citys.dart';
-import 'package:weather_app/src/model/weather.dart';
 import 'package:weather_app/src/repository/weatherRepository.dart';
 import 'package:weather_app/src/ui/screens/local_picker.dart';
 import 'package:weather_app/src/ui/screens/settings.dart';
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ACK Weather',
-      theme: Themes.lightTheme,
+      theme: Themes.darkTheme,
       home: MyHomePage(
         title: 'ACK Weather  ',
       ),
@@ -44,57 +43,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  dynamic cityNumber = 0;
   SharedPreferences preferences;
   WeatherBloc bloc;
-  List<Weather> weathers;
-  int itemCount = 1;
   Position position;
-  List<City> cities;
+  City city;
 
   void _incrementCounter() {
     setState(() {
-      //bloc.add(FetchWeatherById(2735943));
-      List<int> ids = [2735943, 2732438];
-      bloc.add(FetchWeatherCollectionById(ids));
-
-      //bloc.add(FetchWeatherCollectionByLatLon(41.3, -7.75));
-      //bloc.add(FetchWeather("Vila Real"));
-      //widget.weatherRepo.getWeather(0, 0, "Porto");
-      //print("hello");
+      //List<int> ids = [2735943, 2732438];
+      //bloc.add(FetchWeatherCollectionById(ids));
     });
   }
 
   @override
   void initState() {
-    //TODO  Fetch Cities
-    // TODO From shared preferences
     super.initState();
+    bloc = WeatherBloc(widget.weatherRepo, new List());
     _loadState();
-
-    //bloc.add(FetchWeather("Sobrado"));
   }
 
   _loadState() async {
-    cities = await SavedCities.fromSharedPreferences();
-    if (cities == null) cities = new List<City>();
+    SupportedCitys.loadCitys();
     position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    cities.insert(
-        0, new City.fromPosition(position.latitude, position.longitude));
-    itemCount = SavedCities.savedCities.length;
+    if (position == null)
+      position = await Geolocator()
+          .getLastKnownPosition(desiredAccuracy: LocationAccuracy.high);
 
-    bloc = WeatherBloc(widget.weatherRepo);
-    List<int> ids = [2735943, 2732438];
-    bloc.add(FetchWeatherCollectionById(ids));
-    SupportedCitys.loadCitys();
+    city = City.fromPosition(position.latitude, position.longitude);
+    _loadWeather();
+  }
+
+  _loadWeather() {
+    if (city != null && city.id != null && city.id > 0)
+      bloc.add(FetchWeatherById(city.id));
+    else if (city != null && city.long != null && city.lat != null)
+      bloc.add(FetchWeatherByLatLon(city.lat, city.long));
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(cityNumber.toString()),
+        title: new Text(widget.title),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
@@ -117,52 +108,43 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ).then((value) {
                 setState(() {
-                  cities = SavedCities.savedCities;
-                  cities.insert(
-                      0,
-                      new City.fromPosition(
-                          position.latitude, position.longitude));
-                  itemCount = cities.length;
+                  city = value;
+                  _loadWeather();
                 });
               });
             },
           ),
         ],
       ),
-      body: new Swiper(
-        itemBuilder: (BuildContext context, int index) {
-          return BlocBuilder(
-              bloc: bloc,
-              builder: (context, state) {
-                if (state is WeatherLoading) {
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            child: BlocBuilder(
+                bloc: bloc,
+                builder: (context, state) {
+                  if (state is WeatherLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                      ),
+                    );
+                  }
+                  if (state is WeatherLoaded) {
+                    Logger().d("WeatherLoaded", state);
+                    //this.weathers.add(state.weather);
+                    return WeatherScreen(
+                      day: "Sunday, 16 December 2019",
+                      weather: state.weather,
+                    );
+                  }
                   return Center(
                     child: CircularProgressIndicator(
                       backgroundColor: Colors.white,
                     ),
                   );
-                }
-                if (state is WeatherLoaded) {
-                  return WeatherScreen(
-                    day: "Sunday, 16 December 2019",
-                    weather: state.weather,
-                  );
-                }
-                if (state is WeatherCollectionLoaded) {
-                  this.weathers = state.weathers;
-                  return WeatherScreen(
-                      day: "Sunday, 15 December 2019",
-                      weather: this.weathers.elementAt(this.cityNumber));
-                }
-                return WeatherScreen(day: "Sunday, 15 December 2019");
-              });
-        },
-        pagination: new SwiperPagination(),
-        onIndexChanged: (int index) => {
-          setState(() {
-            this.cityNumber = index;
-          })
-        },
-        itemCount: itemCount,
+                }),
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
