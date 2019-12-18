@@ -101,10 +101,6 @@ class Weather {
     return weathers;
   }
 
-  // factory Weather.fromJson(Map<String, dynamic> json) =>
-  //    _$WeatherFromJson(json);
-  // Map<String, dynamic> toJson() => _$WeatherToJson(this);
-
   Map<String, dynamic> toJson() => {
         'id': cityId,
         'name': name,
@@ -142,4 +138,44 @@ class Weather {
                 })
             .toList()
       };
+  IconData toIcon() {
+    switch (this.weatherIconID) {
+      case '01d':
+        return WeatherIconsConverter.clear_day;
+      case '01n':
+        return WeatherIconsConverter.clear_night;
+      case '02d':
+        return WeatherIconsConverter.few_clouds_day;
+      case '02n':
+        return WeatherIconsConverter.few_clouds_day;
+      case '03d':
+      case '04d':
+        return WeatherIconsConverter.clouds_day;
+      case '03n':
+      case '04n':
+        return WeatherIconsConverter.clear_night;
+      case '09d':
+        return WeatherIconsConverter.shower_rain_day;
+      case '09n':
+        return WeatherIconsConverter.shower_rain_night;
+      case '10d':
+        return WeatherIconsConverter.rain_day;
+      case '10n':
+        return WeatherIconsConverter.rain_night;
+      case '11d':
+        return WeatherIconsConverter.thunder_storm_day;
+      case '11n':
+        return WeatherIconsConverter.thunder_storm_night;
+      case '13d':
+        return WeatherIconsConverter.snow_day;
+      case '13n':
+        return WeatherIconsConverter.snow_night;
+      case '50d':
+        return WeatherIconsConverter.mist_day;
+      case '50n':
+        return WeatherIconsConverter.mist_night;
+      default:
+        return WeatherIconsConverter.clear_day;
+    }
+  }
 }
