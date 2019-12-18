@@ -5,6 +5,9 @@ import 'package:weather_app/src/util/constants.dart';
 import 'package:weather_app/src/util/converters.dart';
 
 class Settings extends StatefulWidget {
+  final Function onThemeDataChange;
+
+  const Settings({Key key, this.onThemeDataChange}) : super(key: key);
   @override
   _SettingsState createState() => _SettingsState();
 }
@@ -20,6 +23,7 @@ class _SettingsState extends State<Settings> {
       selectedTheme = themeCode;
       preferences.setInt(Constants.PREFS_THEME, themeCode);
     });
+    widget.onThemeDataChange(Themes.getTheme(themeCode));
   }
 
   notifyTemperatureUnitUpdate(int tempCode) {
@@ -89,7 +93,7 @@ class _SettingsState extends State<Settings> {
                       backgroundColor: Colors.white,
                       textColor: Colors.black,
                       accentColor: Colors.black,
-                      themeName: "Gradient Mode",
+                      themeName: "Colorful Mode",
                       themeValue: Themes.THEME_GRADIENT,
                       updateTheme: notifyThemeUpdate,
                     ),
@@ -181,7 +185,8 @@ class _SettingsState extends State<Settings> {
                               setState(() {
                                 useGoogleMaps = value;
                                 preferences.setBool(
-                                    Constants.LOCATION_PICKER_BOOL, useGoogleMaps);
+                                    Constants.LOCATION_PICKER_BOOL,
+                                    useGoogleMaps);
                               });
                             },
                             activeTrackColor: Colors.lightBlueAccent,

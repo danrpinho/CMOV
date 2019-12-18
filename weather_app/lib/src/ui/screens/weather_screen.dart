@@ -88,7 +88,10 @@ class WeatherScreen extends StatelessWidget {
         }
       },
       itemCount: 6,
-      pagination: new SwiperPagination(),
+      pagination: new SwiperPagination(
+          margin: new EdgeInsets.all(5.0),
+          builder: new DotSwiperPaginationBuilder(
+              color: Colors.blueGrey, activeColor: Colors.black87)),
     );
   }
 //MainInfo(info: weather, prefs: prefs, day: this.day),

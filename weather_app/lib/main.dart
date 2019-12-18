@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/bloc/bloc.dart';
@@ -16,25 +15,46 @@ import 'package:weather_app/src/util/constants.dart';
 
 import 'src/ui/theme/theme.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(App());
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MyApp();
+  }
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeData theme = Themes.getTheme(0);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ACK Weather',
-      theme: Themes.darkTheme,
+      debugShowCheckedModeBanner: false,
+      theme: this.theme,
       home: MyHomePage(
         title: 'ACK Weather  ',
+        updateTheme: (ThemeData data) {
+          setState(() {
+            this.theme = data;
+          });
+        },
       ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.title, this.updateTheme}) : super(key: key);
 
   final String title;
+  final Function updateTheme;
 
   final WeatherRepository weatherRepo = WeatherRepository(
       client: OpenWeatherAPIClient(httpClient: http.Client()));
@@ -49,13 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Position position;
   City city;
 
-  void _incrementCounter() {
-    setState(() {
-      //List<int> ids = [2735943, 2732438];
-      //bloc.add(FetchWeatherCollectionById(ids));
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -66,6 +79,8 @@ class _MyHomePageState extends State<MyHomePage> {
   _loadState() async {
     SupportedCitys.loadCitys();
     preferences = await SharedPreferences.getInstance();
+    widget.updateTheme(
+        Themes.getTheme(preferences.getInt(Constants.PREFS_THEME)));
     position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     if (position == null)
@@ -96,7 +111,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Settings(),
+                  builder: (context) =>
+                      Settings(onThemeDataChange: widget.updateTheme),
                 ),
               );
             },
@@ -165,11 +181,6 @@ class _MyHomePageState extends State<MyHomePage> {
             }),
         alignment: Alignment.center,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

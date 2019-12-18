@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/src/model/weather.dart';
@@ -18,19 +20,35 @@ class Themes {
   static Color getMaxTempColor() => Colors.yellow[900];
   static Color getMinTempColor() => Colors.lightBlue[400];
 
+  static getTheme(int theme) {
+    if (theme == THEME_DARK) return darkTheme;
+    if (theme == THEME_LIGHT) return lightTheme;
+    Random random = Random();
+    theme = random.nextInt(4);
+    if (theme == 0) return gradientThemeUnknown;
+    if (theme == 1) return gradientThemeRainyStormy;
+    if (theme == 2) return gradientThemeFoggySnowy;
+    if (theme == 3) return gradientThemeSunny;
+
+    return gradientThemeSunny;
+  }
+
   static final _themeLight = ThemeData(
     backgroundColor: Colors.grey[50],
     primaryColor: Colors.grey[50],
     accentColor: Colors.grey[100],
     primaryTextTheme: TextTheme(
-      body1: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
+      body1: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
       body2: TextStyle(color: Colors.grey),
-      title: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[850], fontWeight: FontWeight.bold)),
-      subtitle: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[700])),
+      title: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.grey[850], fontWeight: FontWeight.bold)),
+      subtitle:
+          GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[700])),
     ),
-    iconTheme: IconThemeData(
-      color: Colors.grey[700]
-    ),
+    iconTheme: IconThemeData(color: Colors.grey[700]),
     buttonColor: Colors.grey[850],
   );
 
@@ -39,14 +57,17 @@ class Themes {
     backgroundColor: Colors.grey[850],
     accentColor: Colors.grey[700],
     primaryTextTheme: TextTheme(
-      title: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[50], fontWeight: FontWeight.bold)),
-      body1: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[100], fontWeight: FontWeight.bold)),
+      title: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.grey[50], fontWeight: FontWeight.bold)),
+      body1: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.grey[100], fontWeight: FontWeight.bold)),
       body2: TextStyle(color: Colors.grey),
-      subtitle: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[100])),
+      subtitle:
+          GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[100])),
     ),
-    iconTheme: IconThemeData(
-      color: Colors.grey[100]
-    ),
+    iconTheme: IconThemeData(color: Colors.grey[100]),
     buttonColor: Colors.grey[50],
   );
 
@@ -54,14 +75,17 @@ class Themes {
     primaryColor: Colors.lightBlue[400],
     backgroundColor: Colors.lightBlue[400],
     primaryTextTheme: TextTheme(
-      title: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      body1: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      title: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      body1: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       body2: TextStyle(color: Colors.white),
-      subtitle: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white)),
+      subtitle:
+          GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white)),
     ),
-    iconTheme: IconThemeData(
-      color: Colors.white
-    ),
+    iconTheme: IconThemeData(color: Colors.white),
     buttonColor: Colors.white,
   );
 
@@ -69,14 +93,17 @@ class Themes {
     primaryColor: Colors.indigo[400],
     backgroundColor: Colors.indigo[400],
     primaryTextTheme: TextTheme(
-      title: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      body1: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      title: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      body1: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       body2: TextStyle(color: Colors.white),
-      subtitle: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white)),
+      subtitle:
+          GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white)),
     ),
-    iconTheme: IconThemeData(
-      color: Colors.white
-    ),
+    iconTheme: IconThemeData(color: Colors.white),
     buttonColor: Colors.white,
   );
 
@@ -84,14 +111,17 @@ class Themes {
     primaryColor: Colors.blueGrey[400],
     backgroundColor: Colors.blueGrey[400],
     primaryTextTheme: TextTheme(
-      title: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      body1: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      title: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      body1: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       body2: TextStyle(color: Colors.white),
-      subtitle: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white)),
+      subtitle:
+          GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white)),
     ),
-    iconTheme: IconThemeData(
-      color: Colors.white
-    ),
+    iconTheme: IconThemeData(color: Colors.white),
     buttonColor: Colors.white,
   );
 
@@ -99,52 +129,50 @@ class Themes {
     primaryColor: Colors.grey,
     backgroundColor: Colors.grey,
     primaryTextTheme: TextTheme(
-      title: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      body1: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      title: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      body1: GoogleFonts.montserrat(
+          textStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       body2: TextStyle(color: Colors.white),
-      subtitle: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white)),
+      subtitle:
+          GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white)),
     ),
-    iconTheme: IconThemeData(
-      color: Colors.white
-    ),
+    iconTheme: IconThemeData(color: Colors.white),
     buttonColor: Colors.white,
   );
 
   static final _backgroundSunny = BoxDecoration(
-    gradient: LinearGradient(
-      colors: [Colors.lightBlue[400], 
-      Colors.lightBlue[900]],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-    )
-  );
+      gradient: LinearGradient(
+    colors: [Colors.lightBlue[400], Colors.lightBlue[900]],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ));
 
   static final _backgroundRainy = BoxDecoration(
-    gradient: LinearGradient(
-      colors: [Colors.indigo[400], Colors.indigo[900]],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-    )
-  );
+      gradient: LinearGradient(
+    colors: [Colors.indigo[400], Colors.indigo[900]],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ));
 
   static final _backgroundFoggy = BoxDecoration(
-    gradient: LinearGradient(
-      colors: [Colors.blueGrey[400], Colors.blueGrey[800]],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-    )
-  );
+      gradient: LinearGradient(
+    colors: [Colors.blueGrey[400], Colors.blueGrey[800]],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ));
 
   static final _backgroundUnknown = BoxDecoration(
-    gradient: LinearGradient(
-      colors: [Colors.grey, Colors.grey[850]],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-    )
-  );
+      gradient: LinearGradient(
+    colors: [Colors.grey, Colors.grey[850]],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ));
 
-  static ThemeData getGradient(Weather info){
-    switch(info.weatherBio){
+  static ThemeData getGradient(Weather info) {
+    switch (info.weatherBio) {
       case "Clear":
       case "Clouds":
         return _gradientSunny;
@@ -171,8 +199,8 @@ class Themes {
     }
   }
 
-  static BoxDecoration getGradientBackground(Weather info){
-    switch(info.weatherBio){
+  static BoxDecoration getGradientBackground(Weather info) {
+    switch (info.weatherBio) {
       case "Clear":
       case "Clouds":
         return _backgroundUnknown;
@@ -198,5 +226,4 @@ class Themes {
         break;
     }
   }
-
 }

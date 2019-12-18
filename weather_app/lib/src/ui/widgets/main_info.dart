@@ -19,7 +19,7 @@ class MainInfo extends StatelessWidget {
     List<Widget> widgets = List();
     if (this.info.sunriseTime != null) {
       widgets.add(ValueTile(
-          "sunrise",
+          "Sunrise",
           DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(
               this.info.sunriseTime * 1000))));
 
@@ -31,7 +31,7 @@ class MainInfo extends StatelessWidget {
     }
     if (this.info.sunsetTime != null) {
       widgets.add(ValueTile(
-          "sunset",
+          "Sunset",
           DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(
               this.info.sunsetTime * 1000))));
     }
@@ -40,14 +40,14 @@ class MainInfo extends StatelessWidget {
 
   List<Widget> createInfo() {
     List<Widget> widgets = List();
-    widgets.add(ValueTile("wind speed", '${info.windSpeed} m/s'));
+    widgets.add(ValueTile("Wind speed", '${info.windSpeed} m/s'));
     widgets.add(Padding(
       padding: const EdgeInsets.only(left: 5, right: 5),
       child:
           Center(child: Container(width: 1, height: 30, color: Colors.black45)),
     ));
 
-    widgets.add(ValueTile("humidity", '${this.info.humidity}%'));
+    widgets.add(ValueTile("Humidity", '${this.info.humidity}%'));
     if (this.info.rain != null) {
       widgets.add(Padding(
         padding: const EdgeInsets.only(left: 5, right: 5),
@@ -69,7 +69,7 @@ class MainInfo extends StatelessWidget {
         color: Colors.black45,
       )),
     ));
-    widgets.add(ValueTile("pressure", '${this.info.pressure} hPa'));
+    widgets.add(ValueTile("Pressure", '${this.info.pressure} hPa'));
     return widgets;
   }
 
