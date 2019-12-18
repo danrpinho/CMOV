@@ -15,8 +15,6 @@ class Themes {
   static get gradientThemeFoggySnowy => _gradientFoggy;
   static get gradientThemeUnknown => _gradientUnknown;
 
-  static get gradientBackgroundSunny => _backgroundSunny;
-
   static Color getMaxTempColor() => Colors.yellow[900];
   static Color getMinTempColor() => Colors.lightBlue[400];
 
@@ -172,7 +170,7 @@ class Themes {
     }
   }
 
-  static BoxDecoration getBackground(Weather info){
+  static BoxDecoration getGradientBackground(Weather info){
     switch(info.weatherBio){
       case "Clear":
       case "Clouds":

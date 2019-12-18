@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/src/model/supported_citys.dart';
 
+export 'package:weather_app/src/google_maps_local_picker/google_map_location_picker.dart';
+export 'package:weather_app/src/google_maps_local_picker/model/location_result.dart';
+
 class LocalPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var body;
-    if (true)
-      body = new NormalPicker();
-    else
-      body = new Container();
+
+    body = new NormalPicker();
 
     return Scaffold(
       appBar: AppBar(title: Text('Change City')),
