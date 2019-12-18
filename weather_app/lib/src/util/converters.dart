@@ -37,7 +37,7 @@ class Temperature {
         return TemperatureUnit.celsius;
         break;
       case 2:
-        return TemperatureUnit.celsius;
+        return TemperatureUnit.fahrenheit;
         break;
     }
     return TemperatureUnit.celsius;
