@@ -73,8 +73,7 @@ class OpenWeatherAPIClient {
     //URL
     final url = '$baseUrl/data/2.5/forecast?id=$id&appid=$apiKey';
 
-//print('fetching $url');
-
+    //print('fetching $url');
     //response
     final res = await this.httpClient.get(url);
     if (res.statusCode != 200) {

@@ -33,6 +33,7 @@ dependencies:
   logger: ^0.7.0+2
   google_fonts: ^0.2.0
   geolocator: ^5.1.5
+  charts_flutter: ^0.8.1
 
 dev_dependencies:
   flutter_test:

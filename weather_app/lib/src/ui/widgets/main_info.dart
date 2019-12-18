@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/src/model/weather.dart';
 import 'package:weather_app/src/model/weatherCollection.dart';
+import 'package:weather_app/src/ui/widgets/temperature_chart.dart';
 import 'package:weather_app/src/ui/widgets/value_tile.dart';
+import 'package:weather_app/src/util/converters.dart';
 import '../theme/theme.dart';
 
 class MainInfo extends StatelessWidget {
@@ -69,6 +71,11 @@ class MainInfo extends StatelessWidget {
           ),
           ValueTile("humidity", '${this.info.humidity}%'),
         ]),
+        TemperatureChart(
+          info.forecast,
+          TemperatureUnit.celsius,
+          animate: true,
+        )
       ],
     );
   }

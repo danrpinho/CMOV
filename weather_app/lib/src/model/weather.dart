@@ -1,38 +1,3 @@
-//coord
-//coord.lon City geo location, longitude
-//coord.lat City geo location, latitude
-//weather (more info Weather condition codes)
-//weather.id Weather condition id
-//weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
-//weather.description Weather condition within the group
-//weather.icon Weather icon id
-//base Internal parameter
-//main.sea_level Atmospheric pressure on the sea level, hPa
-//main.grnd_level Atmospheric pressure on the ground level, hPa
-//wind
-//wind.speed Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
-//wind.deg Wind direction, degrees (meteorological)
-//clouds
-//clouds.all Cloudiness, %
-//rain
-//rain.1h Rain volume for the last 1 hour, mm
-//rain.3h Rain volume for the last 3 hours, mm
-//snow
-//snow.1h Snow volume for the last 1 hour, mm
-//snow.3h Snow volume for the last 3 hours, mm
-
-//sys
-//sys.type Internal parameter
-//sys.id Internal parameter
-//sys.message Internal parameter
-//sys.country Country code (GB, JP etc.)
-//sys.sunrise Sunrise time, unix, UTC
-//sys.sunset Sunset time, unix, UTC
-//timezone Shift in seconds from UTC
-//id City ID
-//name City name
-//cod Internal parameter
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
