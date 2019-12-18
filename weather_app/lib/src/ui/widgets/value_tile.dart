@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:weather_app/src/ui/theme/theme.dart';
 
 class ValueTile extends StatelessWidget {
   final String label;
@@ -33,7 +32,7 @@ class ValueTile extends StatelessWidget {
         ),
         Text(
           this.value,
-          style: TextStyle(color: Colors.black, fontSize: 20),
+          style: TextStyle(color: Colors.black, fontSize: 15),
         ),
       ],
     );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/src/model/weather.dart';
-import 'package:weather_app/src/model/weatherCollection.dart';
 import 'package:weather_app/src/ui/widgets/temperature_chart.dart';
 import 'package:weather_app/src/ui/widgets/value_tile.dart';
 import 'package:weather_app/src/util/converters.dart';
+
 import '../theme/theme.dart';
 
 class MainInfo extends StatelessWidget {
@@ -22,7 +22,7 @@ class MainInfo extends StatelessWidget {
             info.name,
             style: TextStyle(
               color: Colors.black,
-              fontSize: 50,
+              fontSize: 40,
               fontWeight: FontWeight.w500,
             )),
         Text(
@@ -30,7 +30,7 @@ class MainInfo extends StatelessWidget {
           "Cloudy",
           style: TextStyle(
             color: Colors.grey,
-            fontSize: 30,
+            fontSize: 20,
           ),
         ),
         createTemperatureWidget(info),
@@ -38,34 +38,34 @@ class MainInfo extends StatelessWidget {
           child: Divider(
             color: Colors.black,
           ),
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(15),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           ValueTile("wind speed", '${info.windSpeed} m/s'),
           Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
+            padding: const EdgeInsets.only(left: 5, right: 5),
             child: Center(
-                child: Container(width: 1, height: 30, color: Colors.black45)),
+                child: Container(width: 1, height: 20, color: Colors.black45)),
           ),
           ValueTile(
               "sunrise",
               DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
                   this.info.sunriseTime * 1000))),
           Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
+            padding: const EdgeInsets.only(left: 5, right: 5),
             child: Center(
-                child: Container(width: 1, height: 30, color: Colors.black45)),
+                child: Container(width: 1, height: 20, color: Colors.black45)),
           ),
           ValueTile(
               "sunset",
               DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
                   this.info.sunsetTime * 1000))),
           Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
+            padding: const EdgeInsets.only(left: 5, right: 5),
             child: Center(
                 child: Container(
               width: 1,
-              height: 30,
+              height: 20,
               color: Colors.black45,
             )),
           ),

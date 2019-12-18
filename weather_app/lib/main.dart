@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
@@ -9,7 +8,6 @@ import 'package:weather_app/src/api/open_weather_client.dart';
 import 'package:weather_app/src/bloc/bloc.dart';
 import 'package:weather_app/src/bloc/weather_bloc.dart';
 import 'package:weather_app/src/model/supported_citys.dart';
-import 'package:weather_app/src/model/weather.dart';
 import 'package:weather_app/src/repository/weatherRepository.dart';
 import 'package:weather_app/src/ui/screens/local_picker.dart';
 import 'package:weather_app/src/ui/screens/settings.dart';
@@ -45,48 +43,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  dynamic cityNumber = 0;
   SharedPreferences preferences;
   WeatherBloc bloc;
-  List<Weather> weathers;
-  int itemCount = 1;
   Position position;
-  List<City> cities;
+  City city;
 
   void _incrementCounter() {
     setState(() {
-      //bloc.add(FetchWeatherById(2735943));
-      List<int> ids = [2735943, 2732438];
-      bloc.add(FetchWeatherCollectionById(ids));
-
-      //bloc.add(FetchWeatherCollectionByLatLon(41.3, -7.75));
-      //bloc.add(FetchWeather("Vila Real"));
-      //widget.weatherRepo.getWeather(0, 0, "Porto");
-      //print("hello");
+      //List<int> ids = [2735943, 2732438];
+      //bloc.add(FetchWeatherCollectionById(ids));
     });
   }
 
   @override
   void initState() {
     super.initState();
-    bloc = WeatherBloc(widget.weatherRepo, this.weathers);
-    _loadState();
-
+    bloc = WeatherBloc(widget.weatherRepo, new List());
     bloc.add(FetchWeather("Sobrado"));
+    _loadState();
   }
 
   _loadState() async {
-    cities = await SavedCities.fromSharedPreferences();
-    if (cities == null) cities = new List<City>();
     position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    cities.insert(
-        0, new City.fromPosition(position.latitude, position.longitude));
-    itemCount = SavedCities.savedCities.length;
 
-    bloc = WeatherBloc(widget.weatherRepo, this.weathers);
-    List<int> ids = [2735943, 2732438];
-    bloc.add(FetchWeatherCollectionById(ids));
     SupportedCitys.loadCitys();
   }
 
@@ -94,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(cityNumber.toString()),
+        title: new Text(widget.title),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
@@ -117,21 +97,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ).then((value) {
                 setState(() {
-                  cities = SavedCities.savedCities;
-                  cities.insert(
-                      0,
-                      new City.fromPosition(
-                          position.latitude, position.longitude));
-                  itemCount = cities.length;
+                  //TODO
                 });
               });
             },
           ),
         ],
       ),
-      body: new Swiper(
-        itemBuilder: (BuildContext context, int index) {
-          return BlocBuilder(
+      body: Center(
+        child: Container(
+          child: BlocBuilder(
               bloc: bloc,
               builder: (context, state) {
                 if (state is WeatherLoading) {
@@ -149,23 +124,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     weather: state.weather,
                   );
                 }
-                if (state is WeatherCollectionLoaded) {
-                  this.weathers = state.weathers;
-
-                  return WeatherScreen(
-                      day: "Sunday, 15 December 2019",
-                      weather: this.weathers.elementAt(this.cityNumber));
-                }
                 return WeatherScreen(day: "Sunday, 15 December 2019");
-              });
-        },
-        pagination: new SwiperPagination(),
-        onIndexChanged: (int index) => {
-          setState(() {
-            this.cityNumber = index;
-          })
-        },
-        itemCount: itemCount,
+              }),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

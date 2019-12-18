@@ -1,6 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:weather_app/main.dart';
 import 'package:weather_app/src/model/weather.dart';
 import 'package:weather_app/src/util/converters.dart';
 
@@ -14,9 +13,9 @@ class TemperatureChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        height: 300,
+        height: 125,
         child: Padding(
-            padding: const EdgeInsets.all(40.0),
+            padding: const EdgeInsets.all(20),
             child: charts.TimeSeriesChart([
               new charts.Series<Weather, DateTime>(
                 id: 'Temperature',
