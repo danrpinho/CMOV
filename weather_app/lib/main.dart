@@ -63,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _loadState() async {
+    SupportedCitys.loadCitys();
     position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     if (position == null)
@@ -71,7 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     city = City.fromPosition(position.latitude, position.longitude);
     _loadWeather();
-    SupportedCitys.loadCitys();
   }
 
   _loadWeather() {
