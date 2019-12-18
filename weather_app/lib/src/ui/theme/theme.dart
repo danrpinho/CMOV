@@ -15,8 +15,6 @@ class Themes {
   static get gradientThemeFoggySnowy => _gradientFoggy;
   static get gradientThemeUnknown => _gradientUnknown;
 
-  static get gradientBackgroundSunny => _backgroundSunny;
-
   static Color getMaxTempColor() => Colors.yellow[900];
   static Color getMinTempColor() => Colors.lightBlue[400];
 
@@ -120,8 +118,84 @@ class Themes {
     )
   );
 
+  static final _backgroundRainy = BoxDecoration(
+    gradient: LinearGradient(
+      colors: [Colors.indigo[400], Colors.indigo[900]],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    )
+  );
+
+  static final _backgroundFoggy = BoxDecoration(
+    gradient: LinearGradient(
+      colors: [Colors.blueGrey[400], Colors.blueGrey[800]],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    )
+  );
+
+  static final _backgroundUnknown = BoxDecoration(
+    gradient: LinearGradient(
+      colors: [Colors.grey, Colors.grey[850]],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    )
+  );
+
   static ThemeData getGradient(Weather info){
-    
+    switch(info.weatherBio){
+      case "Clear":
+      case "Clouds":
+        return _gradientSunny;
+        break;
+      case "Rain":
+      case "Drizzle":
+      case "Thunderstorm":
+        return _gradientRainy;
+        break;
+      case "Snow":
+      case "Mist":
+      case "Smoke":
+      case "Haze":
+      case "Dust":
+      case "Fog":
+      case "Sand":
+      case "Ash":
+      case "Squall":
+        return _gradientFoggy;
+        break;
+      default:
+        return _gradientUnknown;
+        break;
+    }
+  }
+
+  static BoxDecoration getGradientBackground(Weather info){
+    switch(info.weatherBio){
+      case "Clear":
+      case "Clouds":
+        return _backgroundUnknown;
+        break;
+      case "Rain":
+      case "Drizzle":
+      case "Thunderstorm":
+        return _backgroundRainy;
+        break;
+      case "Snow":
+      case "Mist":
+      case "Smoke":
+      case "Haze":
+      case "Dust":
+      case "Fog":
+      case "Sand":
+      case "Ash":
+      case "Squall":
+        return _backgroundFoggy;
+        break;
+      default:
+        return _backgroundUnknown;
+        break;
+    }
   }
 
 }
