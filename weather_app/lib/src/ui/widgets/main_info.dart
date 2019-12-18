@@ -9,6 +9,7 @@ import '../theme/theme.dart';
 
 class MainInfo extends StatelessWidget {
   final Weather info;
+
   const MainInfo({Key key, this.info}) : super(key: key);
 
   @override
@@ -18,34 +19,37 @@ class MainInfo extends StatelessWidget {
       children: <Widget>[
         Icon(Icons.cloud, color: Colors.black, size: 45),
         Text(
-            // city
-            info.name,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 40,
-              fontWeight: FontWeight.w500,
-            )),
+          // city
+          info.name,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 40,
+            fontWeight: FontWeight.w500,
+          ),
+          textAlign: TextAlign.center,
+        ),
         Text(
           // weather condition
           "Cloudy",
           style: TextStyle(
             color: Colors.grey,
-            fontSize: 20,
+            fontSize: 25,
           ),
+          textAlign: TextAlign.center,
         ),
         createTemperatureWidget(info),
         Padding(
           child: Divider(
             color: Colors.black,
           ),
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(20),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           ValueTile("wind speed", '${info.windSpeed} m/s'),
           Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: Center(
-                child: Container(width: 1, height: 20, color: Colors.black45)),
+                child: Container(width: 1, height: 30, color: Colors.black45)),
           ),
           ValueTile(
               "sunrise",
@@ -54,7 +58,7 @@ class MainInfo extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: Center(
-                child: Container(width: 1, height: 20, color: Colors.black45)),
+                child: Container(width: 1, height: 30, color: Colors.black45)),
           ),
           ValueTile(
               "sunset",
@@ -65,7 +69,7 @@ class MainInfo extends StatelessWidget {
             child: Center(
                 child: Container(
               width: 1,
-              height: 20,
+              height: 30,
               color: Colors.black45,
             )),
           ),

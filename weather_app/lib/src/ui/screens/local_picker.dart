@@ -16,9 +16,7 @@ class LocalPicker extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           City city = SupportedCitys.citys[_NormalPickerState.selectedCity];
-          SavedCities.addCity(city);
-
-          Navigator.pop(context);
+          Navigator.pop(context, city);
         },
         tooltip: 'Change to',
         child: Icon(Icons.add),

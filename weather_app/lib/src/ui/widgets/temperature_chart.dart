@@ -13,9 +13,9 @@ class TemperatureChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        height: 125,
+        height: 300,
         child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(40),
             child: charts.TimeSeriesChart([
               new charts.Series<Weather, DateTime>(
                 id: 'Temperature',

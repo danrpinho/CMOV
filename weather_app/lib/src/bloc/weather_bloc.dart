@@ -1,8 +1,9 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:weather_app/src/model/weather.dart';
-import 'package:weather_app/src/model/weatherCollection.dart';
 import 'package:weather_app/src/repository/weatherRepository.dart';
+
 import './bloc.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
@@ -49,12 +50,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       } on NetworkError {
         yield WeatherError("Error Weather Bloc");
       }
-    } else if (event is FetchWeatherCollectionByLatLon) {
+    } else if (event is FetchWeatherByLatLon) {
       try {
         final weather = await weatherRepository.getWeatherByLocation(
             event.lat.toDouble(), event.long.toDouble());
-        weathers.add(weather);
-        yield (WeatherCollectionLoaded(this.weathers));
+        yield (WeatherLoaded(weather));
       } on NetworkError {
         yield WeatherError("Error Weather Bloc");
       }

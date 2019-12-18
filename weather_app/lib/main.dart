@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'WeatherApp',
-      theme: Themes.lightTheme,
+      theme: Themes.darkTheme,
       home: MyHomePage(
         title: 'ACME Weather ',
       ),
@@ -59,15 +59,26 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     bloc = WeatherBloc(widget.weatherRepo, new List());
-    bloc.add(FetchWeather("Sobrado"));
     _loadState();
   }
 
   _loadState() async {
     position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    if (position == null)
+      position = await Geolocator()
+          .getLastKnownPosition(desiredAccuracy: LocationAccuracy.high);
 
+    city = City.fromPosition(position.latitude, position.longitude);
+    _loadWeather();
     SupportedCitys.loadCitys();
+  }
+
+  _loadWeather() {
+    if (city != null && city.id != null && city.id > 0)
+      bloc.add(FetchWeatherById(city.id));
+    else if (city != null && city.long != null && city.lat != null)
+      bloc.add(FetchWeatherByLatLon(city.lat, city.long));
   }
 
   @override
@@ -97,35 +108,42 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ).then((value) {
                 setState(() {
-                  //TODO
+                  city = value;
+                  _loadWeather();
                 });
               });
             },
           ),
         ],
       ),
-      body: Center(
-        child: Container(
-          child: BlocBuilder(
-              bloc: bloc,
-              builder: (context, state) {
-                if (state is WeatherLoading) {
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            child: BlocBuilder(
+                bloc: bloc,
+                builder: (context, state) {
+                  if (state is WeatherLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                      ),
+                    );
+                  }
+                  if (state is WeatherLoaded) {
+                    Logger().d("WeatherLoaded", state);
+                    //this.weathers.add(state.weather);
+                    return WeatherScreen(
+                      day: "Sunday, 16 December 2019",
+                      weather: state.weather,
+                    );
+                  }
                   return Center(
                     child: CircularProgressIndicator(
                       backgroundColor: Colors.white,
                     ),
                   );
-                }
-                if (state is WeatherLoaded) {
-                  Logger().d("WeatherLoaded", state);
-                  //this.weathers.add(state.weather);
-                  return WeatherScreen(
-                    day: "Sunday, 16 December 2019",
-                    weather: state.weather,
-                  );
-                }
-                return WeatherScreen(day: "Sunday, 15 December 2019");
-              }),
+                }),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
