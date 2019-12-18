@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:weather_app/src/model/weather.dart';
 import 'package:weather_app/src/ui/widgets/temperature_chart.dart';
 import 'package:weather_app/src/ui/widgets/value_tile.dart';
+import 'package:weather_app/src/util/constants.dart';
 import 'package:weather_app/src/util/converters.dart';
 
 import '../theme/theme.dart';
 
-class MainInfo extends StatelessWidget {
+class MainInfo extends StatefulWidget {
   final Weather info;
 
   const MainInfo({Key key, this.info}) : super(key: key);
+
+  @override
+  _MainInfoState createState() => _MainInfoState();
+}
+
+class _MainInfoState extends State<MainInfo> {
+  SharedPreferences prefs;
+  _loadState() async* {
+    prefs = await SharedPreferences.getInstance();
+    if (prefs.getInt(Constants.PREFS_TEMPERATURE_UNIT) != null) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +34,7 @@ class MainInfo extends StatelessWidget {
         Icon(Icons.cloud, color: Colors.black, size: 45),
         Text(
           // city
-          info.name,
+          widget.info.name,
           style: TextStyle(
             color: Colors.black,
             fontSize: 40,
@@ -30,14 +44,26 @@ class MainInfo extends StatelessWidget {
         ),
         Text(
           // weather condition
-          "Cloudy",
+          widget.info.weatherBio,
           style: TextStyle(
             color: Colors.grey,
             fontSize: 25,
           ),
           textAlign: TextAlign.center,
         ),
-        createTemperatureWidget(info),
+        Padding(
+          padding: EdgeInsets.all(5),
+        ),
+        Text(
+          // weather condition
+          widget.info.weatherInfo,
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 15,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        createTemperatureWidget(widget.info),
         Padding(
           child: Divider(
             color: Colors.black,
@@ -45,7 +71,7 @@ class MainInfo extends StatelessWidget {
           padding: EdgeInsets.all(20),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          ValueTile("wind speed", '${info.windSpeed} m/s'),
+          ValueTile("wind speed", '${widget.info.windSpeed} m/s'),
           Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: Center(
@@ -54,7 +80,7 @@ class MainInfo extends StatelessWidget {
           ValueTile(
               "sunrise",
               DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
-                  this.info.sunriseTime * 1000))),
+                  this.widget.info.sunriseTime * 1000))),
           Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: Center(
@@ -63,7 +89,7 @@ class MainInfo extends StatelessWidget {
           ValueTile(
               "sunset",
               DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
-                  this.info.sunsetTime * 1000))),
+                  this.widget.info.sunsetTime * 1000))),
           Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: Center(
@@ -73,10 +99,10 @@ class MainInfo extends StatelessWidget {
               color: Colors.black45,
             )),
           ),
-          ValueTile("humidity", '${this.info.humidity}%'),
+          ValueTile("humidity", '${this.widget.info.humidity}%'),
         ]),
         TemperatureChart(
-          info.forecast,
+          widget.info.forecast,
           TemperatureUnit.celsius,
           animate: true,
         )
@@ -91,8 +117,8 @@ class MainInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "13ºC",
-              style: TextStyle(fontSize: 30, color: Colors.grey),
+              "${info.temp.as(Temperature.fromRadioOption(prefs.getInt(Constants.PREFS_TEMPERATURE_UNIT))).round().toString()}º",
+              style: TextStyle(fontSize: 50, color: Colors.black),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
@@ -102,10 +128,10 @@ class MainInfo extends StatelessWidget {
             ),
             Column(
               children: <Widget>[
-                Text("Max: 18ºC",
+                Text("Max : ${info.maxTemp.celsius.round().toString()}º",
                     style: TextStyle(color: Themes.getMaxTempColor())),
                 Text(
-                  "Min: 9ºC",
+                  "Min: ${info.minTemp.celsius.round().toString()}º",
                   style: TextStyle(color: Themes.getMinTempColor()),
                 )
               ],
