@@ -49,17 +49,17 @@ class Weather {
 
   fromForecastWidget(List<Weather> weathers, int cityId, String name) {
     this.forecast = weathers;
-    this.temp = new Temperature(0);
-    this.maxTemp = new Temperature(0);
-    this.minTemp = new Temperature(0);
-    this.windSpeed = 0.0;
-    this.sunriseTime = 0;
-    this.sunsetTime = 0;
-    this.humidity = 93;
-    this.pressure = 1;
-    this.weatherIconID = '01d';
-    this.weatherBio = 'Rain';
-    this.weatherInfo = 'HeavyRain';
+    this.temp = new Temperature(0); //média
+    this.maxTemp = new Temperature(0); //max
+    this.minTemp = new Temperature(0); //min
+    this.windSpeed = 0.0; //média
+    this.sunriseTime = 0; //média
+    this.sunsetTime = 0; //0
+    this.humidity = 93; //média
+    this.pressure = 1; //média
+    this.weatherIconID = '01d'; //moda
+    this.weatherBio = 'Rain'; //moda
+    this.weatherInfo = 'HeavyRain'; //moda
     this.name = name;
     this.cityId = cityId;
     //TODO Process data
