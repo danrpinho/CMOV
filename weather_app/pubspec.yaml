@@ -39,7 +39,6 @@ dependencies:
   charts_flutter: ^0.8.1
   intl_translation: ^0.17.7
   google_maps_flutter: ^0.5.21+13
-  # google_map_location_picker: ^2.1.2+1
   android_intent: ^0.3.4+7
   provider: ^3.2.0
   stack_trace: ^1.9.3
@@ -50,6 +49,14 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+   image_path_android: lib/assets/icons/android_icon.png
+   image_path_ios: lib/assets/icons/iOS_icon.png
+   android: true # can specify file name here e.g. "ic_launcher"
+   ios: true # can specify file name here e.g. "My-Launcher-Icon"
+   adaptive_icon_background: lib/assets/icons/android_background.png # only available for Android 8.0 devices and above
+   adaptive_icon_foreground: lib/assets/icons/android_foreground.png # only available for Android 8.0 devices and above
 
 # The following section is specific to Flutter.
 flutter:
@@ -64,14 +71,6 @@ flutter:
     - family: WeatherIcons
       fonts:
         - asset: lib/assets/fonts/weathericons-regular.ttf
-
-  #flutter_icons:
-  #image_path_android: "assets/images/icon-710x599-android.png"
-  #image_path_ios: "assets/images/icon-710x599-ios.png"
-  #android: true # can specify file name here e.g. "ic_launcher"
-  #ios: true # can specify file name here e.g. "My-Launcher-Icon"
-  #adaptive_icon_background: "assets/images/christmas-background.png" # only available for Android 8.0 devices and above
-  #adaptive_icon_foreground: "assets/images/icon-foreground-432x432.png" # only available for Android 8.0 devices and above
 
 
 

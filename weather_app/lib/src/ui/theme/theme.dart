@@ -112,7 +112,8 @@ class Themes {
 
   static final _backgroundSunny = BoxDecoration(
     gradient: LinearGradient(
-      colors: [Colors.lightBlue[400], Colors.lightBlue[900]],
+      colors: [Colors.lightBlue[400], 
+      Colors.lightBlue[900]],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     )
