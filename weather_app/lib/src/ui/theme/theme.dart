@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weather_app/src/model/weather.dart';
 
 class Themes {
   //constants for defining the theme.
@@ -118,5 +119,9 @@ class Themes {
       end: Alignment.bottomCenter,
     )
   );
+
+  static ThemeData getGradient(Weather info){
+    
+  }
 
 }
