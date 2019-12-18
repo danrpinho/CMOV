@@ -181,7 +181,7 @@ class _SettingsState extends State<Settings> {
                               setState(() {
                                 useGoogleMaps = value;
                                 preferences.setBool(
-                                    Constants.LOCATION_PICKER_BOOL, value);
+                                    Constants.LOCATION_PICKER_BOOL, useGoogleMaps);
                               });
                             },
                             activeTrackColor: Colors.lightBlueAccent,
