@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="weather_app"
+        android:label="ACK Weather"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyADLxOw8IbWrGne5PaE7Zz59Z3CqguGhh0"/>
