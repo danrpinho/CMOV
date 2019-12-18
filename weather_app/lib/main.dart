@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               }
               if (state is WeatherLoaded) {
-                Logger().d("WeatherLoaded", state);
+                // Logger().d("WeatherLoaded", state);
                 //this.weathers.add(state.weather);
                 return WeatherScreen(
                   day: "Sunday, 16 December 2019",

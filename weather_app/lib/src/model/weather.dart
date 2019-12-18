@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/src/util/algorithms.dart';
 import 'package:weather_app/src/util/converters.dart';
 import 'package:weather_app/src/util/weather_icons.dart';
 
@@ -30,6 +31,7 @@ class Weather {
   double windSpeed;
   List<Weather> forecast;
 
+  double rain;
   Weather(
       {this.cityId,
       this.name,
@@ -45,28 +47,55 @@ class Weather {
       this.weatherBio,
       this.weatherInfo,
       this.weatherIconID,
-      this.windSpeed});
+      this.windSpeed,
+      this.rain});
 
   fromForecastWidget(List<Weather> weathers, int cityId, String name) {
     this.forecast = weathers;
-    this.temp = new Temperature(0);
-    this.maxTemp = new Temperature(0);
-    this.minTemp = new Temperature(0);
-    this.windSpeed = 0.0;
-    this.sunriseTime = 0;
-    this.sunsetTime = 0;
-    this.humidity = 93;
+
+    this.temp = new Temperature(
+        ListAlgo().avg(weathers.map((f) => f.temp.kelvin).toList()));
+    this.maxTemp = new Temperature(
+        ListAlgo().max(weathers.map((f) => f.maxTemp.kelvin).toList()));
+    this.minTemp = new Temperature(ListAlgo()
+        .min(weathers.map((f) => f.minTemp.kelvin).toList()) as double);
+    this.windSpeed = (ListAlgo()
+        .avg(weathers.map((f) => f.windSpeed).toList())
+        .roundToDouble());
+    this.sunriseTime = null;
+    this.sunsetTime = null;
+
+    this.humidity =
+        (ListAlgo().avg(weathers.map((f) => f.humidity.toDouble()).toList()))
+            .round();
     this.pressure = 1;
-    this.weatherIconID = '01d';
-    this.weatherBio = 'Rain';
-    this.weatherInfo = 'HeavyRain';
+    this.weatherIconID =
+        ListAlgo().mostCommon(weathers.map((f) => f.weatherIconID).toList());
+    this.weatherBio =
+        ListAlgo().mostCommon(weathers.map((f) => f.weatherBio).toList());
+    this.weatherInfo =
+        ListAlgo().mostCommon(weathers.map((f) => f.weatherInfo).toList());
     this.name = name;
+    this.pressure = ListAlgo()
+        .avg(weathers.map((f) => f.pressure.toDouble()).toList())
+        .round();
     this.cityId = cityId;
+    this.rain = ListAlgo()
+        .rainAverage(weathers.map((f) => f.rain).toList())
+        .roundToDouble();
     //TODO Process data
   }
 
   static Weather mapFromJson(Map<String, dynamic> json) {
     final weather = json['weather'][0];
+    var rain;
+    if (json['rain'] != null) {
+      if (json['rain']['1h'] != null) {
+        rain = int2Double(json['rain']['1h']);
+      } else if (json['rain']['3h'] != null) {
+        rain = int2Double(json['rain']['3h']);
+      }
+    }
     return Weather(
         cityId: json['id'],
         name: json['name'],
@@ -101,6 +130,7 @@ class Weather {
         weatherInfo: weather['description'],
         //weather.icon Weather icon id
         weatherIconID: weather['icon'],
+        rain: rain,
         // wind
         windSpeed: int2Double(json['wind']['speed']));
   }

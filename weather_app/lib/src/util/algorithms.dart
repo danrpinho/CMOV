@@ -1,18 +1,16 @@
-import 'dart:math';
-
 class ListAlgo {
   ListAlgo();
 
-  int avg(List<double> lst) {
-    return lst.reduce((a, b) => a + b) ~/ lst.length;
+  double avg(List<double> lst) {
+    return lst.reduce((a, b) => a + b) / lst.length;
   }
 
-  int max(List<double> lst) {
-    return lst.reduce((a, b) => a > b ? a : b).toInt();
+  double max(List<double> lst) {
+    return lst.reduce((a, b) => a > b ? a : b);
   }
 
-  dynamic min(List<dynamic> lst) {
-    return lst.reduce((a, b) => a < b ? a : b).toInt();
+  double min(List<double> lst) {
+    return lst.reduce((a, b) => a < b ? a : b);
   }
 
   dynamic mostCommon(List<dynamic> lst) {
@@ -27,6 +25,15 @@ class ListAlgo {
       }
     }
     return common;
+  }
+
+  double rainAverage(List<double> lst) {
+    double counter = 0;
+
+    for (double item in lst) {
+      if (item != null) counter += item;
+    }
+    return counter / lst.length;
   }
 
   int countElementsinList(List<dynamic> lst, dynamic element) {

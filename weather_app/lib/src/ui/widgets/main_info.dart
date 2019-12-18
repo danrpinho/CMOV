@@ -15,6 +15,63 @@ class MainInfo extends StatelessWidget {
   final dynamic day;
 
   const MainInfo({Key key, this.info, this.prefs, this.day}) : super(key: key);
+  List<Widget> createSunsetSunrise() {
+    List<Widget> widgets = List();
+    if (this.info.sunriseTime != null) {
+      widgets.add(ValueTile(
+          "sunrise",
+          DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(
+              this.info.sunriseTime * 1000))));
+
+      widgets.add(Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5),
+        child: Center(
+            child: Container(width: 1, height: 30, color: Colors.black45)),
+      ));
+    }
+    if (this.info.sunsetTime != null) {
+      widgets.add(ValueTile(
+          "sunset",
+          DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(
+              this.info.sunsetTime * 1000))));
+    }
+    return widgets;
+  }
+
+  List<Widget> createInfo() {
+    List<Widget> widgets = List();
+    widgets.add(ValueTile("wind speed", '${info.windSpeed} m/s'));
+    widgets.add(Padding(
+      padding: const EdgeInsets.only(left: 5, right: 5),
+      child:
+          Center(child: Container(width: 1, height: 30, color: Colors.black45)),
+    ));
+
+    widgets.add(ValueTile("humidity", '${this.info.humidity}%'));
+    if (this.info.rain != null) {
+      widgets.add(Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5),
+        child: Center(
+            child: Container(
+          width: 1,
+          height: 30,
+          color: Colors.black45,
+        )),
+      ));
+      widgets.add(ValueTile("Precipitation", '${this.info.rain} mm'));
+    }
+    widgets.add(Padding(
+      padding: const EdgeInsets.only(left: 5, right: 5),
+      child: Center(
+          child: Container(
+        width: 1,
+        height: 30,
+        color: Colors.black45,
+      )),
+    ));
+    widgets.add(ValueTile("pressure", '${this.info.pressure} hPa'));
+    return widgets;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,42 +119,17 @@ class MainInfo extends StatelessWidget {
         ),
         createTemperatureWidget(info),
         Padding(
-          child: Divider(
-            color: Colors.black,
-          ),
           padding: EdgeInsets.all(20),
         ),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          ValueTile("wind speed", '${info.windSpeed} m/s'),
-          Padding(
-            padding: const EdgeInsets.only(left: 5, right: 5),
-            child: Center(
-                child: Container(width: 1, height: 30, color: Colors.black45)),
-          ),
-          ValueTile(
-              "sunrise",
-              DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(
-                  this.info.sunriseTime * 1000))),
-          Padding(
-            padding: const EdgeInsets.only(left: 5, right: 5),
-            child: Center(
-                child: Container(width: 1, height: 30, color: Colors.black45)),
-          ),
-          ValueTile(
-              "sunset",
-              DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(
-                  this.info.sunsetTime * 1000))),
-          Padding(
-            padding: const EdgeInsets.only(left: 5, right: 5),
-            child: Center(
-                child: Container(
-              width: 1,
-              height: 30,
-              color: Colors.black45,
-            )),
-          ),
-          ValueTile("humidity", '${this.info.humidity}%'),
-        ]),
+        Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: createSunsetSunrise()),
+        ),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: createInfo()),
         TemperatureChart(
           info.forecast,
           Temperature.fromRadioOption(
