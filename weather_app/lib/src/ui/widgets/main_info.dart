@@ -76,7 +76,7 @@ class MainInfo extends StatelessWidget {
           ),
           ValueTile(
               "sunrise",
-              DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
+              DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(
                   this.info.sunriseTime * 1000))),
           Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
@@ -85,7 +85,7 @@ class MainInfo extends StatelessWidget {
           ),
           ValueTile(
               "sunset",
-              DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
+              DateFormat('HH:mm').format(DateTime.fromMillisecondsSinceEpoch(
                   this.info.sunsetTime * 1000))),
           Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
