@@ -6,24 +6,28 @@ import 'package:weather_app/src/ui/widgets/temperature_chart.dart';
 import 'package:weather_app/src/ui/widgets/value_tile.dart';
 import 'package:weather_app/src/util/constants.dart';
 import 'package:weather_app/src/util/converters.dart';
-import 'package:weather_app/src/util/weather_icons.dart';
 
 import '../theme/theme.dart';
 
 class MainInfo extends StatelessWidget {
   final Weather info;
   final SharedPreferences prefs;
+  final dynamic day;
 
-  const MainInfo({Key key, this.info, this.prefs}) : super(key: key);
+  const MainInfo({Key key, this.info, this.prefs, this.day}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Icon(this.info.toIcon(), color: Colors.black, size: 45),
         Padding(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.only(top: 5, bottom: 35),
+          child: Text(this.day),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 10),
+          child: Icon(this.info.toIcon(), color: Colors.black, size: 45),
         ),
         Text(
           // city

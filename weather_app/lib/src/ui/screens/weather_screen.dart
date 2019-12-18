@@ -21,20 +21,8 @@ class WeatherScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: new Center(
-          child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, _main_info_margin),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(this.day),
-              ],
-            ),
-          ),
-          MainInfo(info: weather, key: null, prefs: prefs),
-        ],
-      )),
+        child: MainInfo(info: weather, prefs: prefs, day: this.day),
+      ),
       margin: EdgeInsets.all(_main_info_margin),
     );
   }
