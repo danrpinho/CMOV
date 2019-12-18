@@ -10,11 +10,11 @@ class WeatherScreen extends StatelessWidget {
   final String day;
   final Weather weather;
   final SharedPreferences prefs;
-  final List<Weather> forecast24 = new List();
-  final List<Weather> forecast48 = new List();
-  final List<Weather> forecast72 = new List();
-  final List<Weather> forecast96 = new List();
-  final List<Weather> forecast120 = new List();
+  final Weather forecast24 = new Weather();
+  final Weather forecast48 = new Weather();
+  final Weather forecast72 = new Weather();
+  final Weather forecast96 = new Weather();
+  final Weather forecast120 = new Weather();
 
   WeatherScreen({
     Key key,
@@ -24,11 +24,16 @@ class WeatherScreen extends StatelessWidget {
   }) : super(key: key);
 
   _loadForecast() {
-    forecast24.addAll(weather.forecast.getRange(0, 8));
-    forecast48.addAll(weather.forecast.getRange(8, 16));
-    forecast72.addAll(weather.forecast.getRange(16, 24));
-    forecast96.addAll(weather.forecast.getRange(24, 32));
-    forecast120.addAll(weather.forecast.getRange(32, 40));
+    forecast24.fromForecastWidget(
+        weather.forecast.getRange(0, 8).toList(), weather.cityId, weather.name);
+    forecast48.fromForecastWidget(weather.forecast.getRange(8, 16).toList(),
+        weather.cityId, weather.name);
+    forecast72.fromForecastWidget(weather.forecast.getRange(16, 24).toList(),
+        weather.cityId, weather.name);
+    forecast96.fromForecastWidget(weather.forecast.getRange(24, 32).toList(),
+        weather.cityId, weather.name);
+    forecast120.fromForecastWidget(weather.forecast.getRange(32, 40).toList(),
+        weather.cityId, weather.name);
   }
 
   @override
@@ -46,33 +51,33 @@ class WeatherScreen extends StatelessWidget {
             return SingleChildScrollView(
                 child: Center(
                     child: MainInfo(
-                        info: weather, prefs: prefs, day: "Next 24 Hours")));
+                        info: forecast24, prefs: prefs, day: "Next 24 Hours")));
           case 2:
             return SingleChildScrollView(
                 child: Center(
                     child: MainInfo(
-                        info: weather,
+                        info: forecast48,
                         prefs: prefs,
                         day: "Between the next 24 and 48 Hours")));
           case 3:
             return SingleChildScrollView(
                 child: Center(
                     child: MainInfo(
-                        info: weather,
+                        info: forecast72,
                         prefs: prefs,
                         day: "Between the next 48 and 72 Hours")));
           case 4:
             return SingleChildScrollView(
                 child: Center(
                     child: MainInfo(
-                        info: weather,
+                        info: forecast96,
                         prefs: prefs,
                         day: "Between the next 72 and 96 Hours")));
           case 5:
             return SingleChildScrollView(
                 child: Center(
                     child: MainInfo(
-                        info: weather,
+                        info: forecast120,
                         prefs: prefs,
                         day: "Between the next 96 and 120 Hours")));
           default:

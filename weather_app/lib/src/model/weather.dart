@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:weather_app/src/util/converters.dart';
 import 'package:weather_app/src/util/weather_icons.dart';
@@ -7,6 +5,7 @@ import 'package:weather_app/src/util/weather_icons.dart';
 class Weather {
   String name;
   int cityId;
+
   //int weatherId;
 
   Temperature temp;
@@ -47,6 +46,24 @@ class Weather {
       this.weatherInfo,
       this.weatherIconID,
       this.windSpeed});
+
+  fromForecastWidget(List<Weather> weathers, int cityId, String name) {
+    this.forecast = weathers;
+    this.temp = new Temperature(0);
+    this.maxTemp = new Temperature(0);
+    this.minTemp = new Temperature(0);
+    this.windSpeed = 0.0;
+    this.sunriseTime = 0;
+    this.sunsetTime = 0;
+    this.humidity = 93;
+    this.pressure = 1;
+    this.weatherIconID = '01d';
+    this.weatherBio = 'Rain';
+    this.weatherInfo = 'HeavyRain';
+    this.name = name;
+    this.cityId = cityId;
+    //TODO Process data
+  }
 
   static Weather mapFromJson(Map<String, dynamic> json) {
     final weather = json['weather'][0];
@@ -91,12 +108,22 @@ class Weather {
   static List<Weather> fromForecastJson(Map<String, dynamic> json) {
     final weathers = List<Weather>();
     for (final item in json['list']) {
-      weathers.add(Weather(
-          currentTime: item['dt'],
+      weathers.add(mapFromJson(item));
+
+      // Weather(
+
+/*          currentTime: item['dt'],
           temp: Temperature(int2Double(
             item['main']['temp'],
           )),
-          weatherIconID: item['weather'][0]['icon']));
+          minTemp: Temperature(int2Double(
+            item['main']['maxTemp'],
+          )),
+          maxTemp: Temperature(int2Double(
+            item['main']['minTemp'],
+          )),
+          weatherIconID: item['weather'][0]['icon']));*/
+
     }
     return weathers;
   }
@@ -138,6 +165,7 @@ class Weather {
                 })
             .toList()
       };
+
   IconData toIcon() {
     switch (this.weatherIconID) {
       case '01d':
