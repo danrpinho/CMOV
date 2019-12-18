@@ -22,10 +22,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'WeatherApp',
+      title: 'ACK Weather',
       theme: Themes.lightTheme,
       home: MyHomePage(
-        title: 'ACME Weather ',
+        title: 'ACK Weather  ',
       ),
     );
   }

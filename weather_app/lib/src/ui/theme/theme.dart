@@ -22,6 +22,7 @@ class Themes {
   static final _themeLight = ThemeData(
     backgroundColor: Colors.grey[50],
     primaryColor: Colors.grey[50],
+    accentColor: Colors.grey[100],
     primaryTextTheme: TextTheme(
       body1: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold)),
       body2: TextStyle(color: Colors.grey),
@@ -37,6 +38,7 @@ class Themes {
   static final _themeDark = ThemeData(
     primaryColor: Colors.grey[850],
     backgroundColor: Colors.grey[850],
+    accentColor: Colors.grey[700],
     primaryTextTheme: TextTheme(
       title: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[50], fontWeight: FontWeight.bold)),
       body1: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.grey[100], fontWeight: FontWeight.bold)),
