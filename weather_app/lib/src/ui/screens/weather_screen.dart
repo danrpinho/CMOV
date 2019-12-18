@@ -89,7 +89,7 @@ class WeatherScreen extends StatelessWidget {
       },
       itemCount: 6,
       pagination: new SwiperPagination(
-          margin: new EdgeInsets.all(5.0),
+          margin: new EdgeInsets.only(top:5.0, left: 5, right: 5, bottom: 15),
           builder: new DotSwiperPaginationBuilder(
               color: Colors.blueGrey, activeColor: Colors.black87)),
     );

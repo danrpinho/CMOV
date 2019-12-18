@@ -13,7 +13,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  static dynamic selectedTheme = 1;
+  static dynamic selectedTheme = 2;
   static dynamic selectedTemperatureUnit = 1;
   static bool useGoogleMaps = false;
   SharedPreferences preferences;
