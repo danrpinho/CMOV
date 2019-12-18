@@ -22,7 +22,7 @@ class MainInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: 5, bottom: 35),
+          padding: EdgeInsets.only(top: 45, bottom: 35),
           child: Text(this.day),
         ),
         Padding(

@@ -137,37 +137,33 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            child: BlocBuilder(
-                bloc: bloc,
-                builder: (context, state) {
-                  if (state is WeatherLoading) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                      ),
-                    );
-                  }
-                  if (state is WeatherLoaded) {
-                    Logger().d("WeatherLoaded", state);
-                    //this.weathers.add(state.weather);
-                    return WeatherScreen(
-                      day: "Sunday, 16 December 2019",
-                      weather: state.weather,
-                      prefs: preferences,
-                    );
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.white,
-                    ),
-                  );
-                }),
-            alignment: Alignment.center,
-          ),
-        ),
+      body: Container(
+        child: BlocBuilder(
+            bloc: bloc,
+            builder: (context, state) {
+              if (state is WeatherLoading) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                  ),
+                );
+              }
+              if (state is WeatherLoaded) {
+                Logger().d("WeatherLoaded", state);
+                //this.weathers.add(state.weather);
+                return WeatherScreen(
+                  day: "Sunday, 16 December 2019",
+                  weather: state.weather,
+                  prefs: preferences,
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
+              );
+            }),
+        alignment: Alignment.center,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

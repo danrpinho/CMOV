@@ -16,7 +16,7 @@ class TemperatureChart extends StatelessWidget {
         height: 300,
         child: Padding(
             padding:
-                const EdgeInsets.only(top: 40, bottom: 40, left: 5, right: 5),
+                const EdgeInsets.only(top: 40, bottom: 40, left: 30, right: 30),
             child: charts.TimeSeriesChart([
               new charts.Series<Weather, DateTime>(
                 id: 'Temperature',
